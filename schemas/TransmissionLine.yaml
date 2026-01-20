@@ -1,0 +1,109 @@
+name: TransmissionLine
+description: A transmission line (or distribution line) is a physical electrical conductor system used to transfer power between
+  two network nodes. It is characterized by its electrical parameters (impedance, admittance), thermal limits, topology, and
+  physical construction such as length or number of parallel circuits. Transmission lines can represent overhead lines or
+  underground cables and are key components in AC load-flow, dynamic simulations, and energy system studies.
+attributes:
+- id: line_length
+  description: The physical length of the transmission line, expressed in kilometers (km). Length may be used to scale per-unit-length
+    electrical parameters or compute line losses and charging currents.
+  value:
+    type: decimal
+    constraints:
+      minimum: 0.0
+  required: false
+  label: Line Length
+  unit:
+    constraints:
+      enum:
+      - km
+  provenance_ref: Define the provenance here.
+- id: parallel_circuit_count
+  description: The number of identical transmission circuits run in parallel between the same endpoints. Parallel circuits
+    increase overall capacity, reduce effective impedance, and provide redundancy in grid operation.
+  value:
+    type: integer
+  required: false
+  label: Parallel Circuit Count
+  provenance_ref: Define the provenance here.
+- id: series_reactance
+  description: The imaginary component of the line’s series impedance, expressed in ohms (Ω). It primarily represents the
+    inductive characteristics of the line and strongly influences power flow, voltage stability, and short-circuit behavior.
+  value:
+    type: decimal
+    constraints:
+      minimum: 0.0
+  required: true
+  label: Series Reactance
+  unit:
+    constraints:
+      enum:
+      - ohm
+  provenance_ref: Define the provenance here.
+- id: series_resistance
+  description: The real component of the line’s series impedance, expressed in ohms. It represents the resistive losses in
+    the conductors, leading to I^2R power losses and voltage drop along the line.
+  value:
+    type: decimal
+    constraints:
+      minimum: 0.0
+  required: false
+  label: Series Resistance
+  unit:
+    constraints:
+      enum:
+      - ohm
+  provenance_ref: Define the provenance here.
+- id: shunt_susceptance
+  description: Imaginary component of shunt admittance (microS/km). It models the capacitive coupling of overhead conductors
+    or cables to ground and affects reactive power flow, especially in long lines.
+  value:
+    type: decimal
+    constraints:
+      minimum: 0.0
+  required: false
+  label: Shunt Susceptance
+  unit:
+    constraints:
+      enum:
+      - S
+  provenance_ref: Define the provenance here.
+- id: thermal_capacity_rating
+  description: The maximum continuous apparent power flow limit of the line based on its thermal current-carrying capability,
+    expressed in MVA. Exceeding this limit risks conductor overheating, sag violations, or insulation degradation.
+  value:
+    type: decimal
+    constraints:
+      minimum: 0.0
+  required: false
+  label: Thermal Capacity Rating
+  unit:
+    constraints:
+      enum:
+      - MVA
+  provenance_ref: Define the provenance here.
+- id: name
+  comment: Descriptive name.
+  label: Name
+  required: 'true'
+  description: Descriptive name.
+  domain: Port
+  value:
+    type: string
+  provenance_ref: Define the provenance here.
+relations:
+- id: isFromNodeOf
+  description: Origin node of the connection.
+  required: true
+  target:
+  - ElectricityNode
+- id: isInEnergyDomain
+  description: Object property 'isInEnergyDomain' extracted from ontology.
+  required: true
+  target:
+  - EnergyDomain
+- id: isToNodeOf
+  description: Destination node of the connection.
+  required: true
+  target:
+  - ElectricityNode

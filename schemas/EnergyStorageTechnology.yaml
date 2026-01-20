@@ -1,0 +1,421 @@
+name: EnergyStorageTechnology
+parents:
+- EnergyTechnology
+description: Energy Storage Technology is a technical system designed to absorb energy from an energy carrier or energy flow,
+  transform it into a storable form, retain it for a period of time with minimal losses, and subsequently release it as a
+  usable energy carrier or energy flow on demand.
+attributes:
+- id: annual_natural_inflow_volume
+  description: The total annual volume of natural inflow into the storage resource, expressed in MWh/year or cubic meters/year
+    depending on technology. Applicable for hydro reservoirs, seasonal storages, and resource-driven systems.
+  value:
+    type: string
+  required: false
+  label: Annual Natural Inflow Volume
+  unit:
+    constraints:
+      enum:
+      - MWh/yr
+  provenance_ref: Define the provenance here.
+- id: charging_efficiency
+  description: The fraction of input energy that is successfully stored during the charging process, expressed as a value
+    between 0 and 1. Accounts for losses in power electronics, conversion stages, and internal storage mechanisms.
+  value:
+    type: decimal
+    constraints:
+      minimum: 0.0
+  required: false
+  label: Charging Energy Efficiency
+  unit:
+    constraints:
+      enum:
+      - Fraction (0-1)
+  provenance_ref: Define the provenance here.
+- id: charging_variable_operating_cost
+  description: The charging variable operating cost is a monetary cost incurred per unit of energy absorbed (charged) by an
+    energy storage system, representing operational expenses that scale proportionally with the amount of energy taken into
+    storage. It includes costs such as wear-related degradation, auxiliary energy use during charging, and consumables associated
+    with the charging process.
+  value:
+    type: decimal
+    constraints:
+      minimum: 0.0
+  required: false
+  label: Charging Variable Operating Cost
+  unit:
+    constraints:
+      enum:
+      - MU//MWh
+  provenance_ref: Define the provenance here.
+- id: discharging_efficiency
+  description: The fraction of stored energy that can be delivered as useful output during the discharging process, expressed
+    as a value between 0 and 1. Represents conversion losses, internal resistance, and inverter losses.
+  value:
+    type: decimal
+    constraints:
+      minimum: 0.0
+  required: false
+  label: Discharging Energy Efficiency
+  unit:
+    constraints:
+      enum:
+      - Fraction (0-1)
+  provenance_ref: Define the provenance here.
+- id: discount_rate
+  description: Discount rate applied to investment and cost streams associated with this technology, expressed as a fraction
+    between 0 and 1 (e.g. 0.03 for 3%). May override a global discount rate defined at the Energy System Model level.
+  value:
+    type: decimal
+    constraints:
+      minimum: 0.0
+  constraints:
+  - 'minimum: 0.0'
+  - maximum:1.0
+  required: false
+  unit:
+    constraints:
+      enum:
+      - Fraction
+  provenance_ref: Define the provenance here.
+- id: energy_storage_capacity
+  description: Energy storage capacity is the maximum amount of energy that an energy storage technology can store and subsequently
+    release under defined operating conditions, measured as the difference between the maximum and minimum allowable state
+    of charge.
+  value:
+    type: decimal
+    constraints:
+      minimum: 0.0
+  required: false
+  label: Energy Storage Capacity
+  unit:
+    constraints:
+      enum:
+      - MWh
+  provenance_ref: Define the provenance here.
+- id: fixed_operating_cost
+  description: Fixed operation and maintenance (O&M) cost associated with the technology, typically expressed per year and
+    per unit of installed capacity or per unit of technology. Covers costs that do not depend on energy production.
+  value:
+    type: decimal
+    constraints:
+      minimum: 0.0
+  constraints:
+  - MU/year
+  - MU/(kW/year)
+  - MU/(MW/year)
+  - MU/unit
+  required: false
+  unit:
+    constraints:
+      enum:
+      - MU/year, MU/(kW/year), MU/(MW/year), MU/unit
+  provenance_ref: Define the provenance here.
+- id: initial_state_of_charge
+  description: Initial state of charge at the beginning of the optimization horizon, expressed as a fraction between 0 and
+    1.
+  value:
+    type: decimal
+    constraints:
+      minimum: 0.0
+  constraints:
+  - 'minimum: 0.0'
+  - maximum:1.0
+  required: false
+  unit:
+    constraints:
+      enum:
+      - Fraction
+  provenance_ref: Define the provenance here.
+- id: investment_cost
+  description: Overnight investment cost of the technology per unit of installed capacity or per unit, depending on the modeling
+    convention. Used together with technical_lifetime and discount_rate for annualized cost calculations.
+  value:
+    type: decimal
+    constraints:
+      minimum: 0.0
+  constraints:
+  - MU/kW
+  - MU/MW
+  - MU/unit
+  required: false
+  unit:
+    constraints:
+      enum:
+      - MU/kW, MU/MW, MU/unit
+  provenance_ref: Define the provenance here.
+- id: maximum_charging_power
+  description: The upper limit on instantaneous power intake when the storage system is charging, expressed in kW or MW. Constrained
+    by converter size, thermal limits, and internal charging characteristics.
+  value:
+    type: decimal
+    constraints:
+      minimum: 0.0
+  required: false
+  label: Maximum Charging Power
+  unit:
+    constraints:
+      enum:
+      - kW or MW
+  provenance_ref: Define the provenance here.
+- id: maximum_ramp_rate_down
+  description: The maximum percentage decrease in output power per unit time during ramp-down operations (charging or discharging).
+    Expressed as %/min or %/s, capturing the system’s downward flexibility.
+  value:
+    type: decimal
+    constraints:
+      minimum: 0.0
+  required: false
+  label: Maximum Ramp Rate Down
+  unit:
+    constraints:
+      enum:
+      - '%/h'
+  provenance_ref: Define the provenance here.
+- id: maximum_ramp_rate_up
+  description: The maximum increase in output power per unit time during discharging, typically expressed in kW/s or MW/min.
+    Represents the upward flexibility of the storage device.
+  value:
+    type: decimal
+    constraints:
+      minimum: 0.0
+  required: false
+  label: Maximum Ramp Rate Up
+  unit:
+    constraints:
+      enum:
+      - '%/h'
+  provenance_ref: Define the provenance here.
+- id: maximum_required_units
+  description: Maximum number of discrete units of the technology that can be installed, used to represent site or policy
+    constraints on deployment.
+  value:
+    type: integer
+  required: false
+  unit:
+    constraints:
+      enum:
+      - unit
+  provenance_ref: Define the provenance here.
+- id: maximum_state_or_charge
+  value:
+    type: decimal
+    constraints:
+      minimum: 0.0
+  constraints:
+  - Maximum allowed state of charge, usually expressed as a fraction between 0 and 1.
+  required: false
+  unit:
+    constraints:
+      enum:
+      - Fraction
+  provenance_ref: Define the provenance here.
+- id: minimum_required_units
+  description: Minimum number of discrete units of the technology that must be installed, used for representing modular technologies
+    or minimum build sizes.
+  value:
+    type: integer
+  constraints:
+  - 'minimum: 0'
+  required: false
+  unit:
+    constraints:
+      enum:
+      - unit
+  provenance_ref: Define the provenance here.
+- id: minimum_state_of_charge
+  description: Minimum allowed state of charge, usually expressed as a fraction between 0 and 1
+  value:
+    type: decimal
+    constraints:
+      minimum: 0.0
+  constraints:
+  - 'minimum: 0.0'
+  - maximum:1.0
+  required: false
+  unit:
+    constraints:
+      enum:
+      - Fraction
+  provenance_ref: Define the provenance here.
+- id: natural_inflow_profile_reference
+  description: Identifier linking to a time series of natural inflows into the storage system (e.g., water inflow for reservoirs,
+    natural gas input for seasonal storage). Used for exogenous supply modelling.
+  value:
+    type: string
+  required: false
+  label: Natural Inflow Profile Reference
+  provenance_ref: Define the provenance here.
+- id: nominal_power_capacity
+  description: Maximum instantaneous power that the conversion unit can deliver or absorb, in MW. Defines operational limits
+    for dispatch.
+  value:
+    type: decimal
+    constraints:
+      minimum: 0.0
+  required: false
+  label: Nominal Power Capacity
+  unit:
+    constraints:
+      enum:
+      - MW
+  provenance_ref: Define the provenance here.
+- id: ramping_cost_decrease
+  description: The cost associated with reducing output power or reducing charging rate, expressed in MonetaryUnits/MW or
+    MonetaryUnits/MW/min. Represents operational constraints or efficiency penalties during ramp-down.
+  value:
+    type: decimal
+    constraints:
+      minimum: 0.0
+  required: false
+  label: Ramping Cost Decrease
+  provenance_ref: Define the provenance here.
+- id: ramping_cost_increase
+  description: The cost associated with increasing output power, expressed in MU/MW or MU/MW/min. Used in dispatch optimisation
+    to represent wear, thermal cycling, or operational penalties for fast upward ramping.
+  value:
+    type: decimal
+    constraints:
+      minimum: 0.0
+  required: false
+  label: Ramping Cost Increase
+  unit:
+    constraints:
+      enum:
+      - MU/MW
+  provenance_ref: Define the provenance here.
+- id: salvage_fraction_value
+  description: Fraction of the original investment value that is recovered as salvage at the end of the planning horizon,
+    expressed as a fraction between 0 and 1. Used for partial lifetime treatment when the technology lifetime extends beyond
+    the modeled period.
+  value:
+    type: decimal
+    constraints:
+      minimum: 0.0
+  constraints:
+  - 'minnimum: 0.0'
+  - 'maximum: 1.0'
+  required: false
+  unit:
+    constraints:
+      enum:
+      - Fraction
+  provenance_ref: Define the provenance here.
+- id: self_discharge_rate
+  description: Fraction of stored energy lost per time step due to self-discharge.
+  value:
+    type: decimal
+    constraints:
+      minimum: 0.0
+  constraints:
+  - 'minimum: 0.0'
+  required: false
+  unit:
+    constraints:
+      enum:
+      - Fraction
+  provenance_ref: Define the provenance here.
+- id: storage_technology_type
+  description: 'Enum: reservoir hydro, pumped hydro, battery'
+  value:
+    type: string
+  required: false
+  label: Storage Technology Type
+  provenance_ref: Define the provenance here.
+- id: technical_lifetime
+  description: Expected technical lifetime of the technology, typically expressed in years. Used to compute annualized investment
+    costs and to determine replacement over long-term planning horizons.
+  value:
+    type: decimal
+    constraints:
+      minimum: 0.0
+  required: false
+  unit:
+    constraints:
+      enum:
+      - year
+  provenance_ref: Define the provenance here.
+- id: unit_nominal_size
+  description: Nominal size of a single technology unit, typically in MW of power or MWh of energy capacity, depending on
+    the technology type. Combined with min_units and max_units to define total installable capacity.
+  value:
+    type: decimal
+    constraints:
+      minimum: 0.0
+  constraints:
+  - kW
+  - MW
+  - kWh
+  - MWh
+  required: false
+  unit:
+    constraints:
+      enum:
+      - kW, MW, kWh, MWh
+  provenance_ref: Define the provenance here.
+- id: variable_operating_cost
+  description: The marginal operational cost associated with providing the demand (MU/MWh). For loads, this often represents
+    demand-side management costs, smart-load operation costs, or penalties applied during optimization.
+  value:
+    type: decimal
+    constraints:
+      minimum: 0.0
+  required: false
+  label: Variable Operating Cost
+  unit:
+    constraints:
+      enum:
+      - MU/MWh
+  provenance_ref: Define the provenance here.
+- id: name
+  comment: Descriptive name.
+  label: Name
+  required: 'true'
+  description: Descriptive name.
+  domain: EnergyTechnology
+  value:
+    type: string
+  provenance_ref: Define the provenance here.
+- id: co2_price
+  comment: CO2 Price is a monetary value assigned to each tonne of carbon dioxide (or CO₂-equivalent) emitted within an energy
+    system. It represents the cost of emitting greenhouse gases and is used to internalize the environmental and societal
+    damages associated with climate change.
+  label: CO2 Price
+  unit:
+    constraints:
+      enum:
+      - MU/tCO2
+  description: CO2 Price is a monetary value assigned to each tonne of carbon dioxide (or CO₂-equivalent) emitted within an
+    energy system. It represents the cost of emitting greenhouse gases and is used to internalize the environmental and societal
+    damages associated with climate change.
+  domain: EnergySystemModel
+  value:
+    type: decimal
+    constraints:
+      minimum: 0.0
+  provenance_ref: Define the provenance here.
+- id: long_name
+  comment: Long description
+  label: Long Name
+  description: Long description
+  domain: EnergySystemModel
+  value:
+    type: string
+  provenance_ref: Define the provenance here.
+relations:
+- id: hasInputEnergyCarrier
+  description: Type of energy entering the converter, e.g., electricity, natural gas, hydrogen, heat. Determines the resource
+    and carrier modeling.
+  required: true
+  target:
+  - EnergyCarrier
+- id: hasOutputEnergyCarrier
+  description: Type of energy leaving the converter, e.g., electricity, heat, hydrogen. Defines the target energy form and
+    downstream modeling.
+  required: true
+  target:
+  - EnergyCarrier
+- id: isConnectedToNode
+  description: The node where the injection/withdrawal occurs.
+  required: true
+  target:
+  - EnergyNode

@@ -1,0 +1,56 @@
+name: EnergyNode
+parents:
+- Node
+description: Represents a physical or logical point in the energy systems.
+attributes:
+- id: elevation
+  description: Elevation of the node above sea level, if relevant for modeling climate or system performance.
+  value:
+    type: decimal
+    constraints:
+      minimum: 0.0
+  required: false
+  unit:
+    constraints:
+      enum:
+      - m (meters above mean sea level)
+  provenance_ref: Define the provenance here.
+- id: latitude
+  description: Geographical latitude of the generator, expressed in decimal degrees. Used for spatial modeling, renewable
+    resource assessment, and GIS-based visualization.
+  value:
+    type: decimal
+    constraints:
+      minimum: 0.0
+  required: false
+  label: Latitude
+  unit:
+    constraints:
+      enum:
+      - decimal degrees
+  provenance_ref: Define the provenance here.
+- id: longitude
+  description: Geographical longitude of the generator, expressed in decimal degrees. Used for spatial modeling, renewable
+    resource assessment, and GIS-based visualization.
+  value:
+    type: decimal
+    constraints:
+      minimum: 0.0
+  required: false
+  label: Longitude
+  provenance_ref: Define the provenance here.
+- id: name
+  comment: Descriptive name.
+  label: Name
+  required: 'true'
+  description: Descriptive name.
+  domain: Node
+  value:
+    type: string
+  provenance_ref: Define the provenance here.
+relations:
+- id: isInEnergyDomain
+  description: Object property 'isInEnergyDomain' extracted from ontology.
+  required: true
+  target:
+  - EnergyDomain

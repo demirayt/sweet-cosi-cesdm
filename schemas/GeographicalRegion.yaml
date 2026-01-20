@@ -1,0 +1,19 @@
+name: GeographicalRegion
+description: A physical geographic location is a spatial region or point that exists independently of human social constructs
+  and is defined by its position on the Earth’s surface or within the Earth’s physical environment. It conmsiders different
+  geographical regions characterized by one or more shared physical, environmental, cultural, or socio-economic attributes,
+  araising from either natural features (physical regions) or human-defined criteria (political, cultural, statistical regions).
+attributes:
+- id: name
+  description: Descriptive name.
+  value:
+    type: string
+  required: 'true'
+  label: Name
+  provenance_ref: Define the provenance here.
+relations:
+- id: hasGeographicalRegionAsParent
+  description: Links a sub-region to its hasGeographicalRegionAsParent region.
+  required: false
+  target:
+  - GeographicalRegion

@@ -1,0 +1,147 @@
+name: CombinedHeatandPowerPlant
+parents:
+- EnergyConversionTechnology
+description: A Combined Heat and Power (CHP) Plant is an energy conversion facility that simultaneously produces useful electrical
+  energy and useful thermal energy from a single fuel input by recovering heat that would otherwise be wasted in conventional
+  electricity-only generation. It performs cogeneration through coupled thermodynamic processes, typically enhancing overall
+  fuel utilization efficiency relative to separate heat and electricity production.
+attributes:
+- id: input_origin
+  description: Classifies whether the input energy carrier is exogenous (primary resource originating outside the modeled
+    energy network, e.g. solar irradiance, wind, hydro inflow, crude oil imports) or endogenous (delivered from an internal
+    energy node such as electricity, gas, hydrogen).
+  value:
+    type: string
+    constraints:
+        enum:
+        - endogenous
+        - exogenous
+  required: true
+  provenance_ref: Define the provenance here.
+- id: net_electrical_efficiency
+  description: Net electrical efficiency is the ratio of the net electrical energy output of the CHP plant to the total fuel
+    energy input under defined operating conditions. It quantifies the plant’s effectiveness in converting input fuel energy
+    into electricity.
+  value:
+    type: float
+    default: 0.35
+    constraints:
+      minimum: 0.0
+      maximum: 1.0
+  required: false
+  label: Net Electrical Efficiency
+  unit:
+    constraints:
+      enum:
+      - Fraction (0-1)
+  provenance_ref: Define the provenance here.
+- id: net_thermal_efficiency
+  description: Net thermal efficiency is the ratio of the useful thermal energy output of the CHP plant to the total fuel
+    energy input. It represents the portion of input fuel energy recovered as usable heat.
+  value:
+    type: decimal
+    default: 0.45
+    constraints:
+      minimum: 0.0
+      maximum: 1.0
+  required: false
+  label: Net Thermal Efficiency
+  unit:
+    constraints:
+      enum:
+      - Fraction (0-1)
+  provenance_ref: Define the provenance here.
+- id: rated_electrical_power_capacity
+  description: Electrical power capacity is the maximum continuous electrical output a device can deliver under specified
+    conditions, typically expressed in kilowatts (kW) or megawatts (MW).
+  value:
+    type: decimal
+    constraints:
+      minimum: 0.0
+  required: true
+  label: Rated Electrical Power Capacity
+  unit:
+    constraints:
+      enum:
+      - MW
+  provenance_ref: Define the provenance here.
+- id: rated_thermal_output_capacity
+  description: Thermal power capacity is the maximum useful thermal power that a device can deliver (as steam, hot water,
+    or process heat) to an external heat network or process under defined operation.
+  value:
+    type: decimal
+    constraints:
+      minimum: 0.0
+  required: true
+  label: Rated Thermal Output Capacity
+  unit:
+    constraints:
+      enum:
+      - MW
+  provenance_ref: Define the provenance here.
+- id: name
+  comment: Descriptive name.
+  label: Name
+  required: 'true'
+  description: Descriptive name.
+  domain: EnergyTechnology
+  value:
+    type: string
+  provenance_ref: Define the provenance here.
+- id: co2_price
+  comment: CO2 Price is a monetary value assigned to each tonne of carbon dioxide (or CO₂-equivalent) emitted within an energy
+    system. It represents the cost of emitting greenhouse gases and is used to internalize the environmental and societal
+    damages associated with climate change.
+  label: CO2 Price
+  unit:
+    constraints:
+      enum:
+      - MU/tCO2
+  description: CO2 Price is a monetary value assigned to each tonne of carbon dioxide (or CO₂-equivalent) emitted within an
+    energy system. It represents the cost of emitting greenhouse gases and is used to internalize the environmental and societal
+    damages associated with climate change.
+  domain: EnergySystemModel
+  value:
+    type: decimal
+    constraints:
+      minimum: 0.0
+  provenance_ref: Define the provenance here.
+- id: long_name
+  comment: Long description
+  label: Long Name
+  description: Long description
+  domain: EnergySystemModel
+  value:
+    type: string
+  provenance_ref: Define the provenance here.
+relations:
+- id: hasElectricityAsCarrier
+  description: Electricity carrier produced by the CHP plant.
+  required: true
+  target:
+  - EnergyCarrier
+- id: hasFuelCarrier
+  description: Fuel carrier consumed by the CHP plant (e.g., natural gas, biomass).
+  required: true
+  target:
+  - EnergyCarrier
+- id: hasHeatAsCarrier
+  description: Heat carrier produced by the CHP plant (e.g., district heating water).
+  required: true
+  target:
+  - EnergyCarrier
+- id: isElectricityOutputNodeOf
+  description: Node representing the electricity output of the CHP plant.
+  required: true
+  target:
+  - EnergyNode
+- id: isFuelInputNodeOf
+  description: Node representing the fuel supply for the CHP plant.
+  required: true
+  target:
+  - EnergyNode
+- id: isHeatOutputNodeOf
+  description: Node representing the heat output of the CHP plant.
+  required: true
+  target:
+  - EnergyNode

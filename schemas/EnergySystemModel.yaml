@@ -1,0 +1,25 @@
+name: EnergySystemModel
+description: Container entity for a full energy system model instance.
+attributes:
+- id: co2_price
+  description: CO2 Price is a monetary value assigned to each tonne of carbon dioxide (or CO₂-equivalent) emitted within an
+    energy system. It represents the cost of emitting greenhouse gases and is used to internalize the environmental and societal
+    damages associated with climate change.
+  value:
+    type: decimal
+    constraints:
+      minimum: 0.0
+  required: false
+  label: CO2 Price
+  unit:
+    constraints:
+      enum:
+      - CHF/tCO2
+  provenance_ref: Define the provenance here.
+- id: long_name
+  description: Long description
+  value:
+    type: string
+  required: false
+  label: Long Name
+  provenance_ref: Define the provenance here.

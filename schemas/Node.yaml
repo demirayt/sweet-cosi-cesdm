@@ -1,0 +1,15 @@
+name: Node
+attributes:
+- id: name
+  description: Descriptive name.
+  value:
+    type: string
+  required: 'true'
+  label: Name
+  provenance_ref: Define the provenance here.
+relations:
+- id: isInGeographicalRegion
+  description: Object property 'isInGeographicalRegion' extracted from ontology.
+  required: true
+  target:
+  - GeographicalRegion

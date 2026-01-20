@@ -1,0 +1,76 @@
+name: EnergyCarrier
+description: An energy carrier represents a medium through which energy is delivered, stored or consumed. This includes electricity,
+  natural gas, hydrogen, heat, or any other energy form. Attributes define tager environmental and economic characteristics
+  of the carrier, which are crucial for energy system modeling, dispatch, and lifecycle assessment.
+attributes:
+- id: co2_emission_intensity
+  description: The amount of CO₂ emissions associated with producing or delivering one MWh of the energy carrier, expressed
+    in tons CO₂/MWh. Used for carbon accounting and environmental impact modeling.
+  value:
+    type: decimal
+    default: 0.0
+    constraints:
+      minimum: 0.0
+  required: false
+  label: CO2 Emission Intensity
+  unit:
+    constraints:
+      enum:
+      - tCO2/MWh
+  provenance_ref: Define the provenance here.
+- id: energy_carrier_cost
+  description: The monetary cost of the energy carrier per unit of energy, expressed in MU/MWh. Includes production, delivery,
+    and variable operational costs, used for economic dispatch and optimization.
+  value:
+    type: decimal
+    default: 0.0
+    constraints:
+      minimum: 0.0
+  required: false
+  label: Energy Carrier Cost
+  unit:
+    constraints:
+      enum:
+      - MU/MWh
+  provenance_ref: Define the provenance here.
+- id: energy_carrier_group
+  description: High-level group of the carrier, such as "electricity", "heat", "gas", or "hydrogen". Useful for aggregation
+    and reporting.
+  value:
+    type: string
+  required: false
+  provenance_ref: Define the provenance here.
+- id: energy_carrier_type
+  description: Description of the energy carrier type.
+  value:
+    type: string
+  required: false
+  label: Energy Carrier Type
+  provenance_ref: Define the provenance here.
+- id: is_primary_fuel
+  description: Flag indicating whether this carrier is considered a primary fuel (e.g., natural gas) as opposed to a secondary
+    or derived carrier.
+  value:
+    type: string
+  constraints:
+  - 'true'
+  - 'false'
+  required: false
+  provenance_ref: Define the provenance here.
+- id: is_secondary_fuel
+  description: Flag indicating whether this carrier is considered a secondary or derived fuel (e.g., hydrogen produced via
+    electrolysis).
+  value:
+    type: string
+  constraints:
+  - 'true'
+  - 'false'
+  required: false
+  provenance_ref: Define the provenance here.
+- id: name
+  description: Descriptive name.
+  value:
+    type: string
+  required: true
+  label: Name
+  provenance_ref: Define the provenance here.

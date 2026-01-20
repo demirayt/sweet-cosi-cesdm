@@ -1,0 +1,152 @@
+name: TwoWindingPowerTransformer
+description: An electrical transformer with exactly one primary and one secondary winding that performs voltage transformation
+  and electrical isolation between two AC network voltage levels.
+attributes:
+- id: name
+  comment: Descriptive name.
+  label: Name
+  required: 'true'
+  description: Descriptive name.
+  domain: Port
+  value:
+    type: string
+  provenance_ref: Define the provenance here.
+- id: core_losses
+  description: The transformer’s core (iron) losses measured under nominal voltage and no-load conditions, expressed in kilowatts
+    (kW). Core losses include hysteresis and eddy current losses within the magnetic core.
+  value:
+    type: decimal
+    constraints:
+      minimum: 0.0
+  required: false
+  label: Core Losses
+  unit:
+    constraints:
+      enum:
+      - kW
+  provenance_ref: Define the provenance here.
+- id: no_load_current
+  description: The no-load excitation current, expressed as a percentage of the rated current. Represents the magnetizing
+    current required to energize the core at rated voltage with the secondary open-circuited.
+  value:
+    type: decimal
+    constraints:
+      minimum: 0.0
+  required: false
+  label: No Load Current
+  unit:
+    constraints:
+      enum:
+      - '%'
+  provenance_ref: Define the provenance here.
+- id: number_of_parallel_circuits
+  description: The number of identical parallel winding circuits or parallel line paths between transformer terminals. Used
+    to represent multiple conductors or windings operating in parallel to share current flow and reduce impedance.
+  value:
+    type: integer
+  required: false
+  label: Number of Parallel Circuits
+  unit:
+    constraints:
+      enum:
+      - count
+  provenance_ref: Define the provenance here.
+- id: rated_apparent_power
+  description: The transformer’s rated apparent power at nominal operating conditions, expressed in megavolt‐amperes (MVA).
+    This value represents the maximum continuous apparent power the transformer can deliver without exceeding thermal limits.
+  value:
+    type: decimal
+    constraints:
+      minimum: 0.0
+  required: false
+  label: Rated Apparent Power
+  unit:
+    constraints:
+      enum:
+      - MVA
+  provenance_ref: Define the provenance here.
+- id: rated_copper_losses
+  description: The transformer’s winding I^2(R) losses at rated load, expressed in kilowatts (kW). These copper losses represent
+    real power dissipated as heat due to resistance in the windings under full-load current conditions.
+  value:
+    type: decimal
+    constraints:
+      minimum: 0.0
+  required: false
+  label: Rated Copper Losses
+  unit:
+    constraints:
+      enum:
+      - kW
+  provenance_ref: Define the provenance here.
+- id: rated_primary_voltage
+  description: The rated line-to-line RMS voltage at the primary winding terminals under nominal operating conditions, expressed
+    in kilovolts (kV). This corresponds to the voltage level the primary side is designed to receive.
+  value:
+    type: decimal
+    constraints:
+      minimum: 0.0
+  required: false
+  label: Rated Primary Voltage
+  unit:
+    constraints:
+      enum:
+      - kV
+  provenance_ref: Define the provenance here.
+- id: rated_secondary_voltage
+  description: The rated line-to-line RMS voltage at the secondary winding terminals under nominal operating conditions, expressed
+    in kilovolts (kV). This corresponds to the nominal output voltage level.
+  value:
+    type: decimal
+    constraints:
+      minimum: 0.0
+  required: false
+  label: Rated Secondary Voltage
+  unit:
+    constraints:
+      enum:
+      - kV
+  provenance_ref: Define the provenance here.
+- id: reactance_resistance_ratio
+  description: The ratio of transformer leakage reactance to winding resistance (X/R). This dimensionless value characterizes
+    the dynamic behavior of the transformer during faults and influences short-circuit current decay and transient performance.
+  value:
+    type: decimal
+    constraints:
+      minimum: 0.0
+  required: false
+  label: Reactance Resistance Ratio
+  unit:
+    constraints:
+      enum:
+      - km
+  provenance_ref: Define the provenance here.
+- id: short_circuit_voltage
+  description: Percentage of rated voltage required to circulate rated current when the secondary winding is short-circuited.
+  value:
+    type: decimal
+    constraints:
+      minimum: 0.0
+  required: false
+  label: Short Circuit Voltage
+  unit:
+    constraints:
+      enum:
+      - '%'
+  provenance_ref: Define the provenance here.
+relations:
+- id: isFromNodeOf
+  description: Origin node of the connection.
+  required: true
+  target:
+  - ElectricityNode
+- id: isInEnergyDomain
+  description: Object property 'isInEnergyDomain' extracted from ontology.
+  required: true
+  target:
+  - EnergyDomain
+- id: isToNodeOf
+  description: Destination node of the connection.
+  required: true
+  target:
+  - ElectricityNode
