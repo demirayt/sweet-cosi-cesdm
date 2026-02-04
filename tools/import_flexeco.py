@@ -63,7 +63,7 @@ def save_timeseries_to_hdf5(filename, timestamps, data_dict):
 
             is_path = ("/" in str(key))
             ds_path = str(key).lstrip("/") if is_path else str(key).lstrip("/")
-            alias_path = None if is_path else f"profiles/{ds_path}"
+            # alias_path = None if is_path else f"profiles/{ds_path}"
             ds_path = str(ds_path).lstrip("/")
 
             arr = np.asarray(values)
@@ -78,14 +78,14 @@ def save_timeseries_to_hdf5(filename, timestamps, data_dict):
                 del f[ds_path]
             f.create_dataset(ds_path, data=arr)
 
-            # Optional alias under profiles/<key> for non-path keys
-            if alias_path:
-                parent2 = os.path.dirname(alias_path)
-                if parent2:
-                    f.require_group(parent2)
-                if alias_path in f:
-                    del f[alias_path]
-                f[alias_path] = f[ds_path]
+            # # Optional alias under profiles/<key> for non-path keys
+            # if alias_path:
+            #     parent2 = os.path.dirname(alias_path)
+            #     if parent2:
+            #         f.require_group(parent2)
+            #     if alias_path in f:
+            #         del f[alias_path]
+            #     f[alias_path] = f[ds_path]
 
 def export_to_flexeco(model, output_path: str | Path):
     """
@@ -178,6 +178,7 @@ def export_to_flexeco(model, output_path: str | Path):
         return raw, None, None
 
     node_entities = model.entities.get("ElectricityNode", {})
+    node_entities = node_entities | (model.entities.get("EnergyNode", {}))
     carrier_entities = model.entities.get("EnergyCarrier", {})
     ntc_entities = model.entities.get("NetTransferCapacity", {})
     line_entities = model.entities.get("TransmissionLine", {})
@@ -185,17 +186,52 @@ def export_to_flexeco(model, output_path: str | Path):
     load_entities = model.entities.get("EnergyDemand", {})
     storage_entities = model.entities.get("EnergyStorageTechnology", {})
     conv1x1_entities = model.entities.get("EnergyConversionTechnology1x1", {})
+    storagetype_entities = model.entities.get("StorageTechnologyType", {})
+    techtype_entities = model.entities.get("TechnologyType", {})
     energysystemmodel_entities = model.entities.get("EnergySystemModel", {})
 
     # EnergyNode id -> bus uid (from "node_<uid>")
     node_id_to_uid = {}
+    node_uid = 10000001
     for nid, ent in node_entities.items():
-        if nid.startswith("node_"):
-            node_id_to_uid[nid] = uid_from_prefixed_id(nid, "node_")
-        else:
-            # If you want to allow non-"node_" ids, comment out this 'if'
-            # and just do:
-            node_id_to_uid[nid] = uid_from_prefixed_id(nid, "node_")
+        node_id_to_uid[nid] = node_uid
+        node_uid = node_uid + 1
+
+    ntc_id_to_uid = {}
+    ntc_uid = 20000001
+    for nid, ent in ntc_entities.items():
+        ntc_id_to_uid[nid] = ntc_uid
+        ntc_uid = ntc_uid + 1
+
+    line_id_to_uid = {}
+    line_uid = 21000001
+    for nid, ent in line_entities.items():
+        line_id_to_uid[nid] = line_uid
+        line_uid = line_uid + 1
+
+    tr2_id_to_uid = {}
+    tr2_uid = 22000001
+    for nid, ent in tr2_entities.items():
+        tr2_id_to_uid[nid] = tr2_uid
+        tr2_uid = tr2_uid + 1
+
+    load_id_to_uid = {}
+    load_uid = 30000001
+    for nid, ent in load_entities.items():
+        load_id_to_uid[nid] = load_uid
+        load_uid = load_uid + 1
+
+    gen_id_to_uid = {}
+    gen_uid = 40000001
+    for nid, ent in conv1x1_entities.items():
+        gen_id_to_uid[nid] = gen_uid
+        gen_uid = gen_uid + 1
+
+    storage_id_to_uid = {}
+    storage_uid = 50000001
+    for nid, ent in storage_entities.items():
+        storage_id_to_uid[nid] = storage_uid
+        storage_uid = storage_uid + 1
 
     def bus_uid_from_node_id(node_id: str | None) -> int | None:
         """
@@ -204,10 +240,15 @@ def export_to_flexeco(model, output_path: str | Path):
         Raises an error if the ElectricityNode is unknown, to avoid writing
         an inconsistent Flexeco file.
         """
+        
         if node_id is None:
             return None
         try:
-            return node_id_to_uid[node_id]
+            if node_id in node_id_to_uid:
+                return node_id_to_uid[node_id]
+            else:
+                return None
+
         except KeyError:
             raise KeyError(
                 f"ElectricityNode id '{node_id}' has no assigned Flexeco bus uid. "
@@ -239,6 +280,7 @@ def export_to_flexeco(model, output_path: str | Path):
             return None
         return get_attr_value(ent,"co2_emission_intensity", 0.0)
 
+    map_busses = {}
     # ------------------------------------------------------------------
     # 1) ElectricityNode → PN_Busbar
     # ------------------------------------------------------------------
@@ -257,7 +299,9 @@ def export_to_flexeco(model, output_path: str | Path):
         if isInGeographicalRegion and isInGeographicalRegion != "region_europe":
             # if you want to distinguish zone/country, add logic here
             bus_el["zone_name"] = isInGeographicalRegion
+            bus_el["country"] = isInGeographicalRegion
 
+        map_busses[uid] = bus_el
         elements.append(bus_el)
 
     # ------------------------------------------------------------------
@@ -270,7 +314,7 @@ def export_to_flexeco(model, output_path: str | Path):
         bus1_uid = bus_uid_from_node_id(isFromNodeOf)
         bus2_uid = bus_uid_from_node_id(isToNodeOf)
 
-        uid = uid_from_prefixed_id(eid, "line_")
+        uid = line_id_to_uid[lid]
 
         el = {
             "class": "PN_Line",
@@ -294,7 +338,7 @@ def export_to_flexeco(model, output_path: str | Path):
         bus1_uid = bus_uid_from_node_id(isFromNodeOf)
         bus2_uid = bus_uid_from_node_id(isToNodeOf)
 
-        uid = uid_from_prefixed_id(eid, "tr2_")
+        uid = tr2_id_to_uid[lid]
 
         el = {
             "class": "PN_TR2",
@@ -321,7 +365,7 @@ def export_to_flexeco(model, output_path: str | Path):
         bus1_uid = bus_uid_from_node_id(isFromNodeOf)
         bus2_uid = bus_uid_from_node_id(isToNodeOf)
 
-        uid = uid_from_prefixed_id(eid, "ntc_")
+        uid = ntc_id_to_uid[eid]
         P1max = maximum_power_flow_1_to_2
         P2max = maximum_power_flow_2_to_1
         Pmax = max(v for v in (P1max, P2max) if v is not None) if (P1max or P2max) else None
@@ -336,6 +380,7 @@ def export_to_flexeco(model, output_path: str | Path):
             "Pmax": Pmax,
         }
 
+        el["technology"] = "NTC"
         elements.append(el)
 
     # ------------------------------------------------------------------
@@ -343,7 +388,7 @@ def export_to_flexeco(model, output_path: str | Path):
     # ------------------------------------------------------------------
     for lid, ent in load_entities.items():
 
-        uid = uid_from_prefixed_id(lid, "load_")
+        uid = load_id_to_uid[lid]
 
         node_id = get_attr_value(ent,"isConnectedToNode","")
         busuid = bus_uid_from_node_id(node_id)
@@ -375,6 +420,8 @@ def export_to_flexeco(model, output_path: str | Path):
                 "xi_ref_profile": get_attr_value(ent,"demand_profile_reference", ""),
             }
 
+        load_el["country"] = map_busses[busuid]["country"]
+        load_el["technology"] = get_attr_value(ent,"demand_type", "")
         elements.append(load_el)
 
     # ------------------------------------------------------------------
@@ -385,26 +432,33 @@ def export_to_flexeco(model, output_path: str | Path):
         node_id = get_attr_value(ent,"isConnectedToNode","")
         busuid = bus_uid_from_node_id(node_id)
 
+        techtype_name = ent.data['instanceOf']
+        techtype_entity = storagetype_entities[techtype_name]
+
         hasInputEnergyCarrier = get_attr_value(ent,"hasInputEnergyCarrier","")
         carrier_name = carrier_name_from_id(hasInputEnergyCarrier)
         cost = carrier_cost_from_id(hasInputEnergyCarrier)
 
-        has_inflow = get_attr_value(ent,"natural_inflow_profile_reference",False)
+        charging_efficiency = get_attr_value(techtype_entity,"charging_efficiency", None)
+        discharging_efficiency = get_attr_value(techtype_entity,"discharging_efficiency", None)
+        has_inflow = (get_attr_value(ent,"natural_inflow_profile_reference","") != "")
 
         du_gen_up_max = get_attr_value(ent,"maximum_ramp_rate_up", None)
         du_gen_down_max = get_attr_value(ent,"maximum_ramp_rate_up", None)
         du_gen_up_c1 = get_attr_value(ent,"ramping_cost_increase", None)
         du_gen_down_c1 = get_attr_value(ent,"ramping_cost_decrease", None)
 
-        if sid.startswith("storage_pump_"):
-            uid = uid_from_prefixed_id(sid, "storage_pump_")
+        inflow = get_attr_value(ent,"annual_natural_inflow_volume", None)
+        uid = storage_id_to_uid[sid]
+        
+        if inflow==None and charging_efficiency is not None:
             el = {
                 "class": "PN_StoragePumpNoInfeed",
                 "uid": uid,
                 "name": get_attr_value(ent,"name", sid),
                 "busuid": busuid,
-                "eta_load": get_attr_value(ent,"charging_efficiency", 1.0),
-                "eta_gen": get_attr_value(ent,"discharging_efficiency", 1.0),
+                "eta_load": charging_efficiency,
+                "eta_gen": discharging_efficiency,
                 "u_gen_max": get_attr_value(ent,"nominal_power_capacity", 0.0),
                 "u_load_max": get_attr_value(ent,"maximum_charging_power", 0.0),
                 "u_gen_c1": get_attr_value(ent,"variable_operating_cost", 0.0),
@@ -415,15 +469,32 @@ def export_to_flexeco(model, output_path: str | Path):
                 "has_inflow": has_inflow
             }
 
-        elif sid.startswith("storage_dam_"):
-            uid = uid_from_prefixed_id(sid, "storage_dam_")
+        if inflow and charging_efficiency is not None:
+            el = {
+                "class": "PN_StoragePump",
+                "uid": uid,
+                "name": get_attr_value(ent,"name", sid),
+                "busuid": busuid,
+                "eta_load": charging_efficiency,
+                "eta_gen": discharging_efficiency,
+                "u_gen_max": get_attr_value(ent,"nominal_power_capacity", 0.0),
+                "u_load_max": get_attr_value(ent,"maximum_charging_power", 0.0),
+                "u_gen_c1": get_attr_value(ent,"variable_operating_cost", 0.0),
+                "u_load_c1": get_attr_value(ent,"charging_variable_operating_cost", 0.0),
+                "Capacity": get_attr_value(ent,"energy_storage_capacity", 0.0),
+                "xi_ref_profile": get_attr_value(ent,"natural_inflow_profile_reference","") or "",
+                "profile_factor": get_attr_value(ent,"annual_natural_inflow_volume", 0.0),
+                "has_inflow": has_inflow
+            }
+
+        elif inflow is not None:
             el = {
                 "class": "PN_StorageDam",
                 "uid": uid,
                 "name": get_attr_value(ent,"name", sid),
                 "busuid": busuid,
-                "eta_load": get_attr_value(ent,"charging_efficiency", 1.0),
-                "eta_gen": get_attr_value(ent,"discharging_efficiency", 1.0),
+                "eta_load": charging_efficiency,
+                "eta_gen": discharging_efficiency,
                 "u_gen_max": get_attr_value(ent,"nominal_power_capacity", 0.0),
                 "u_gen_c1": get_attr_value(ent,"variable_operating_cost", 0.0),
                 "Capacity": get_attr_value(ent,"energy_storage_capacity", 0.0),
@@ -452,6 +523,8 @@ def export_to_flexeco(model, output_path: str | Path):
             el["has_ramprate"] = True
             el["du_gen_down_c1"] = du_gen_down_c1
 
+        el["country"] = map_busses[busuid]["country"]
+        el["technology"] = techtype_name
         elements.append(el)
 
     # ------------------------------------------------------------------
@@ -459,35 +532,47 @@ def export_to_flexeco(model, output_path: str | Path):
     # ------------------------------------------------------------------
     for gid, ent in conv1x1_entities.items():
 
-        uid = uid_from_prefixed_id(gid, "gen_")
+        uid = gen_id_to_uid[gid]
 
         node_id = get_attr_value(ent,"isOutputNodeOf",uid)
         busuid = bus_uid_from_node_id(node_id)
 
         input_origin = get_attr_value(ent,"input_origin","exogenous")
-        is_gen = (input_origin=="exogenous")
 
-        hasInputEnergyCarrier = get_attr_value(ent,"hasInputEnergyCarrier","")
+        techtype_name = ent.data['instanceOf']
+        techtype_entity = techtype_entities[techtype_name]
+
+        hasInputEnergyCarrier = get_attr_value(techtype_entity,"hasInputEnergyCarrier","")
         carrier_name = carrier_name_from_id(hasInputEnergyCarrier)
         cost = carrier_cost_from_id(hasInputEnergyCarrier)
         co2 = carrier_co2_from_id(hasInputEnergyCarrier)
 
         nominal_power_capacity = get_attr_value(ent,"nominal_power_capacity", 0.0)
-        eff = get_attr_value(ent,"energy_conversion_efficiency", 1.0)
-        annual_available = get_attr_value(ent,"annual_resource_potential","")
+        # import pdb
+        # pdb.set_trace()
+
+
+        eff = get_attr_value(techtype_entity,"energy_conversion_efficiency", None)
+        annual_available = get_attr_value(ent,"annual_resource_potential",None)
         has_profile = get_attr_value(ent,"resource_potential_profile_reference","")
 
         # heuristic: non-dispatchable if annual_available > 0
-        is_nondisp = bool(has_profile and has_profile != "")
+        is_has_annual_resource_potential = bool(annual_available is not None)
 
-        if is_gen:
-            cls = "PN_GenNonDispatchable" if is_nondisp else "PN_GenDispatchable"
+        is_nondisp = ("Wind" in techtype_name or "Solar" in techtype_name or "RunOfRiver" in techtype_name )
+
+        if is_nondisp and is_has_annual_resource_potential==False:
+            continue
+
+
+        cls = "PN_GenDispatchable"
+        if is_nondisp:
+            cls = "PN_GenNonDispatchable"  
 
         du_gen_up_max = get_attr_value(ent,"maximum_ramp_rate_up", None)
         du_gen_down_max = get_attr_value(ent,"maximum_ramp_rate_up", None)
         du_gen_up_c1 = get_attr_value(ent,"ramping_cost_increase", None)
         du_gen_down_c1 = get_attr_value(ent,"ramping_cost_decrease", None)
-
 
 
         el = {
@@ -529,6 +614,8 @@ def export_to_flexeco(model, output_path: str | Path):
             el["has_ramprate"] = True
             el["du_gen_down_c1"] = du_gen_down_c1
 
+        el["country"] = map_busses[busuid]["country"]
+        el["technology"] = techtype_name
         elements.append(el)
 
     # ------------------------------------------------------------------
