@@ -40,6 +40,7 @@ def _repo_root() -> Path:
 sys.path.insert(0, str(_repo_root()))
 sys.path.insert(0, str(_repo_root() / "tools"))
 
+from import_flexeco import export_to_flexeco, import_from_flexeco 
 
 def _optional_imports():
     """Import optional dependencies with a helpful error message."""
@@ -156,6 +157,9 @@ def main() -> None:
         save_timeseries_to_hdf5(str(h5_path), timestamps, ts_data)
         print(f"Exported {len(ts_data)} time series with {len(timestamps)} timesteps to: {h5_path}")
 
+    # scenario_output_folder = args.output_dir
+    # export_to_flexeco(model, Path(scenario_output_folder + "/flexeco/" + "network_flexeco" + ".jpn"))
+    # save_timeseries_to_hdf5(filename=str(scenario_output_folder + "/flexeco/profiles/profiles.h5"), timestamps=None, data_dict=profiles)
 
 if __name__ == "__main__":
     main()
