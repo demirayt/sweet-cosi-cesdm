@@ -23,6 +23,7 @@ from typing import Any, Dict, List, Optional, Union, Tuple
 from difflib import get_close_matches
 import os, pathlib
 import yaml
+from pathlib import Path
 import re
 
 @dataclass
@@ -400,6 +401,45 @@ class Model:
     ##  schema loading & introspection
 
 
+    def import_library(self, library_yaml: str, *, namespace: str | None = None,
+                       conflict: str = "error"):
+        """
+        Import a master-data library (YAML) and optionally prefix entity IDs.
+
+        conflict:
+          - "error": raise if an ID already exists
+          - "skip": keep existing entity, skip incoming
+          - "overwrite": replace existing entity data
+        """
+        import yaml
+        blob = yaml.safe_load(Path(library_yaml).read_text(encoding="utf-8")) or {}
+
+        if namespace:
+            ns = namespace.rstrip("__") + "__"
+            renamed = {}
+            for cls, ents in blob.items():
+                renamed.setdefault(cls, {})
+                for eid, edata in (ents or {}).items():
+                    renamed[cls][ns + eid] = edata
+
+                    # also rewrite relation targets inside the library if they point to local IDs
+                    rels = ((edata or {}).get("relations") or [])
+                    for r in rels:
+                        if isinstance(r, dict) and "target_entity_ids" in r:
+                            r["target_entity_ids"] = [
+                                (ns + t) if isinstance(t, str) and not t.startswith(ns) else t
+                                for t in r["target_entity_ids"]
+                            ]
+            blob = renamed
+
+        # now merge according to conflict strategy using existing import logic:
+        # simplest: write to temp file and call import_yaml()
+        tmp = Path(library_yaml).with_suffix(".tmp.__import__.yaml")
+        tmp.write_text(yaml.safe_dump(blob, sort_keys=False), encoding="utf-8")
+        try:
+            return self.import_yaml(str(tmp), strict_unknown=False)
+        finally:
+            tmp.unlink(missing_ok=True)
     def resolve_inheritance(self):
 
         """
@@ -954,6 +994,7 @@ class Model:
 
         for cname, cdef in class_map.items():
             attrs_def, refs_def = self._collect_inherited_fields(cdef)
+
             known_fields = set(attrs_def.keys()) | set(refs_def.keys())
             ents = entity_map.get(cname, {}) or {}
 
@@ -1745,6 +1786,9 @@ class Model:
 
         for cname, cdef in self.classes.items():
             ents = self.entities.get(cname, {})
+
+            if len(ents)==0:
+                continue
 
             # Inheritance-aware merged fields
             attrs_def, refs_def = self._collect_inherited_fields(cdef)
@@ -2976,7 +3020,7 @@ class Model:
                                 continue
                             ad = attrs_def[an]
                             coerced = self._coerce_for_attr(cname, an, raw_val)
-                            self.add_attribute(entity_id=eid, attribute=an, value=coerced)
+                            self.add_attribute(entity_id=eid, attribute_id=an, value=coerced)
 
     def import_csv_by_class_wide_meta(
         self,
@@ -3187,7 +3231,7 @@ class Model:
                             # Let add_attribute handle type-coercion and wrapping
                             self.add_attribute(
                                 entity_id=eid,
-                                attribute=aname,
+                                attribute_id=aname,
                                 value=aval,
                                 unit=unit,
                                 provenance_ref=prov,
@@ -3221,6 +3265,8 @@ class Model:
 
                 per_class_rows[cname] += 1
 
+        if unknowns:
+            print(unknowns)
         return {
             "created_entities": created_entities,
             "set_attributes": set_attr,
