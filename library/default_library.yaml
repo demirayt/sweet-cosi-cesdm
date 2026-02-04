@@ -1,0 +1,915 @@
+EnergyCarrier:
+  carrier.electricity:
+    attributes:
+      - id: co2_emission_intensity
+        value: 0.0
+        unit: tCO2/MWh
+      - id: energy_carrier_cost
+        value: 0.0
+        unit: MU/MWh
+      - id: name
+        value: electricity
+    relations: []
+  carrier.heat:
+    attributes:
+      - id: co2_emission_intensity
+        value: 0.0
+        unit: tCO2/MWh
+      - id: energy_carrier_cost
+        value: 0.0
+        unit: MU/MWh
+      - id: name
+        value: heat
+    relations: []
+  carrier.fuel.fossil.gas.natural_gas:
+    attributes:
+      - id: co2_emission_intensity
+        value: 0.203
+        unit: tCO2/MWh
+      - id: energy_carrier_cost
+        value: 22.6420244526585
+        unit: MU/MWh
+      - id: name
+        value: natural_gas
+    relations: []
+  carrier.fuel.fossil.coal.hard_coal:
+    attributes:
+      - id: co2_emission_intensity
+        value: 0.34
+        unit: tCO2/MWh
+      - id: energy_carrier_cost
+        value: 6.39672466734903
+        unit: MU/MWh
+      - id: name
+        value: hard coal
+    relations: []
+  carrier.fuel.fossil.coal.lignite:
+    attributes:
+      - id: co2_emission_intensity
+        value: 0.363
+        unit: tCO2/MWh
+      - id: energy_carrier_cost
+        value: 7.18
+        unit: MU/MWh
+      - id: name
+        value: lignite
+    relations: []
+  carrier.fuel.nuclear.uranium:
+    attributes:
+      - id: co2_emission_intensity
+        value: 0.0
+        unit: tCO2/MWh
+      - id: energy_carrier_cost
+        value: 6.05105454545455
+        unit: MU/MWh
+      - id: name
+        value: uranium
+    relations: []
+  carrier.fuel.fossil.oil:
+    attributes:
+      - id: co2_emission_intensity
+        value: 0.28
+        unit: tCO2/MWh
+      - id: energy_carrier_cost
+        value: 33.0266211604096
+        unit: MU/MWh
+      - id: name
+        value: oil
+    relations: []
+  carrier.fuel.fossil.oil.shale:
+    attributes:
+      - id: co2_emission_intensity
+        value: 0.359
+        unit: tCO2/MWh
+      - id: energy_carrier_cost
+        value: 6.696
+        unit: MU/MWh
+      - id: name
+        value: oil_shale
+    relations: []
+  carrier.fuel.fossil.oil.crude:
+    attributes:
+      - id: co2_emission_intensity
+        value: 0.26388
+        unit: tCO2/MWh
+      - id: energy_carrier_cost
+        value: 0.0
+        unit: MU/MWh
+      - id: name
+        value: crude_oil
+    relations: []
+  carrier.fuel.fossil.oil.diesel:
+    attributes:
+      - id: co2_emission_intensity
+        value: 0.26676
+        unit: tCO2/MWh
+      - id: energy_carrier_cost
+        value: 0.0
+        unit: MU/MWh
+      - id: name
+        value: diesel
+    relations: []
+  carrier.fuel.fossil.oil.gasoline:
+    attributes:
+      - id: co2_emission_intensity
+        value: 0.24948
+        unit: tCO2/MWh
+      - id: energy_carrier_cost
+        value: 0.0
+        unit: MU/MWh
+      - id: name
+        value: gasoline
+    relations: []
+  carrier.fuel.fossil.oil.kerosene:
+    attributes:
+      - id: co2_emission_intensity
+        value: 0.2574
+        unit: tCO2/MWh
+      - id: energy_carrier_cost
+        value: 0.0
+        unit: MU/MWh
+      - id: name
+        value: jet_kerosene
+    relations: []
+  carrier.fuel.fossil.oil.fuel:
+    attributes:
+      - id: co2_emission_intensity
+        value: 0.27864
+        unit: tCO2/MWh
+      - id: energy_carrier_cost
+        value: 0.0
+        unit: MU/MWh
+      - id: name
+        value: residual_fuel_oil
+    relations: []
+  carrier.fuel.fossil.gas.lpg:
+    attributes:
+      - id: co2_emission_intensity
+        value: 0.22716
+        unit: tCO2/MWh
+      - id: energy_carrier_cost
+        value: 0.0
+        unit: MU/MWh
+      - id: name
+        value: lpg
+    relations: []
+  carrier.fuel.fossil.peat:
+    attributes:
+      - id: co2_emission_intensity
+        value: 0.3816
+        unit: tCO2/MWh
+      - id: energy_carrier_cost
+        value: 0.0
+        unit: MU/MWh
+      - id: name
+        value: peat
+    relations: []
+  carrier.fuel.biogenic.wood:
+    attributes:
+      - id: co2_emission_intensity
+        value: 0.4032
+        unit: tCO2/MWh
+      - id: energy_carrier_cost
+        value: 0.0
+        unit: MU/MWh
+      - id: name
+        value: wood
+    relations: []
+  carrier.fuel.biofuel.biodiesel:
+    attributes:
+      - id: co2_emission_intensity
+        value: 0.25488
+        unit: tCO2/MWh
+      - id: energy_carrier_cost
+        value: 0.0
+        unit: MU/MWh
+      - id: name
+        value: biodiesel
+    relations: []
+  carrier.fuel.biofuel.ethanol:
+    attributes:
+      - id: co2_emission_intensity
+        value: 0.25488
+        unit: tCO2/MWh
+      - id: energy_carrier_cost
+        value: 0.0
+        unit: MU/MWh
+      - id: name
+        value: ethanol
+    relations: []
+  carrier.fuel.biofuel.biogas:
+    attributes:
+      - id: co2_emission_intensity
+        value: 0.19656
+        unit: tCO2/MWh
+      - id: energy_carrier_cost
+        value: 0.0
+        unit: MU/MWh
+      - id: name
+        value: biogas
+    relations: []
+  carrier.resource.water:
+    attributes:
+      - id: co2_emission_intensity
+        value: 0.0
+        unit: tCO2/MWh
+      - id: energy_carrier_cost
+        value: 0.0
+        unit: MU/MWh
+      - id: name
+        value: water
+    relations: []
+  carrier.resource.renewable.solar:
+    attributes:
+      - id: co2_emission_intensity
+        value: 0.0
+        unit: tCO2/MWh
+      - id: energy_carrier_cost
+        value: 0.0
+        unit: MU/MWh
+      - id: name
+        value: solar
+    relations: []
+  carrier.resource.renewable.wind:
+    attributes:
+      - id: co2_emission_intensity
+        value: 0.0
+        unit: tCO2/MWh
+      - id: energy_carrier_cost
+        value: 0.0
+        unit: MU/MWh
+      - id: name
+        value: wind
+    relations: []
+EnergyDomain:
+  domain.electricity:
+    attributes:
+    - id: name
+      value: Electricity Domain
+    relations:
+    - id: hasEnergyCarrier
+      target_entity_ids:
+      - carrier.electricity
+StorageTechnologyType:
+  Storage.Electrochemical.Battery:
+    attributes:
+    - id: name
+      value: Storage.Electrochemical.Battery
+    - id: charging_efficiency
+      value: 0.9
+      unit: Fraction (0-1)
+    - id: discharging_efficiency
+      value: 0.95
+      unit: Fraction (0-1)
+    - id: hasInflow
+      value: false
+    - id: hasCharging
+      value: true
+    relations:
+    - id: hasInputEnergyCarrier
+      target_entity_ids:
+      - carrier.electricity
+    - id: hasOutputEnergyCarrier
+      target_entity_ids:
+      - carrier.electricity
+  Storage.Hydro.PumpedHydro.ClosedLoop:
+    attributes:
+    - id: name
+      value: Storage.Hydro.PumpedHydro.ClosedLoop
+    - id: charging_efficiency
+      value: 0.85
+      unit: Fraction (0-1)
+    - id: discharging_efficiency
+      value: 0.9
+      unit: Fraction (0-1)
+    - id: hasInflow
+      value: false
+    - id: hasCharging
+      value: true
+    relations:
+    - id: hasInputEnergyCarrier
+      target_entity_ids:
+      - carrier.resource.water
+    - id: hasOutputEnergyCarrier
+      target_entity_ids:
+      - carrier.electricity
+  Storage.Hydro.PumpedHydro.OpenLoop:
+    attributes:
+    - id: name
+      value: Storage.Hydro.PumpedHydro.OpenLoop
+    - id: charging_efficiency
+      value: 0.8
+      unit: Fraction (0-1)
+    - id: discharging_efficiency
+      value: 0.88
+      unit: Fraction (0-1)
+    - id: hasInflow
+      value: true
+    - id: hasCharging
+      value: true
+    relations:
+    - id: hasInputEnergyCarrier
+      target_entity_ids:
+      - carrier.resource.water
+    - id: hasOutputEnergyCarrier
+      target_entity_ids:
+      - carrier.electricity
+  Storage.Hydro.Reservoir:
+    attributes:
+    - id: name
+      value: Storage.Hydro.Reservoir
+    - id: charging_efficiency
+      value: 0.0
+      unit: Fraction (0-1)
+    - id: discharging_efficiency
+      value: 0.9
+      unit: Fraction (0-1)
+    - id: hasInflow
+      value: true
+    - id: hasCharging
+      value: false
+    relations:
+    - id: hasInputEnergyCarrier
+      target_entity_ids:
+      - carrier.resource.water
+    - id: hasOutputEnergyCarrier
+      target_entity_ids:
+      - carrier.electricity
+TechnologyType:
+  Supply.Gas:
+    attributes:
+    - id: name
+      value: Generic Unit
+    - id: energy_conversion_efficiency
+      value: 1.0
+      unit: Fraction 0-1
+    - id: dispatch_type
+      value: dispatchable
+    relations:
+    - id: hasInputEnergyCarrier
+      target_entity_ids:
+      - carrier.fuel.fossil.gas.natural_gas
+    - id: hasOutputEnergyCarrier
+      target_entity_ids:
+      - carrier.fuel.fossil.gas.natural_gas
+  Generation.DemandResponse:
+    attributes:
+    - id: name
+      value: Demand Side Response Explicit
+    - id: energy_conversion_efficiency
+      value: 1.0
+      unit: Fraction 0-1
+    - id: dispatch_type
+      value: dispatchable
+    relations:
+    - id: hasInputEnergyCarrier
+      target_entity_ids:
+      - carrier.electricity
+    - id: hasOutputEnergyCarrier
+      target_entity_ids:
+      - carrier.electricity
+  Generation.Thermal.Gas.CCGT.CCS:
+    attributes:
+    - id: name
+      value: Gas CCGT CCS
+    - id: energy_conversion_efficiency
+      value: 0.51
+      unit: Fraction 0-1
+    - id: dispatch_type
+      value: dispatchable
+    relations:
+    - id: hasInputEnergyCarrier
+      target_entity_ids:
+      - carrier.fuel.fossil.gas.natural_gas
+    - id: hasOutputEnergyCarrier
+      target_entity_ids:
+      - carrier.electricity
+  Generation.Thermal.Gas.CCGT.New:
+    attributes:
+    - id: name
+      value: Gas CCGT new
+    - id: energy_conversion_efficiency
+      value: 0.6
+      unit: Fraction 0-1
+    - id: dispatch_type
+      value: dispatchable
+    relations:
+    - id: hasInputEnergyCarrier
+      target_entity_ids:
+      - carrier.fuel.fossil.gas.natural_gas
+    - id: hasOutputEnergyCarrier
+      target_entity_ids:
+      - carrier.electricity
+  Generation.Thermal.Gas.CCGT.Old1:
+    attributes:
+    - id: name
+      value: Gas CCGT old 1
+    - id: energy_conversion_efficiency
+      value: 0.4
+      unit: Fraction 0-1
+    - id: dispatch_type
+      value: dispatchable
+    relations:
+    - id: hasInputEnergyCarrier
+      target_entity_ids:
+      - carrier.fuel.fossil.gas.natural_gas
+    - id: hasOutputEnergyCarrier
+      target_entity_ids:
+      - carrier.electricity
+  Generation.Thermal.Gas.CCGT.Old2:
+    attributes:
+    - id: name
+      value: Gas CCGT old 2
+    - id: energy_conversion_efficiency
+      value: 0.48
+      unit: Fraction 0-1
+    - id: dispatch_type
+      value: dispatchable
+    relations:
+    - id: hasInputEnergyCarrier
+      target_entity_ids:
+      - carrier.fuel.fossil.gas.natural_gas
+    - id: hasOutputEnergyCarrier
+      target_entity_ids:
+      - carrier.electricity
+  Generation.Thermal.Gas.CCGT.Present1:
+    attributes:
+    - id: name
+      value: Gas CCGT present 1
+    - id: energy_conversion_efficiency
+      value: 0.56
+      unit: Fraction 0-1
+    - id: dispatch_type
+      value: dispatchable
+    relations:
+    - id: hasInputEnergyCarrier
+      target_entity_ids:
+      - carrier.fuel.fossil.gas.natural_gas
+    - id: hasOutputEnergyCarrier
+      target_entity_ids:
+      - carrier.electricity
+  Generation.Thermal.Gas.CCGT.Present2:
+    attributes:
+    - id: name
+      value: Gas CCGT present 2
+    - id: energy_conversion_efficiency
+      value: 0.58
+      unit: Fraction 0-1
+    - id: dispatch_type
+      value: dispatchable
+    relations:
+    - id: hasInputEnergyCarrier
+      target_entity_ids:
+      - carrier.fuel.fossil.gas.natural_gas
+    - id: hasOutputEnergyCarrier
+      target_entity_ids:
+      - carrier.electricity
+  Generation.Thermal.Gas.OCGT.New:
+    attributes:
+    - id: name
+      value: Gas OCGT new
+    - id: energy_conversion_efficiency
+      value: 0.42
+      unit: Fraction 0-1
+    - id: dispatch_type
+      value: dispatchable
+    relations:
+    - id: hasInputEnergyCarrier
+      target_entity_ids:
+      - carrier.fuel.fossil.gas.natural_gas
+    - id: hasOutputEnergyCarrier
+      target_entity_ids:
+      - carrier.electricity
+  Generation.Thermal.Gas.OCGT.Old:
+    attributes:
+    - id: name
+      value: Gas OCGT old
+    - id: energy_conversion_efficiency
+      value: 0.35
+      unit: Fraction 0-1
+    - id: dispatch_type
+      value: dispatchable
+    relations:
+    - id: hasInputEnergyCarrier
+      target_entity_ids:
+      - carrier.fuel.fossil.gas.natural_gas
+    - id: hasOutputEnergyCarrier
+      target_entity_ids:
+      - carrier.electricity
+  Generation.Thermal.Gas.CCGT.Biofuel:
+    attributes:
+    - id: name
+      value: Gas biofuel
+    - id: energy_conversion_efficiency
+      value: 0.55
+      unit: Fraction 0-1
+    - id: dispatch_type
+      value: dispatchable
+    relations:
+    - id: hasInputEnergyCarrier
+      target_entity_ids:
+      - carrier.fuel.fossil.gas.natural_gas
+    - id: hasOutputEnergyCarrier
+      target_entity_ids:
+      - carrier.electricity
+  Generation.Thermal.Gas.Conventional.Old1:
+    attributes:
+    - id: name
+      value: Gas conventional old 1
+    - id: energy_conversion_efficiency
+      value: 0.36
+      unit: Fraction 0-1
+    - id: dispatch_type
+      value: dispatchable
+    relations:
+    - id: hasInputEnergyCarrier
+      target_entity_ids:
+      - carrier.fuel.fossil.gas.natural_gas
+    - id: hasOutputEnergyCarrier
+      target_entity_ids:
+      - carrier.electricity
+  Generation.Thermal.Gas.Conventional.Old2:
+    attributes:
+    - id: name
+      value: Gas conventional old 2
+    - id: energy_conversion_efficiency
+      value: 0.41
+      unit: Fraction 0-1
+    - id: dispatch_type
+      value: dispatchable
+    relations:
+    - id: hasInputEnergyCarrier
+      target_entity_ids:
+      - carrier.fuel.fossil.gas.natural_gas
+    - id: hasOutputEnergyCarrier
+      target_entity_ids:
+      - carrier.electricity
+  Generation.Thermal.Coal.HardCoal.Biofuel:
+    attributes:
+    - id: name
+      value: Hard Coal biofuel
+    - id: energy_conversion_efficiency
+      value: 0.38
+      unit: Fraction 0-1
+    - id: dispatch_type
+      value: dispatchable
+    relations:
+    - id: hasInputEnergyCarrier
+      target_entity_ids:
+      - carrier.fuel.fossil.coal.hard_coal
+    - id: hasOutputEnergyCarrier
+      target_entity_ids:
+      - carrier.electricity
+  Generation.Thermal.Coal.HardCoal.New:
+    attributes:
+    - id: name
+      value: Hard coal new
+    - id: energy_conversion_efficiency
+      value: 0.46
+      unit: Fraction 0-1
+    - id: dispatch_type
+      value: dispatchable
+    relations:
+    - id: hasInputEnergyCarrier
+      target_entity_ids:
+      - carrier.fuel.fossil.coal.hard_coal
+    - id: hasOutputEnergyCarrier
+      target_entity_ids:
+      - carrier.electricity
+  Generation.Thermal.Coal.HardCoal.Old1:
+    attributes:
+    - id: name
+      value: Hard coal old 1
+    - id: energy_conversion_efficiency
+      value: 0.35
+      unit: Fraction 0-1
+    - id: dispatch_type
+      value: dispatchable
+    relations:
+    - id: hasInputEnergyCarrier
+      target_entity_ids:
+      - carrier.fuel.fossil.coal.hard_coal
+    - id: hasOutputEnergyCarrier
+      target_entity_ids:
+      - carrier.electricity
+  Generation.Thermal.Coal.HardCoal.Old2:
+    attributes:
+    - id: name
+      value: Hard coal old 2
+    - id: energy_conversion_efficiency
+      value: 0.4
+      unit: Fraction 0-1
+    - id: dispatch_type
+      value: dispatchable
+    relations:
+    - id: hasInputEnergyCarrier
+      target_entity_ids:
+      - carrier.fuel.fossil.coal.hard_coal
+    - id: hasOutputEnergyCarrier
+      target_entity_ids:
+      - carrier.electricity
+  Generation.Thermal.Oil.HeavyOil.Old1:
+    attributes:
+    - id: name
+      value: Heavy oil old 1
+    - id: energy_conversion_efficiency
+      value: 0.35
+      unit: Fraction 0-1
+    - id: dispatch_type
+      value: dispatchable
+    relations:
+    - id: hasInputEnergyCarrier
+      target_entity_ids:
+      - carrier.fuel.fossil.oil
+    - id: hasOutputEnergyCarrier
+      target_entity_ids:
+      - carrier.electricity
+  Generation.Thermal.Oil.HeavyOil.Old2:
+    attributes:
+    - id: name
+      value: Heavy oil old 2
+    - id: energy_conversion_efficiency
+      value: 0.4
+      unit: Fraction 0-1
+    - id: dispatch_type
+      value: dispatchable
+    relations:
+    - id: hasInputEnergyCarrier
+      target_entity_ids:
+      - carrier.fuel.fossil.oil
+    - id: hasOutputEnergyCarrier
+      target_entity_ids:
+      - carrier.electricity
+  Generation.Hydrogen.CCGT:
+    attributes:
+    - id: name
+      value: Hydrogen CCGT
+    - id: energy_conversion_efficiency
+      value: 0.58
+      unit: Fraction 0-1
+    - id: dispatch_type
+      value: dispatchable
+    relations:
+    - id: hasInputEnergyCarrier
+      target_entity_ids:
+      - carrier.resource.water
+    - id: hasOutputEnergyCarrier
+      target_entity_ids:
+      - carrier.electricity
+  Generation.Hydrogen.FuelCell:
+    attributes:
+    - id: name
+      value: Hydrogen Fuel Cell
+    - id: energy_conversion_efficiency
+      value: 0.55
+      unit: Fraction 0-1
+    - id: dispatch_type
+      value: dispatchable
+    relations:
+    - id: hasInputEnergyCarrier
+      target_entity_ids:
+      - carrier.resource.water
+    - id: hasOutputEnergyCarrier
+      target_entity_ids:
+      - carrier.electricity
+  Generation.Thermal.Oil.LightOil.Standard:
+    attributes:
+    - id: name
+      value: Light oil
+    - id: energy_conversion_efficiency
+      value: 0.35
+      unit: Fraction 0-1
+    - id: dispatch_type
+      value: dispatchable
+    relations:
+    - id: hasInputEnergyCarrier
+      target_entity_ids:
+      - carrier.fuel.fossil.oil
+    - id: hasOutputEnergyCarrier
+      target_entity_ids:
+      - carrier.electricity
+  Generation.Thermal.Coal.Lignite.Biofuel:
+    attributes:
+    - id: name
+      value: Lignite biofuel
+    - id: energy_conversion_efficiency
+      value: 0.35
+      unit: Fraction 0-1
+    - id: dispatch_type
+      value: dispatchable
+    relations:
+    - id: hasInputEnergyCarrier
+      target_entity_ids:
+      - carrier.fuel.fossil.coal.lignite
+    - id: hasOutputEnergyCarrier
+      target_entity_ids:
+      - carrier.electricity
+  Generation.Thermal.Coal.Lignite.New:
+    attributes:
+    - id: name
+      value: Lignite new
+    - id: energy_conversion_efficiency
+      value: 0.46
+      unit: Fraction 0-1
+    - id: dispatch_type
+      value: dispatchable
+    relations:
+    - id: hasInputEnergyCarrier
+      target_entity_ids:
+      - carrier.fuel.fossil.coal.lignite
+    - id: hasOutputEnergyCarrier
+      target_entity_ids:
+      - carrier.electricity
+  Generation.Thermal.Coal.Lignite.Old1:
+    attributes:
+    - id: name
+      value: Lignite old 1
+    - id: energy_conversion_efficiency
+      value: 0.35
+      unit: Fraction 0-1
+    - id: dispatch_type
+      value: dispatchable
+    relations:
+    - id: hasInputEnergyCarrier
+      target_entity_ids:
+      - carrier.fuel.fossil.coal.lignite
+    - id: hasOutputEnergyCarrier
+      target_entity_ids:
+      - carrier.electricity
+  Generation.Thermal.Coal.Lignite.Old2:
+    attributes:
+    - id: name
+      value: Lignite old 2
+    - id: energy_conversion_efficiency
+      value: 0.4
+      unit: Fraction 0-1
+    - id: dispatch_type
+      value: dispatchable
+    relations:
+    - id: hasInputEnergyCarrier
+      target_entity_ids:
+      - carrier.fuel.fossil.coal.lignite
+    - id: hasOutputEnergyCarrier
+      target_entity_ids:
+      - carrier.electricity
+  Generation.Thermal.Nuclear.Standard:
+    attributes:
+    - id: name
+      value: Nuclear
+    - id: energy_conversion_efficiency
+      value: 0.33
+      unit: Fraction 0-1
+    - id: dispatch_type
+      value: dispatchable
+    relations:
+    - id: hasInputEnergyCarrier
+      target_entity_ids:
+      - carrier.fuel.nuclear.uranium
+    - id: hasOutputEnergyCarrier
+      target_entity_ids:
+      - carrier.electricity
+  Generation.Thermal.OilShale.Biofuel.Standard:
+    attributes:
+    - id: name
+      value: Oil shale biofuel
+    - id: energy_conversion_efficiency
+      value: 0.29
+      unit: Fraction 0-1
+    - id: dispatch_type
+      value: dispatchable
+    relations:
+    - id: hasInputEnergyCarrier
+      target_entity_ids:
+      - carrier.fuel.fossil.oil.shale
+    - id: hasOutputEnergyCarrier
+      target_entity_ids:
+      - carrier.electricity
+  Generation.Thermal.Other.NonRenewable.Residual:
+    attributes:
+    - id: name
+      value: Others non-renewable
+    - id: energy_conversion_efficiency
+      value: 1.0
+      unit: Fraction 0-1
+    - id: dispatch_type
+      value: dispatchable
+    relations:
+    - id: hasInputEnergyCarrier
+      target_entity_ids:
+      - carrier.electricity
+    - id: hasOutputEnergyCarrier
+      target_entity_ids:
+      - carrier.electricity
+  Generation.Renewable.Other.Residual:
+    attributes:
+    - id: name
+      value: Others renewable
+    - id: energy_conversion_efficiency
+      value: 1.0
+      unit: Fraction 0-1
+    - id: dispatch_type
+      value: dispatchable
+    relations:
+    - id: hasInputEnergyCarrier
+      target_entity_ids:
+      - carrier.electricity
+    - id: hasOutputEnergyCarrier
+      target_entity_ids:
+      - carrier.electricity
+  Storage.Hydro.Pondage:
+    attributes:
+    - id: name
+      value: Pondage
+    - id: energy_conversion_efficiency
+      value: 0.9
+      unit: Fraction 0-1
+    - id: dispatch_type
+      value: dispatchable
+    relations:
+    - id: hasInputEnergyCarrier
+      target_entity_ids:
+      - carrier.resource.water
+    - id: hasOutputEnergyCarrier
+      target_entity_ids:
+      - carrier.electricity
+  Generation.Renewable.Hydro.RunOfRiver:
+    attributes:
+    - id: name
+      value: Run-of-River
+    - id: energy_conversion_efficiency
+      value: 1.0
+      unit: Fraction 0-1
+    - id: dispatch_type
+      value: nondispatchable
+    relations:
+    - id: hasInputEnergyCarrier
+      target_entity_ids:
+      - carrier.resource.water
+    - id: hasOutputEnergyCarrier
+      target_entity_ids:
+      - carrier.electricity
+  Generation.Renewable.Solar.PV:
+    attributes:
+    - id: name
+      value: Solar (Photovoltaic)
+    - id: energy_conversion_efficiency
+      value: 1.0
+      unit: Fraction 0-1
+    - id: dispatch_type
+      value: nondispatchable
+    relations:
+    - id: hasInputEnergyCarrier
+      target_entity_ids:
+      - carrier.resource.renewable.solar
+    - id: hasOutputEnergyCarrier
+      target_entity_ids:
+      - carrier.electricity
+  Generation.Renewable.Solar.Thermal:
+    attributes:
+    - id: name
+      value: Solar (Thermal)
+    - id: energy_conversion_efficiency
+      value: 0.35
+      unit: Fraction 0-1
+    - id: dispatch_type
+      value: nondispatchable
+    relations:
+    - id: hasInputEnergyCarrier
+      target_entity_ids:
+      - carrier.resource.renewable.solar
+    - id: hasOutputEnergyCarrier
+      target_entity_ids:
+      - carrier.electricity
+  Generation.Renewable.Wind.Offshore:
+    attributes:
+    - id: name
+      value: Wind Offshore
+    - id: energy_conversion_efficiency
+      value: 1.0
+      unit: Fraction 0-1
+    - id: dispatch_type
+      value: nondispatchable
+    relations:
+    - id: hasInputEnergyCarrier
+      target_entity_ids:
+      - carrier.resource.renewable.wind
+    - id: hasOutputEnergyCarrier
+      target_entity_ids:
+      - carrier.electricity
+  Generation.Renewable.Wind.Onshore:
+    attributes:
+    - id: name
+      value: Wind Onshore
+    - id: energy_conversion_efficiency
+      value: 1.0
+      unit: Fraction 0-1
+    - id: dispatch_type
+      value: nondispatchable
+    relations:
+    - id: hasInputEnergyCarrier
+      target_entity_ids:
+      - carrier.resource.renewable.wind
+    - id: hasOutputEnergyCarrier
+      target_entity_ids:
+      - carrier.electricity
+
