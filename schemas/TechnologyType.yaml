@@ -1,0 +1,184 @@
+name: TechnologyType
+description: Generic technology definition (shared parameters for many technology
+  instances).
+attributes:
+- id: name
+  description: Descriptive technology type name (e.g., CCGT, Wind Onshore).
+  value:
+    type: string
+  required: true
+  label: Name
+  provenance_ref: Define the provenance here.
+- id: comment
+  description: Optional comment/notes.
+  value:
+    type: string
+  required: false
+  label: Comment
+  provenance_ref: Define the provenance here.
+- id: energy_conversion_efficiency
+  description: Ratio of useful output energy to input energy, expressed as a fraction
+    (0–1). Determines efficiency of energy conversion processes.
+  value:
+    type: decimal
+    constraints:
+      minimum: 0.0
+      maximum: 1.0
+  required: true
+  label: Energy Conversion Efficiency
+  unit:
+    constraints:
+      enum:
+      - Fraction 0-1
+      - '-'
+  provenance_ref: Define the provenance here.
+- id: dispatch_type
+  comment: dispatch type
+  label: dispatch type
+  required: true
+  value:
+    type: string
+    constraints:
+      enum:
+      - nondispatchable
+      - dispatchable
+  provenance_ref: Define the provenance here.
+- id: maximum_ramp_rate_up
+  description: The maximum increase in output power per unit time during discharging,
+    typically expressed in kW/s or MW/min. Represents the upward flexibility of the
+    storage device.
+  value:
+    type: decimal
+    constraints:
+      minimum: 0.0
+  required: false
+  label: Maximum Ramp Rate Up
+  unit:
+    constraints:
+      enum:
+      - '%/h'
+  provenance_ref: Define the provenance here.
+- id: maximum_ramp_rate_down
+  description: The maximum percentage decrease in output power per unit time during
+    ramp-down operations (charging or discharging). Expressed as %/min or %/s, capturing
+    the system’s downward flexibility.
+  value:
+    type: decimal
+    constraints:
+      minimum: 0.0
+  required: false
+  label: Maximum Ramp Rate Down
+  unit:
+    constraints:
+      enum:
+      - '%/h'
+  provenance_ref: Define the provenance here.
+- id: minimum_up_time
+  description: Minimum consecutive time the generator must remain online once started,
+    expressed in hours. Used for unit commitment and scheduling.
+  value:
+    type: decimal
+    constraints:
+      minimum: 0.0
+  required: false
+  label: Minimum Up Time
+  unit:
+    constraints:
+      enum:
+      - hour
+  provenance_ref: Define the provenance here.
+- id: minimum_down_time
+  description: Minimum consecutive time the generator must remain offline after shutdown,
+    expressed in hours. Ensures thermal or operational constraints are respected.
+  value:
+    type: decimal
+    constraints:
+      minimum: 0.0
+  required: false
+  label: Minimum Down Time
+  unit:
+    constraints:
+      enum:
+      - hour
+  provenance_ref: Define the provenance here.
+- id: hot_start_cost
+  description: Cost incurred to restart a generator that has been recently offline
+    (hot state), expressed in monitary units. Reflects fuel and operational overhead.
+  value:
+    type: decimal
+    constraints:
+      minimum: 0.0
+  required: false
+  label: Hot Start Cost
+  unit:
+    constraints:
+      enum:
+      - MU
+  provenance_ref: Define the provenance here.
+- id: cold_start_cost
+  description: Cost incurred to restart a generator that has been offline for a long
+    period (cold state), expressed in MU. Usually higher than hot start due to additional
+    operational procedures.
+  value:
+    type: decimal
+    constraints:
+      minimum: 0.0
+  required: false
+  label: Cold Start Cost
+  unit:
+    constraints:
+      enum:
+      - MU
+  provenance_ref: Define the provenance here.
+- id: ramping_cost_increase
+  description: The cost associated with increasing output power, expressed in MU/MW
+    or MU/MW/min. Used in dispatch optimisation to represent wear, thermal cycling,
+    or operational penalties for fast upward ramping.
+  value:
+    type: decimal
+    constraints:
+      minimum: 0.0
+  required: false
+  label: Ramping Cost Increase
+  unit:
+    constraints:
+      enum:
+      - MU/MW
+  provenance_ref: Define the provenance here.
+- id: ramping_cost_decrease
+  description: The cost associated with reducing output power or reducing charging
+    rate, expressed in MonetaryUnits/MW or MonetaryUnits/MW/min. Represents operational
+    constraints or efficiency penalties during ramp-down.
+  value:
+    type: decimal
+    constraints:
+      minimum: 0.0
+  required: false
+  label: Ramping Cost Decrease
+  provenance_ref: Define the provenance here.
+- id: variable_operating_cost
+  description: The marginal operational cost associated with providing the demand
+    (MU/MWh). For loads, this often represents demand-side management costs, smart-load
+    operation costs, or penalties applied during optimization.
+  value:
+    type: decimal
+    constraints:
+      minimum: 0.0
+  required: false
+  label: Variable Operating Cost
+  unit:
+    constraints:
+      enum:
+      - MU/MWh
+  provenance_ref: Define the provenance here.
+relations:
+- id: hasInputEnergyCarrier
+  description: Default input energy carrier for this technology type (if applicable).
+  required: true
+  target:
+  - EnergyCarrier
+- id: hasOutputEnergyCarrier
+  description: Default output energy carrier for this technology type (if applicable).
+  required: true
+  target:
+  - EnergyCarrier

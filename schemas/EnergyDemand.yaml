@@ -26,6 +26,13 @@ attributes:
       enum:
       - MWh/year
   provenance_ref: Define the provenance here.
+- id: demand_type
+  description: Type of the specific demand
+  value:
+    type: string
+  required: false
+  label: Type of the specific demand
+  provenance_ref: Define the provenance here.
 - id: demand_profile_reference
   description: Identifier linking the load to a time series describing its temporal demand pattern (hourly, sub-hourly, or
     daily). The referenced profile expresses the relative or absolute consumption values over the modelling horizon.
@@ -38,7 +45,7 @@ attributes:
   description: The smallest allowable time granularity for shifting, adjusting, or rescheduling the load demand. Typically
     corresponds to the dispatch interval (e.g., 15 min, 1 h).
   value:
-    type: decimal
+    type: number
     constraints:
       minimum: 0.0
   required: false
@@ -52,7 +59,7 @@ attributes:
   description: The end of the time interval during which flexibility actions are permitted. Outside this window the demand
     must strictly follow its profile.
   value:
-    type: dateTime
+    type: number
   required: false
   label: Flexibility Window Time End
   unit:
@@ -64,7 +71,7 @@ attributes:
   description: The beginning of the time interval during which the load is allowed to shift or modify its consumption, expressed
     as a timestamp or model time index.
   value:
-    type: decimal
+    type: number
     constraints:
       minimum: 0.0
   required: false
@@ -78,10 +85,7 @@ attributes:
   description: Boolean indicator specifying whether the load can be shifted, curtailed, rescheduled, or otherwise managed
     during operation. If false, demand must be met as defined by the demand profile.
   value:
-    type: string
-  constraints:
-  - 'true'
-  - 'false'
+    type: boolean
   required: false
   label: Is demand Flexible
   provenance_ref: Define the provenance here.

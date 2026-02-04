@@ -1,13 +1,42 @@
 name: EnergyConversionTechnology1x1
 parents:
 - EnergyConversionTechnology
-description: An energy converter represents a system or device that transforms energy from one form (input energy carrier)
-  to another (output energy carrier). This can include generators, storage charging/discharging, or conversion devices such
-  as electrolyzers or heat pumps. Attributes define the operational efficiency, capacity, and connectivity to the energy system.
+description: An energy converter represents a system or device that transforms energy
+  from one form (input energy carrier) to another (output energy carrier). This can
+  include generators, storage charging/discharging, or conversion devices such as
+  electrolyzers or heat pumps. Attributes define the operational efficiency, capacity,
+  and connectivity to the energy system.
 attributes:
+- id: energy_conversion_efficiency
+  description: Ratio of useful output energy to input energy, expressed as a fraction
+    (0–1). Determines efficiency of energy conversion processes.
+  value:
+    type: decimal
+    constraints:
+      minimum: 0.0
+      maximum: 1.0
+  required: false
+  label: Energy Conversion Efficiency
+  unit:
+    constraints:
+      enum:
+      - Fraction 0-1
+      - '-'
+  provenance_ref: Define the provenance here.
+- id: dispatch_type
+  comment: dispatch type
+  label: dispatch type
+  required: false
+  value:
+    type: string
+    constraints:
+      enum:
+      - nondispatchable
+      - dispatchable
+  provenance_ref: Define the provenance here.
 - id: annual_resource_potential
-  description: Total energy available from the resource for the generator over a year, expressed in MWh. Scales the time-series
-    profile if normalized.
+  description: Total energy available from the resource for the generator over a year,
+    expressed in MWh. Scales the time-series profile if normalized.
   value:
     type: decimal
     constraints:
@@ -20,8 +49,9 @@ attributes:
       - MWh/year
   provenance_ref: Define the provenance here.
 - id: cold_start_cost
-  description: Cost incurred to restart a generator that has been offline for a long period (cold state), expressed in MU.
-    Usually higher than hot start due to additional operational procedures.
+  description: Cost incurred to restart a generator that has been offline for a long
+    period (cold state), expressed in MU. Usually higher than hot start due to additional
+    operational procedures.
   value:
     type: decimal
     constraints:
@@ -34,8 +64,8 @@ attributes:
       - MU
   provenance_ref: Define the provenance here.
 - id: commission_date
-  description: The date when the generator was first commissioned and became operational. Used for lifecycle, availability,
-    and depreciation modeling.
+  description: The date when the generator was first commissioned and became operational.
+    Used for lifecycle, availability, and depreciation modeling.
   value:
     type: dateTime
   required: false
@@ -45,33 +75,18 @@ attributes:
       enum:
       - date
   provenance_ref: Define the provenance here.
-- id: energy_conversion_efficiency
-  description: Ratio of useful output energy to input energy, expressed as a fraction (0–1). Determines efficiency of energy
-    conversion processes.
-  value:
-    type: decimal
-    constraints:
-      minimum: 0.0
-      maximum: 1.0
-  required: 'true'
-  label: Energy Conversion Efficiency
-  unit:
-    constraints:
-      enum:
-      - Fraction 0-1
-      - '-'
-  provenance_ref: Define the provenance here.
 - id: generator_technology_type
-  description: Specifies the technology category of the generator, e.g., gas_turbine, steam_turbine, hydro, photovoltaic,
-    or wind. Used for technology-specific constraints and performance modeling.
+  description: Specifies the technology category of the generator, e.g., gas_turbine,
+    steam_turbine, hydro, photovoltaic, or wind. Used for technology-specific constraints
+    and performance modeling.
   value:
     type: string
   required: false
   label: Generator Technology Type
   provenance_ref: Define the provenance here.
 - id: hot_start_cost
-  description: Cost incurred to restart a generator that has been recently offline (hot state), expressed in monitary units.
-    Reflects fuel and operational overhead.
+  description: Cost incurred to restart a generator that has been recently offline
+    (hot state), expressed in monitary units. Reflects fuel and operational overhead.
   value:
     type: decimal
     constraints:
@@ -84,9 +99,10 @@ attributes:
       - MU
   provenance_ref: Define the provenance here.
 - id: input_origin
-  description: Classifies whether the input energy carrier is exogenous (primary resource originating outside the modeled
-    energy network, e.g. solar irradiance, wind, hydro inflow, crude oil imports) or endogenous (delivered from an internal
-    energy node such as electricity, gas, hydrogen).
+  description: Classifies whether the input energy carrier is exogenous (primary resource
+    originating outside the modeled energy network, e.g. solar irradiance, wind, hydro
+    inflow, crude oil imports) or endogenous (delivered from an internal energy node
+    such as electricity, gas, hydrogen).
   value:
     type: string
     default: exogenous
@@ -97,8 +113,8 @@ attributes:
   required: false
   provenance_ref: Define the provenance here.
 - id: latitude
-  description: Geographical latitude of the generator, expressed in decimal degrees. Used for spatial modeling, renewable
-    resource assessment, and GIS-based visualization.
+  description: Geographical latitude of the generator, expressed in decimal degrees.
+    Used for spatial modeling, renewable resource assessment, and GIS-based visualization.
   value:
     type: decimal
     constraints:
@@ -111,8 +127,8 @@ attributes:
       - decimal degrees
   provenance_ref: Define the provenance here.
 - id: longitude
-  description: Geographical longitude of the generator, expressed in decimal degrees. Used for spatial modeling, renewable
-    resource assessment, and GIS-based visualization.
+  description: Geographical longitude of the generator, expressed in decimal degrees.
+    Used for spatial modeling, renewable resource assessment, and GIS-based visualization.
   value:
     type: decimal
     constraints:
@@ -121,8 +137,9 @@ attributes:
   label: Longitude
   provenance_ref: Define the provenance here.
 - id: maximum_ramp_rate_down
-  description: The maximum percentage decrease in output power per unit time during ramp-down operations (charging or discharging).
-    Expressed as %/min or %/s, capturing the system’s downward flexibility.
+  description: The maximum percentage decrease in output power per unit time during
+    ramp-down operations (charging or discharging). Expressed as %/min or %/s, capturing
+    the system’s downward flexibility.
   value:
     type: decimal
     constraints:
@@ -135,8 +152,9 @@ attributes:
       - '%/h'
   provenance_ref: Define the provenance here.
 - id: maximum_ramp_rate_up
-  description: The maximum increase in output power per unit time during discharging, typically expressed in kW/s or MW/min.
-    Represents the upward flexibility of the storage device.
+  description: The maximum increase in output power per unit time during discharging,
+    typically expressed in kW/s or MW/min. Represents the upward flexibility of the
+    storage device.
   value:
     type: decimal
     constraints:
@@ -149,8 +167,8 @@ attributes:
       - '%/h'
   provenance_ref: Define the provenance here.
 - id: minimum_down_time
-  description: Minimum consecutive time the generator must remain offline after shutdown, expressed in hours. Ensures thermal
-    or operational constraints are respected.
+  description: Minimum consecutive time the generator must remain offline after shutdown,
+    expressed in hours. Ensures thermal or operational constraints are respected.
   value:
     type: decimal
     constraints:
@@ -163,8 +181,8 @@ attributes:
       - hour
   provenance_ref: Define the provenance here.
 - id: minimum_up_time
-  description: Minimum consecutive time the generator must remain online once started, expressed in hours. Used for unit commitment
-    and scheduling.
+  description: Minimum consecutive time the generator must remain online once started,
+    expressed in hours. Used for unit commitment and scheduling.
   value:
     type: decimal
     constraints:
@@ -177,13 +195,13 @@ attributes:
       - hour
   provenance_ref: Define the provenance here.
 - id: nominal_power_capacity
-  description: Maximum instantaneous power that the conversion unit can deliver or absorb, in MW. Defines operational limits
-    for dispatch.
+  description: Maximum instantaneous power that the conversion unit can deliver or
+    absorb, in MW. Defines operational limits for dispatch.
   value:
     type: decimal
     constraints:
       minimum: 0.0
-  required: false
+  required: true
   label: Nominal Power Capacity
   unit:
     constraints:
@@ -191,8 +209,9 @@ attributes:
       - MW
   provenance_ref: Define the provenance here.
 - id: ramping_cost_decrease
-  description: The cost associated with reducing output power or reducing charging rate, expressed in MonetaryUnits/MW or
-    MonetaryUnits/MW/min. Represents operational constraints or efficiency penalties during ramp-down.
+  description: The cost associated with reducing output power or reducing charging
+    rate, expressed in MonetaryUnits/MW or MonetaryUnits/MW/min. Represents operational
+    constraints or efficiency penalties during ramp-down.
   value:
     type: decimal
     constraints:
@@ -201,8 +220,9 @@ attributes:
   label: Ramping Cost Decrease
   provenance_ref: Define the provenance here.
 - id: ramping_cost_increase
-  description: The cost associated with increasing output power, expressed in MU/MW or MU/MW/min. Used in dispatch optimisation
-    to represent wear, thermal cycling, or operational penalties for fast upward ramping.
+  description: The cost associated with increasing output power, expressed in MU/MW
+    or MU/MW/min. Used in dispatch optimisation to represent wear, thermal cycling,
+    or operational penalties for fast upward ramping.
   value:
     type: decimal
     constraints:
@@ -215,16 +235,16 @@ attributes:
       - MU/MW
   provenance_ref: Define the provenance here.
 - id: resource_potential_profile_reference
-  description: Identifier linking the generator to a time series of available primary energy resource, e.g., solar irradiance,
-    wind speed, or hydro inflow.
+  description: Identifier linking the generator to a time series of available primary
+    energy resource, e.g., solar irradiance, wind speed, or hydro inflow.
   value:
     type: string
   required: false
   label: Resource Potential Profile Reference
   provenance_ref: Define the provenance here.
 - id: retirement_date
-  description: Planned or actual date when the generator is permanently retired from service. Used for asset replacement planning
-    and system expansion studies.
+  description: Planned or actual date when the generator is permanently retired from
+    service. Used for asset replacement planning and system expansion studies.
   value:
     type: dateTime
   required: false
@@ -235,8 +255,8 @@ attributes:
       - date
   provenance_ref: Define the provenance here.
 - id: retrofit_date
-  description: Date of major upgrade or efficiency retrofit. Impacts operational efficiency, lifetime extension, and emission
-    calculations.
+  description: Date of major upgrade or efficiency retrofit. Impacts operational efficiency,
+    lifetime extension, and emission calculations.
   value:
     type: dateTime
   required: false
@@ -247,8 +267,9 @@ attributes:
       - date
   provenance_ref: Define the provenance here.
 - id: variable_operating_cost
-  description: The marginal operational cost associated with providing the demand (MU/MWh). For loads, this often represents
-    demand-side management costs, smart-load operation costs, or penalties applied during optimization.
+  description: The marginal operational cost associated with providing the demand
+    (MU/MWh). For loads, this often represents demand-side management costs, smart-load
+    operation costs, or penalties applied during optimization.
   value:
     type: decimal
     constraints:
@@ -270,16 +291,18 @@ attributes:
     type: string
   provenance_ref: Define the provenance here.
 - id: co2_price
-  comment: CO2 Price is a monetary value assigned to each tonne of carbon dioxide (or CO₂-equivalent) emitted within an energy
-    system. It represents the cost of emitting greenhouse gases and is used to internalize the environmental and societal
+  comment: CO2 Price is a monetary value assigned to each tonne of carbon dioxide
+    (or CO₂-equivalent) emitted within an energy system. It represents the cost of
+    emitting greenhouse gases and is used to internalize the environmental and societal
     damages associated with climate change.
   label: CO2 Price
   unit:
     constraints:
       enum:
       - MU/tCO2
-  description: CO2 Price is a monetary value assigned to each tonne of carbon dioxide (or CO₂-equivalent) emitted within an
-    energy system. It represents the cost of emitting greenhouse gases and is used to internalize the environmental and societal
+  description: CO2 Price is a monetary value assigned to each tonne of carbon dioxide
+    (or CO₂-equivalent) emitted within an energy system. It represents the cost of
+    emitting greenhouse gases and is used to internalize the environmental and societal
     damages associated with climate change.
   domain: EnergySystemModel
   value:
@@ -296,27 +319,31 @@ attributes:
     type: string
   provenance_ref: Define the provenance here.
 relations:
-- id: hasInputEnergyCarrier
-  description: Type of energy entering the converter, e.g., electricity, natural gas, hydrogen, heat. Determines the resource
-    and carrier modeling.
-  required: true
-  target:
-  - EnergyCarrier
-- id: hasOutputEnergyCarrier
-  description: Type of energy leaving the converter, e.g., electricity, heat, hydrogen. Defines the target energy form and
-    downstream modeling.
-  required: true
-  target:
-  - EnergyCarrier
 - id: isInputNodeOf
-  description: Identifier of the bus or network node where the input energy carrier is received. Defines the point of energy
-    inflow in the system topology.
+  description: Identifier of the bus or network node where the input energy carrier
+    is received. Defines the point of energy inflow in the system topology.
   required: false
   target:
   - EnergyNode
 - id: isOutputNodeOf
-  description: Identifier of the bus or network node where the output energy carrier is delivered. Defines the point of energy
-    outflow in the system topology.
+  description: Identifier of the bus or network node where the output energy carrier
+    is delivered. Defines the point of energy outflow in the system topology.
   required: true
   target:
   - EnergyNode
+- id: hasInputEnergyCarrier
+  description: Default input energy carrier for this technology type (if applicable).
+  required: false
+  target:
+  - EnergyCarrier
+- id: hasOutputEnergyCarrier
+  description: Default output energy carrier for this technology type (if applicable).
+  required: false
+  target:
+  - EnergyCarrier
+- id: instanceOf
+  description: Reference to a TechnologyType entity defining shared techno-economic
+    and carrier properties for this technology instance.
+  required: false
+  target:
+  - TechnologyType
