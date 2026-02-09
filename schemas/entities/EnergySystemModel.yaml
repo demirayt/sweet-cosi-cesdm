@@ -1,0 +1,7 @@
+name: EnergySystemModel
+description: Container entity for a full energy system model instance.
+attributes:
+- id: co2_price
+  required: false
+- id: long_name
+  required: false

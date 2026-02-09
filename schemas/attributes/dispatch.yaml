@@ -1,0 +1,66 @@
+attributes:
+  dispatch_type:
+    comment: dispatch type
+    label: dispatch type
+    provenance_ref: Define the provenance here.
+    value:
+      type: string
+      constraints:
+        enum:
+        - nondispatchable
+        - dispatchable
+  maximum_ramp_rate_down:
+    description: The maximum percentage decrease in output power per unit time during
+      ramp-down operations (charging or discharging). Expressed as %/min or %/s, capturing
+      the system’s downward flexibility.
+    label: Maximum Ramp Rate Down
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - '%/h'
+  maximum_ramp_rate_up:
+    description: The maximum increase in output power per unit time during discharging,
+      typically expressed in kW/s or MW/min. Represents the upward flexibility of
+      the storage device.
+    label: Maximum Ramp Rate Up
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - '%/h'
+  minimum_down_time:
+    description: Minimum consecutive time the generator must remain offline after
+      shutdown, expressed in hours. Ensures thermal or operational constraints are
+      respected.
+    label: Minimum Down Time
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - hour
+  minimum_up_time:
+    description: Minimum consecutive time the generator must remain online once started,
+      expressed in hours. Used for unit commitment and scheduling.
+    label: Minimum Up Time
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - hour

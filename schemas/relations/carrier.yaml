@@ -1,0 +1,35 @@
+relations:
+  hasElectricityAsCarrier:
+    description: Electricity carrier produced by the CHP plant.
+    target:
+    - EnergyCarrier
+  hasFuelCarrier:
+    description: Fuel carrier consumed by the CHP plant (e.g., natural gas, biomass).
+    target:
+    - EnergyCarrier
+  hasHeatAsCarrier:
+    description: Heat carrier produced by the CHP plant (e.g., district heating water).
+    target:
+    - EnergyCarrier
+  hasInputEnergyCarrier:
+    description: Default input energy carrier for this technology type (if applicable).
+    target:
+    - EnergyCarrier
+  hasOutputEnergyCarrier:
+    description: Default output energy carrier for this technology type (if applicable).
+    target:
+    - EnergyCarrier
+  hasOutput1EnergyCarrier:
+    description: Identifier of the bus or network node where the output energy carrier
+      is delivered. Defines the point of energy outflow in the system topology.
+    target:
+    - EnergyNode
+  hasOutput2EnergyCarrier:
+    description: Type of energy leaving the converter, e.g., electricity, heat, hydrogen.
+      Defines the target energy form and downstream modeling.
+    target:
+    - EnergyNode
+  hasEnergyCarrier:
+    description: Object property 'hasEnergyCarrier' extracted from ontology.
+    target:
+    - EnergyCarrier

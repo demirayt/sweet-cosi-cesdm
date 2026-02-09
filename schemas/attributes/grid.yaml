@@ -1,0 +1,243 @@
+attributes:
+  max_flow:
+    description: Maximum power that can flow from one area to another without violating
+      operational limits.
+    label: Maximum Power Flow
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - MW
+  nominal_voltage:
+    description: The standard or rated voltage level assigned to that node under normal
+      operating conditions. It represents the voltage at which equipment connected
+      to the node is designed to operate efficiently and safely. It is typically expressed
+      in volts (V) or kilovolts (kV) and corresponds to the line-to-line or line-to-neutral
+      voltage, depending on the system configuration.
+    label: Nominal Voltage
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - kV
+  maximum_power_flow_1_to_2:
+    description: Maximum power that can flow from one area to another without violating
+      operational limits.
+    label: Maximum Power Flow 1 to 2
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - MW
+  maximum_power_flow_2_to_1:
+    description: Maximum power that can flow from one area to another without violating
+      operational limits.
+    label: Maximum Power Flow 2 to 1
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - MW
+  line_length:
+    description: The physical length of the transmission line, expressed in kilometers
+      (km). Length may be used to scale per-unit-length electrical parameters or compute
+      line losses and charging currents.
+    label: Line Length
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - km
+  parallel_circuit_count:
+    description: The number of identical transmission circuits run in parallel between
+      the same endpoints. Parallel circuits increase overall capacity, reduce effective
+      impedance, and provide redundancy in grid operation.
+    label: Parallel Circuit Count
+    provenance_ref: Define the provenance here.
+    value:
+      type: integer
+  series_reactance:
+    description: The imaginary component of the line’s series impedance, expressed
+      in ohms (Ω). It primarily represents the inductive characteristics of the line
+      and strongly influences power flow, voltage stability, and short-circuit behavior.
+    label: Series Reactance
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - ohm
+  series_resistance:
+    description: The real component of the line’s series impedance, expressed in ohms.
+      It represents the resistive losses in the conductors, leading to I^2R power
+      losses and voltage drop along the line.
+    label: Series Resistance
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - ohm
+  shunt_susceptance:
+    description: Imaginary component of shunt admittance (microS/km). It models the
+      capacitive coupling of overhead conductors or cables to ground and affects reactive
+      power flow, especially in long lines.
+    label: Shunt Susceptance
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - S
+  thermal_capacity_rating:
+    description: The maximum continuous apparent power flow limit of the line based
+      on its thermal current-carrying capability, expressed in MVA. Exceeding this
+      limit risks conductor overheating, sag violations, or insulation degradation.
+    label: Thermal Capacity Rating
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - MVA
+  core_losses:
+    description: The transformer’s core (iron) losses measured under nominal voltage
+      and no-load conditions, expressed in kilowatts (kW). Core losses include hysteresis
+      and eddy current losses within the magnetic core.
+    label: Core Losses
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - kW
+  number_of_parallel_circuits:
+    description: The number of identical parallel winding circuits or parallel line
+      paths between transformer terminals. Used to represent multiple conductors or
+      windings operating in parallel to share current flow and reduce impedance.
+    label: Number of Parallel Circuits
+    provenance_ref: Define the provenance here.
+    value:
+      type: integer
+    unit:
+      constraints:
+        enum:
+        - count
+  rated_apparent_power:
+    description: The transformer’s rated apparent power at nominal operating conditions,
+      expressed in megavolt‐amperes (MVA). This value represents the maximum continuous
+      apparent power the transformer can deliver without exceeding thermal limits.
+    label: Rated Apparent Power
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - MVA
+  rated_copper_losses:
+    description: The transformer’s winding I^2(R) losses at rated load, expressed
+      in kilowatts (kW). These copper losses represent real power dissipated as heat
+      due to resistance in the windings under full-load current conditions.
+    label: Rated Copper Losses
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - kW
+  rated_primary_voltage:
+    description: The rated line-to-line RMS voltage at the primary winding terminals
+      under nominal operating conditions, expressed in kilovolts (kV). This corresponds
+      to the voltage level the primary side is designed to receive.
+    label: Rated Primary Voltage
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - kV
+  rated_secondary_voltage:
+    description: The rated line-to-line RMS voltage at the secondary winding terminals
+      under nominal operating conditions, expressed in kilovolts (kV). This corresponds
+      to the nominal output voltage level.
+    label: Rated Secondary Voltage
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - kV
+  reactance_resistance_ratio:
+    description: The ratio of transformer leakage reactance to winding resistance
+      (X/R). This dimensionless value characterizes the dynamic behavior of the transformer
+      during faults and influences short-circuit current decay and transient performance.
+    label: Reactance Resistance Ratio
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - km
+  short_circuit_voltage:
+    description: Percentage of rated voltage required to circulate rated current when
+      the secondary winding is short-circuited.
+    label: Short Circuit Voltage
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - '%'

@@ -1,0 +1,118 @@
+attributes:
+  resource_potential_profile_reference:
+    description: Identifier linking the generator to a time series of available primary
+      energy resource, e.g., solar irradiance, wind speed, or hydro inflow.
+    label: Resource Potential Profile Reference
+    provenance_ref: Define the provenance here.
+    value:
+      type: string
+  annual_energy_demand:
+    description: The total amount of energy required by the load over an entire year,
+      expressed in MWh/year. It is used to scale demand time series or to validate
+      consumption totals for modelling scenarios.
+    label: Annual Energy Demand
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - MWh/year
+  demand_type:
+    description: Type of the specific demand
+    label: Type of the specific demand
+    provenance_ref: Define the provenance here.
+    value:
+      type: string
+  demand_profile_reference:
+    description: Identifier linking the load to a time series describing its temporal
+      demand pattern (hourly, sub-hourly, or daily). The referenced profile expresses
+      the relative or absolute consumption values over the modelling horizon.
+    label: Demand Profile Reference
+    provenance_ref: Define the provenance here.
+    value:
+      type: string
+  flexibility_time_resolution:
+    description: The smallest allowable time granularity for shifting, adjusting,
+      or rescheduling the load demand. Typically corresponds to the dispatch interval
+      (e.g., 15 min, 1 h).
+    label: Flexibility Time Resolution
+    provenance_ref: Define the provenance here.
+    value:
+      type: number
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - Houes / minutes
+  flexibility_window_time_end:
+    description: The end of the time interval during which flexibility actions are
+      permitted. Outside this window the demand must strictly follow its profile.
+    label: Flexibility Window Time End
+    provenance_ref: Define the provenance here.
+    value:
+      type: number
+    unit:
+      constraints:
+        enum:
+        - Timestamp / time index
+  flexibility_window_time_start:
+    description: The beginning of the time interval during which the load is allowed
+      to shift or modify its consumption, expressed as a timestamp or model time index.
+    label: Flexibility WindowTime Start
+    provenance_ref: Define the provenance here.
+    value:
+      type: number
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - Timestamp / time index
+  is_demand_flexible:
+    description: Boolean indicator specifying whether the load can be shifted, curtailed,
+      rescheduled, or otherwise managed during operation. If false, demand must be
+      met as defined by the demand profile.
+    label: Is demand Flexible
+    provenance_ref: Define the provenance here.
+    value:
+      type: boolean
+  maximum_downward_adjustment:
+    description: The maximum allowable reduction from the nominal load, expressed
+      in kW or MW. Represents demand reduction, curtailment potential, or flexibility
+      for load shedding.
+    label: Maximum Downward Adjustment
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - kW / MW
+  maximum_upward_adjustment:
+    description: The maximum amount of incremental upward deviation from the nominal
+      load that is allowed at any given time, expressed in kW or MW. Represents demand
+      increase or load activation flexibility.
+    label: Maximum Upward Adjustment
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - kW / MW
+  natural_inflow_profile_reference:
+    description: Identifier linking to a time series of natural inflows into the storage
+      system (e.g., water inflow for reservoirs, natural gas input for seasonal storage).
+      Used for exogenous supply modelling.
+    label: Natural Inflow Profile Reference
+    provenance_ref: Define the provenance here.
+    value:
+      type: string

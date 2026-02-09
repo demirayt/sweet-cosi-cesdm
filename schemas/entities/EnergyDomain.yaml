@@ -1,0 +1,8 @@
+name: EnergyDomain
+description: An energy domain or market (e.g., electricity).
+attributes:
+- id: name
+  required: true
+relations:
+- id: hasEnergyCarrier
+  required: true

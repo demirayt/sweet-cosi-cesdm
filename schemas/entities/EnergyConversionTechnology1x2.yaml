@@ -1,0 +1,40 @@
+name: EnergyConversionTechnology1x2
+parents:
+- EnergyConversionTechnology
+description: An energy converter represents a system or device that transforms energy
+  from one form (input energy carrier) to another (output energy carrier). This can
+  include generators, storage charging/discharging, or conversion devices such as
+  electrolyzers or heat pumps. Attributes define the operational efficiency, capacity,
+  and connectivity to the energy system.
+attributes:
+- id: energy_conversion_efficiency_in1_out1
+  required: false
+- id: energy_conversion_efficiency_in1_out2
+  required: false
+- id: input_origin
+  required: false
+- id: nominal_power_capacity_output_1
+  required: false
+- id: nominal_power_capacity_output_2
+  required: false
+- id: name
+  required: true
+- id: co2_price
+- id: long_name
+relations:
+- id: hasInputEnergyCarrier
+  required: true
+- id: hasOutput1EnergyCarrier
+  required: true
+- id: hasOutput2EnergyCarrier
+  required: true
+- id: hasOutputEnergyCarrier
+  required: true
+- id: isInputNodeOf
+  required: true
+- id: isOutputNode1Of
+  required: true
+- id: isOutputNode2Of
+  required: true
+- id: instanceOf
+  required: false

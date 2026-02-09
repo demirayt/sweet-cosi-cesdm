@@ -1,0 +1,6 @@
+name: EnergyTechnology
+attributes:
+- id: name
+  required: true
+- id: co2_price
+- id: long_name

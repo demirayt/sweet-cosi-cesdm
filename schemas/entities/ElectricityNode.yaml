@@ -1,0 +1,15 @@
+name: ElectricityNode
+parents:
+- EnergyNode
+description: A Electricity Node is a distinct point within an electrical power system
+  where electrical quantities such as voltage, current, power, and frequency are defined
+  and measured. Grid Nodes can represent physical entities such as substations, buses,
+  or terminals of electrical equipment, or logical points in system studies and simulations.
+attributes:
+- id: nominal_voltage
+  required: true
+- id: elevation
+- id: latitude
+- id: longitude
+- id: name
+  required: true

@@ -1,0 +1,11 @@
+relations:
+  instanceOf:
+    description: Reference to a TechnologyType entity defining shared techno-economic
+      and carrier properties for this technology instance.
+    target:
+    - TechnologyType
+    - StorageTechnologyType
+  isInEnergyDomain:
+    description: Object property 'isInEnergyDomain' extracted from ontology.
+    target:
+    - EnergyDomain

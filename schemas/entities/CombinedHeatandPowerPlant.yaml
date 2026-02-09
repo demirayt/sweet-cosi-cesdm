@@ -1,0 +1,41 @@
+name: CombinedHeatandPowerPlant
+parents:
+- EnergyConversionTechnology
+description: A Combined Heat and Power (CHP) Plant is an energy conversion facility
+  that simultaneously produces useful electrical energy and useful thermal energy
+  from a single fuel input by recovering heat that would otherwise be wasted in conventional
+  electricity-only generation. It performs cogeneration through coupled thermodynamic
+  processes, typically enhancing overall fuel utilization efficiency relative to separate
+  heat and electricity production.
+attributes:
+- id: input_origin
+  required: true
+- id: net_electrical_efficiency
+  required: false
+  default: 0.35
+- id: net_thermal_efficiency
+  required: false
+  default: 0.45
+- id: rated_electrical_power_capacity
+  required: true
+- id: rated_thermal_output_capacity
+  required: true
+- id: name
+  required: true
+- id: co2_price
+- id: long_name
+relations:
+- id: hasElectricityAsCarrier
+  required: true
+- id: hasFuelCarrier
+  required: true
+- id: hasHeatAsCarrier
+  required: true
+- id: isElectricityOutputNodeOf
+  required: true
+- id: isFuelInputNodeOf
+  required: true
+- id: isHeatOutputNodeOf
+  required: true
+- id: instanceOf
+  required: false

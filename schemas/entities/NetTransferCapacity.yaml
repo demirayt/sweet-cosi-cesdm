@@ -1,0 +1,21 @@
+name: NetTransferCapacity
+description: Net Transfer Capacity (NTC) is the maximum allowable power flow between
+  two interconnected areas, regions, or control zones in an electrical transmission
+  network under predefined operating conditions. It represents the transfer limit
+  used for cross-border trading, congestion management, and operational planning.
+  NTC accounts for network constraints, security margins, and system reliability,
+  ensuring that the transfer does not violate voltage, thermal, or stability limits.
+attributes:
+- id: maximum_power_flow_1_to_2
+  required: false
+- id: maximum_power_flow_2_to_1
+  required: false
+- id: name
+  required: true
+relations:
+- id: isFromNodeOf
+  required: true
+- id: isInEnergyDomain
+  required: true
+- id: isToNodeOf
+  required: true

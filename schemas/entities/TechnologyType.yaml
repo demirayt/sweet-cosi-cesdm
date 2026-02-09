@@ -1,0 +1,35 @@
+name: TechnologyType
+description: Generic technology definition (shared parameters for many technology
+  instances).
+attributes:
+- id: name
+  required: true
+- id: comment
+  required: false
+- id: energy_conversion_efficiency
+  required: true
+- id: dispatch_type
+  required: true
+- id: maximum_ramp_rate_up
+  required: false
+- id: maximum_ramp_rate_down
+  required: false
+- id: minimum_up_time
+  required: false
+- id: minimum_down_time
+  required: false
+- id: hot_start_cost
+  required: false
+- id: cold_start_cost
+  required: false
+- id: ramping_cost_increase
+  required: false
+- id: ramping_cost_decrease
+  required: false
+- id: variable_operating_cost
+  required: false
+relations:
+- id: hasInputEnergyCarrier
+  required: true
+- id: hasOutputEnergyCarrier
+  required: true

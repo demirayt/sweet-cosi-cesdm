@@ -1,0 +1,14 @@
+name: DCLink
+description: Connection between nodes in a domain, e.g., cross-border NTC.
+attributes:
+- id: max_flow
+  required: false
+- id: name
+  required: true
+relations:
+- id: isFromNodeOf
+  required: true
+- id: isInEnergyDomain
+  required: true
+- id: isToNodeOf
+  required: true

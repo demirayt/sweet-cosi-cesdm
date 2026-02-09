@@ -1,0 +1,34 @@
+attributes:
+  commission_date:
+    description: The date when the generator was first commissioned and became operational.
+      Used for lifecycle, availability, and depreciation modeling.
+    label: Commission Date
+    provenance_ref: Define the provenance here.
+    value:
+      type: dateTime
+    unit:
+      constraints:
+        enum:
+        - date
+  retirement_date:
+    description: Planned or actual date when the generator is permanently retired
+      from service. Used for asset replacement planning and system expansion studies.
+    label: Retirement Date
+    provenance_ref: Define the provenance here.
+    value:
+      type: dateTime
+    unit:
+      constraints:
+        enum:
+        - date
+  retrofit_date:
+    description: Date of major upgrade or efficiency retrofit. Impacts operational
+      efficiency, lifetime extension, and emission calculations.
+    label: Retrofit Date
+    provenance_ref: Define the provenance here.
+    value:
+      type: dateTime
+    unit:
+      constraints:
+        enum:
+        - date

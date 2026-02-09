@@ -1,0 +1,96 @@
+attributes:
+  hasInflow:
+    comment: dispatch type
+    label: dispatch type
+    provenance_ref: Define the provenance here.
+    value:
+      type: bool
+  annual_natural_inflow_volume:
+    description: The total annual volume of natural inflow into the storage resource,
+      expressed in MWh/year or cubic meters/year depending on technology. Applicable
+      for hydro reservoirs, seasonal storages, and resource-driven systems.
+    label: Annual Natural Inflow Volume
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+    unit:
+      constraints:
+        enum:
+        - MWh/yr
+  energy_storage_capacity:
+    description: Energy storage capacity is the maximum amount of energy that an energy
+      storage technology can store and subsequently release under defined operating
+      conditions, measured as the difference between the maximum and minimum allowable
+      state of charge.
+    label: Energy Storage Capacity
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - MWh
+  initial_state_of_charge:
+    description: Initial state of charge at the beginning of the optimization horizon,
+      expressed as a fraction between 0 and 1.
+    constraints:
+    - 'minimum: 0.0'
+    - maximum:1.0
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - Fraction
+  maximum_state_or_charge:
+    constraints:
+    - Maximum allowed state of charge, usually expressed as a fraction between 0 and
+      1.
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - Fraction
+  minimum_state_of_charge:
+    description: Minimum allowed state of charge, usually expressed as a fraction
+      between 0 and 1
+    constraints:
+    - 'minimum: 0.0'
+    - maximum:1.0
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - Fraction
+  self_discharge_rate:
+    description: Fraction of stored energy lost per time step due to self-discharge.
+    constraints:
+    - 'minimum: 0.0'
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - Fraction
+  storage_technology_type:
+    description: 'Enum: reservoir hydro, pumped hydro, battery'
+    label: Storage Technology Type
+    provenance_ref: Define the provenance here.
+    value:
+      type: string

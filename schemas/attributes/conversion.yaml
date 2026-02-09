@@ -1,0 +1,188 @@
+attributes:
+  net_electrical_efficiency:
+    description: Net electrical efficiency is the ratio of the net electrical energy
+      output of the CHP plant to the total fuel energy input under defined operating
+      conditions. It quantifies the plant’s effectiveness in converting input fuel
+      energy into electricity.
+    label: Net Electrical Efficiency
+    provenance_ref: Define the provenance here.
+    value:
+      type: float
+      default: 0.35
+      constraints:
+        minimum: 0.0
+        maximum: 1.0
+    unit:
+      constraints:
+        enum:
+        - Fraction (0-1)
+  net_thermal_efficiency:
+    description: Net thermal efficiency is the ratio of the useful thermal energy
+      output of the CHP plant to the total fuel energy input. It represents the portion
+      of input fuel energy recovered as usable heat.
+    label: Net Thermal Efficiency
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      default: 0.45
+      constraints:
+        minimum: 0.0
+        maximum: 1.0
+    unit:
+      constraints:
+        enum:
+        - Fraction (0-1)
+  rated_electrical_power_capacity:
+    description: Electrical power capacity is the maximum continuous electrical output
+      a device can deliver under specified conditions, typically expressed in kilowatts
+      (kW) or megawatts (MW).
+    label: Rated Electrical Power Capacity
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - MW
+  rated_thermal_output_capacity:
+    description: Thermal power capacity is the maximum useful thermal power that a
+      device can deliver (as steam, hot water, or process heat) to an external heat
+      network or process under defined operation.
+    label: Rated Thermal Output Capacity
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - MW
+  conversion_rules:
+    description: List of conversion relations between input and output ports. Each
+      rule references an input port ID and an output port ID defined under ports-inputs
+      / ports-outputs and specifies an efficiency (0..1).
+    provenance_ref: Define the provenance here.
+    value:
+      type: string
+    unit:
+      constraints:
+        enum:
+        - List
+  energy_conversion_efficiency:
+    description: Ratio of useful output energy to input energy, expressed as a fraction
+      (0–1). Determines efficiency of energy conversion processes.
+    label: Energy Conversion Efficiency
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+        maximum: 1.0
+    unit:
+      constraints:
+        enum:
+        - Fraction 0-1
+        - '-'
+  generator_technology_type:
+    description: Specifies the technology category of the generator, e.g., gas_turbine,
+      steam_turbine, hydro, photovoltaic, or wind. Used for technology-specific constraints
+      and performance modeling.
+    label: Generator Technology Type
+    provenance_ref: Define the provenance here.
+    value:
+      type: string
+  nominal_power_capacity:
+    description: Maximum instantaneous power that the conversion unit can deliver
+      or absorb, in MW. Defines operational limits for dispatch.
+    label: Nominal Power Capacity
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - MW
+  energy_conversion_efficiency_in1_out1:
+    description: Ratio of useful output energy to input energy, expressed as a fraction
+      (0–1). Determines efficiency of energy conversion processes.
+    label: Energy Conversion Efficiency in 1 out 1
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - Fraction 0-1
+  energy_conversion_efficiency_in1_out2:
+    description: Ratio of useful output energy to input energy, expressed as a fraction
+      (0–1). Determines efficiency of energy conversion processes.
+    label: Energy Conversion Efficiency in 1 out 2
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - Fraction 0-1
+  nominal_power_capacity_output_1:
+    description: Maximum instantaneous power that the conversion unit can deliver
+      or absorb, in MW. Defines operational limits for dispatch.
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - MW
+  nominal_power_capacity_output_2:
+    description: Maximum instantaneous power that the conversion unit can deliver
+      or absorb, in MW. Defines operational limits for dispatch.
+    label: Nominal Power Capacity Output 2
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - MW
+  charging_efficiency:
+    description: The fraction of input energy that is successfully stored during the
+      charging process, expressed as a value between 0 and 1. Accounts for losses
+      in power electronics, conversion stages, and internal storage mechanisms.
+    label: Charging Energy Efficiency
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - Fraction (0-1)
+  discharging_efficiency:
+    description: The fraction of stored energy that can be delivered as useful output
+      during the discharging process, expressed as a value between 0 and 1. Represents
+      conversion losses, internal resistance, and inverter losses.
+    label: Discharging Energy Efficiency
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - Fraction (0-1)

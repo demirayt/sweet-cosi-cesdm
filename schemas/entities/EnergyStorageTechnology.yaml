@@ -1,0 +1,75 @@
+name: EnergyStorageTechnology
+parents:
+- EnergyTechnology
+description: Energy Storage Technology is a technical system designed to absorb energy
+  from an energy carrier or energy flow, transform it into a storable form, retain
+  it for a period of time with minimal losses, and subsequently release it as a usable
+  energy carrier or energy flow on demand.
+attributes:
+- id: charging_efficiency
+  required: false
+- id: discharging_efficiency
+  required: false
+- id: hasInflow
+  required: false
+- id: hasCharging
+  required: false
+- id: annual_natural_inflow_volume
+  required: false
+- id: discount_rate
+  required: false
+- id: energy_storage_capacity
+  required: false
+- id: fixed_operating_cost
+  required: false
+- id: initial_state_of_charge
+  required: false
+- id: investment_cost
+  required: false
+- id: maximum_charging_power
+  required: false
+- id: maximum_ramp_rate_down
+  required: false
+- id: maximum_ramp_rate_up
+  required: false
+- id: maximum_required_units
+  required: false
+- id: maximum_state_or_charge
+  required: false
+- id: minimum_required_units
+  required: false
+- id: minimum_state_of_charge
+  required: false
+- id: natural_inflow_profile_reference
+  required: false
+- id: nominal_power_capacity
+  required: false
+- id: ramping_cost_decrease
+  required: false
+- id: ramping_cost_increase
+  required: false
+- id: salvage_fraction_value
+  required: false
+- id: self_discharge_rate
+  required: false
+- id: storage_technology_type
+  required: false
+- id: technical_lifetime
+  required: false
+- id: unit_nominal_size
+  required: false
+- id: variable_operating_cost
+  required: false
+- id: name
+  required: true
+- id: co2_price
+- id: long_name
+relations:
+- id: isConnectedToNode
+  required: true
+- id: hasInputEnergyCarrier
+  required: false
+- id: hasOutputEnergyCarrier
+  required: false
+- id: instanceOf
+  required: false

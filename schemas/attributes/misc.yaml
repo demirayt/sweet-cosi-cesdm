@@ -1,0 +1,98 @@
+attributes:
+  annual_resource_potential:
+    description: Total energy available from the resource for the generator over a
+      year, expressed in MWh. Scales the time-series profile if normalized.
+    label: Annual Resource Potential
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - MWh/year
+  hasCharging:
+    comment: dispatch type
+    label: dispatch type
+    provenance_ref: Define the provenance here.
+    value:
+      type: bool
+  maximum_charging_power:
+    description: The upper limit on instantaneous power intake when the storage system
+      is charging, expressed in kW or MW. Constrained by converter size, thermal limits,
+      and internal charging characteristics.
+    label: Maximum Charging Power
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - MW
+        - kW
+  maximum_required_units:
+    description: Maximum number of discrete units of the technology that can be installed,
+      used to represent site or policy constraints on deployment.
+    provenance_ref: Define the provenance here.
+    value:
+      type: integer
+    unit:
+      constraints:
+        enum:
+        - unit
+  minimum_required_units:
+    description: Minimum number of discrete units of the technology that must be installed,
+      used for representing modular technologies or minimum build sizes.
+    constraints:
+    - 'minimum: 0'
+    provenance_ref: Define the provenance here.
+    value:
+      type: integer
+    unit:
+      constraints:
+        enum:
+        - unit
+  technical_lifetime:
+    description: Expected technical lifetime of the technology, typically expressed
+      in years. Used to compute annualized investment costs and to determine replacement
+      over long-term planning horizons.
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - year
+  unit_nominal_size:
+    description: Nominal size of a single technology unit, typically in MW of power
+      or MWh of energy capacity, depending on the technology type. Combined with min_units
+      and max_units to define total installable capacity.
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - - MW
+          - kW
+  no_load_current:
+    description: The no-load excitation current, expressed as a percentage of the
+      rated current. Represents the magnetizing current required to energize the core
+      at rated voltage with the secondary open-circuited.
+    label: No Load Current
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - '%'

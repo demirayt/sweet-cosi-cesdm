@@ -1,0 +1,9 @@
+relations:
+  hasGeographicalRegionAsParent:
+    description: Links a sub-region to its hasGeographicalRegionAsParent region.
+    target:
+    - GeographicalRegion
+  isInGeographicalRegion:
+    description: Object property 'isInGeographicalRegion' extracted from ontology.
+    target:
+    - GeographicalRegion

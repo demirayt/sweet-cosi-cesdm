@@ -1,0 +1,47 @@
+relations:
+  isElectricityOutputNodeOf:
+    description: Node representing the electricity output of the CHP plant.
+    target:
+    - EnergyNode
+  isFuelInputNodeOf:
+    description: Node representing the fuel supply for the CHP plant.
+    target:
+    - EnergyNode
+  isHeatOutputNodeOf:
+    description: Node representing the heat output of the CHP plant.
+    target:
+    - EnergyNode
+  isFromNodeOf:
+    description: Origin node of the connection.
+    target:
+    - EnergyNode
+    - ElectricityNode
+  isToNodeOf:
+    description: Destination node of the connection.
+    target:
+    - EnergyNode
+    - ElectricityNode
+  isInputNodeOf:
+    description: Identifier of the bus or network node where the input energy carrier
+      is received. Defines the point of energy inflow in the system topology.
+    target:
+    - EnergyNode
+  isOutputNodeOf:
+    description: Identifier of the bus or network node where the output energy carrier
+      is delivered. Defines the point of energy outflow in the system topology.
+    target:
+    - EnergyNode
+  isOutputNode1Of:
+    description: Identifier of the bus or network node where the output energy carrier
+      is delivered. Defines the point of energy outflow in the system topology.
+    target:
+    - EnergyNode
+  isOutputNode2Of:
+    description: Identifier of the bus or network node where the output energy carrier
+      is delivered. Defines the point of energy outflow in the system topology.
+    target:
+    - EnergyNode
+  isConnectedToNode:
+    description: The node where the injection/withdrawal occurs.
+    target:
+    - EnergyNode

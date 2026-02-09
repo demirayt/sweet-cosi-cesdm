@@ -1,0 +1,21 @@
+attributes:
+  name:
+    comment: Descriptive name.
+    label: Name
+    description: Descriptive name.
+    provenance_ref: Define the provenance here.
+    value:
+      type: string
+  long_name:
+    comment: Long description
+    label: Long Name
+    description: Long description
+    provenance_ref: Define the provenance here.
+    value:
+      type: string
+  comment:
+    description: Optional comment/notes.
+    label: Comment
+    provenance_ref: Define the provenance here.
+    value:
+      type: string

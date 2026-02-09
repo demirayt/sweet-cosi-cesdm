@@ -1,0 +1,34 @@
+name: EnergyDemand
+description: A consumer load represents the demand for an energy carrier (typically
+  electricity, heat, hydrogen, or gas) over time in an energy system. A load may be
+  static, time-varying, or flexible. It can be connected to operational constraints
+  (flexibility windows, demand shifting), cost signals, and reliability metrics such
+  as the value of lost load (VOLL).
+attributes:
+- id: name
+  required: true
+- id: annual_energy_demand
+  required: true
+- id: demand_type
+  required: false
+- id: demand_profile_reference
+  required: false
+- id: flexibility_time_resolution
+  required: false
+- id: flexibility_window_time_end
+  required: false
+- id: flexibility_window_time_start
+  required: false
+- id: is_demand_flexible
+  required: false
+- id: maximum_downward_adjustment
+  required: false
+- id: maximum_upward_adjustment
+  required: false
+- id: value_of_lost_load
+  required: false
+- id: variable_operating_cost
+  required: false
+relations:
+- id: isConnectedToNode
+  required: true

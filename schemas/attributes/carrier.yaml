@@ -1,0 +1,62 @@
+attributes:
+  input_origin:
+    description: Classifies whether the input energy carrier is exogenous (primary
+      resource originating outside the modeled energy network, e.g. solar irradiance,
+      wind, hydro inflow, crude oil imports) or endogenous (delivered from an internal
+      energy node such as electricity, gas, hydrogen).
+    provenance_ref: Define the provenance here.
+    constraints:
+    - endogenous
+    - exogenous
+    value:
+      type: string
+      default: exogenous
+      constraints:
+        enum:
+        - endogenous
+        - exogenous
+  co2_emission_intensity:
+    description: The amount of CO₂ emissions associated with producing or delivering
+      one MWh of the energy carrier, expressed in tons CO₂/MWh. Used for carbon accounting
+      and environmental impact modeling.
+    label: CO2 Emission Intensity
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      default: 0.0
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - tCO2/MWh
+  energy_carrier_group:
+    description: High-level group of the carrier, such as "electricity", "heat", "gas",
+      or "hydrogen". Useful for aggregation and reporting.
+    provenance_ref: Define the provenance here.
+    value:
+      type: string
+  energy_carrier_type:
+    description: Description of the energy carrier type.
+    label: Energy Carrier Type
+    provenance_ref: Define the provenance here.
+    value:
+      type: string
+  is_primary_fuel:
+    description: Flag indicating whether this carrier is considered a primary fuel
+      (e.g., natural gas) as opposed to a secondary or derived carrier.
+    constraints:
+    - 'true'
+    - 'false'
+    provenance_ref: Define the provenance here.
+    value:
+      type: string
+  is_secondary_fuel:
+    description: Flag indicating whether this carrier is considered a secondary or
+      derived fuel (e.g., hydrogen produced via electrolysis).
+    constraints:
+    - 'true'
+    - 'false'
+    provenance_ref: Define the provenance here.
+    value:
+      type: string

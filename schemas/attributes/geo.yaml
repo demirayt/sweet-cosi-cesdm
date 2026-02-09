@@ -1,0 +1,43 @@
+attributes:
+  elevation:
+    comment: Elevation of the node above sea level, if relevant for modeling climate
+      or system performance.
+    description: Elevation of the node above sea level, if relevant for modeling climate
+      or system performance.
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - m (meters above mean sea level)
+  latitude:
+    comment: Geographical latitude of the generator, expressed in decimal degrees.
+      Used for spatial modeling, renewable resource assessment, and GIS-based visualization.
+    label: Latitude
+    description: Geographical latitude of the generator, expressed in decimal degrees.
+      Used for spatial modeling, renewable resource assessment, and GIS-based visualization.
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: -90.0
+        maximum: 90.0
+    unit:
+      constraints:
+        enum:
+        - decimal degrees
+  longitude:
+    comment: Geographical longitude of the generator, expressed in decimal degrees.
+      Used for spatial modeling, renewable resource assessment, and GIS-based visualization.
+    label: Longitude
+    description: Geographical longitude of the generator, expressed in decimal degrees.
+      Used for spatial modeling, renewable resource assessment, and GIS-based visualization.
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: -180.0
+        maximum: 180.0

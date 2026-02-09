@@ -1,0 +1,12 @@
+name: EnergyConversion
+parents:
+- EnergyConversionTechnology
+attributes:
+- id: conversion_rules
+  required: false
+- id: input_origin
+  required: false
+- id: name
+  required: true
+- id: co2_price
+- id: long_name

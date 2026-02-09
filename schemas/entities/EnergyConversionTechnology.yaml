@@ -1,0 +1,10 @@
+name: EnergyConversionTechnology
+parents:
+- EnergyTechnology
+description: Energy conversion technology refers to any system that converts energy
+  from one  to another form of energy carrier.
+attributes:
+- id: name
+  required: true
+- id: co2_price
+- id: long_name

@@ -1,0 +1,184 @@
+attributes:
+  co2_price:
+    comment: CO2 Price is a monetary value assigned to each tonne of carbon dioxide
+      (or CO₂-equivalent) emitted within an energy system. It represents the cost
+      of emitting greenhouse gases and is used to internalize the environmental and
+      societal damages associated with climate change.
+    label: CO2 Price
+    description: CO2 Price is a monetary value assigned to each tonne of carbon dioxide
+      (or CO₂-equivalent) emitted within an energy system. It represents the cost
+      of emitting greenhouse gases and is used to internalize the environmental and
+      societal damages associated with climate change.
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - MU/tCO2
+        - CHF/tCO2
+  energy_carrier_cost:
+    description: The monetary cost of the energy carrier per unit of energy, expressed
+      in MU/MWh. Includes production, delivery, and variable operational costs, used
+      for economic dispatch and optimization.
+    label: Energy Carrier Cost
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      default: 0.0
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - MU/MWh
+  cold_start_cost:
+    description: Cost incurred to restart a generator that has been offline for a
+      long period (cold state), expressed in MU. Usually higher than hot start due
+      to additional operational procedures.
+    label: Cold Start Cost
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - MU
+  hot_start_cost:
+    description: Cost incurred to restart a generator that has been recently offline
+      (hot state), expressed in monitary units. Reflects fuel and operational overhead.
+    label: Hot Start Cost
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - MU
+  ramping_cost_decrease:
+    description: The cost associated with reducing output power or reducing charging
+      rate, expressed in MonetaryUnits/MW or MonetaryUnits/MW/min. Represents operational
+      constraints or efficiency penalties during ramp-down.
+    label: Ramping Cost Decrease
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+  ramping_cost_increase:
+    description: The cost associated with increasing output power, expressed in MU/MW
+      or MU/MW/min. Used in dispatch optimisation to represent wear, thermal cycling,
+      or operational penalties for fast upward ramping.
+    label: Ramping Cost Increase
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - MU/MW
+  variable_operating_cost:
+    description: The marginal operational cost associated with providing the demand
+      (MU/MWh). For loads, this often represents demand-side management costs, smart-load
+      operation costs, or penalties applied during optimization.
+    label: Variable Operating Cost
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - MU/MWh
+  value_of_lost_load:
+    description: The economic cost (MU/MWh) assigned to unserved energy demand, representing
+      the penalty for not meeting the load. This parameter quantifies the societal
+      and economic impact of supply interruptions and is heavily used in adequacy
+      and reliability studies.
+    label: Value of Lost Load Cost
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - MU/MWh
+  discount_rate:
+    description: Discount rate applied to investment and cost streams associated with
+      this technology, expressed as a fraction between 0 and 1 (e.g. 0.03 for 3%).
+      May override a global discount rate defined at the Energy System Model level.
+    constraints:
+    - 'minimum: 0.0'
+    - maximum:1.0
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - Fraction
+  fixed_operating_cost:
+    description: Fixed operation and maintenance (O&M) cost associated with the technology,
+      typically expressed per year and per unit of installed capacity or per unit
+      of technology. Covers costs that do not depend on energy production.
+    constraints:
+    - MU/year
+    - MU/(kW/year)
+    - MU/(MW/year)
+    - MU/unit
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - MU/year, MU/(kW/year), MU/(MW/year), MU/unit
+  investment_cost:
+    description: Overnight investment cost of the technology per unit of installed
+      capacity or per unit, depending on the modeling convention. Used together with
+      technical_lifetime and discount_rate for annualized cost calculations.
+    constraints:
+    - MU/kW
+    - MU/MW
+    - MU/unit
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - MU/kW, MU/MW, MU/unit
+  salvage_fraction_value:
+    description: Fraction of the original investment value that is recovered as salvage
+      at the end of the planning horizon, expressed as a fraction between 0 and 1.
+      Used for partial lifetime treatment when the technology lifetime extends beyond
+      the modeled period.
+    constraints:
+    - 'minnimum: 0.0'
+    - 'maximum: 1.0'
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - Fraction

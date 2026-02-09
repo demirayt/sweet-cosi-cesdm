@@ -1,0 +1,47 @@
+name: StorageTechnologyType
+description: Generic storage technology definition (shared parameters for many technology
+  instances).
+attributes:
+- id: name
+  required: true
+- id: comment
+  required: false
+- id: charging_efficiency
+  required: true
+- id: discharging_efficiency
+  required: true
+- id: hasInflow
+  required: true
+- id: hasCharging
+  required: true
+- id: maximum_ramp_rate_up
+  required: false
+- id: maximum_ramp_rate_down
+  required: false
+- id: ramping_cost_increase
+  required: false
+- id: ramping_cost_decrease
+  required: false
+- id: variable_operating_cost
+  required: false
+- id: self_discharge_rate
+  required: false
+- id: investment_cost
+  required: false
+- id: fixed_operating_cost
+  required: false
+- id: technical_lifetime
+  required: false
+- id: discount_rate
+  required: false
+- id: storage_technology_type
+  required: false
+- id: minimum_state_of_charge
+  required: false
+- id: maximum_state_or_charge
+  required: false
+relations:
+- id: hasInputEnergyCarrier
+  required: true
+- id: hasOutputEnergyCarrier
+  required: true

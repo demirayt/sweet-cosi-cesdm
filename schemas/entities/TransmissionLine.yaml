@@ -1,0 +1,29 @@
+name: TransmissionLine
+description: A transmission line (or distribution line) is a physical electrical conductor
+  system used to transfer power between two network nodes. It is characterized by
+  its electrical parameters (impedance, admittance), thermal limits, topology, and
+  physical construction such as length or number of parallel circuits. Transmission
+  lines can represent overhead lines or underground cables and are key components
+  in AC load-flow, dynamic simulations, and energy system studies.
+attributes:
+- id: line_length
+  required: false
+- id: parallel_circuit_count
+  required: false
+- id: series_reactance
+  required: true
+- id: series_resistance
+  required: false
+- id: shunt_susceptance
+  required: false
+- id: thermal_capacity_rating
+  required: false
+- id: name
+  required: true
+relations:
+- id: isFromNodeOf
+  required: true
+- id: isInEnergyDomain
+  required: true
+- id: isToNodeOf
+  required: true

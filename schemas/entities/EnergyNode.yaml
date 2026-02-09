@@ -1,0 +1,16 @@
+name: EnergyNode
+parents:
+- Node
+description: Represents a physical or logical point in the energy systems.
+attributes:
+- id: elevation
+  required: false
+- id: latitude
+  required: false
+- id: longitude
+  required: false
+- id: name
+  required: true
+relations:
+- id: isInEnergyDomain
+  required: true

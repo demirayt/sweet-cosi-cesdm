@@ -1,0 +1,23 @@
+name: EnergyCarrier
+description: An energy carrier represents a medium through which energy is delivered,
+  stored or consumed. This includes electricity, natural gas, hydrogen, heat, or any
+  other energy form. Attributes define tager environmental and economic characteristics
+  of the carrier, which are crucial for energy system modeling, dispatch, and lifecycle
+  assessment.
+attributes:
+- id: co2_emission_intensity
+  required: false
+  default: 0.0
+- id: energy_carrier_cost
+  required: false
+  default: 0.0
+- id: energy_carrier_group
+  required: false
+- id: energy_carrier_type
+  required: false
+- id: is_primary_fuel
+  required: false
+- id: is_secondary_fuel
+  required: false
+- id: name
+  required: true

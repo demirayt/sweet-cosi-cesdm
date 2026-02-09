@@ -1,0 +1,32 @@
+name: TwoWindingPowerTransformer
+description: An electrical transformer with exactly one primary and one secondary
+  winding that performs voltage transformation and electrical isolation between two
+  AC network voltage levels.
+attributes:
+- id: name
+  required: true
+- id: core_losses
+  required: false
+- id: no_load_current
+  required: false
+- id: number_of_parallel_circuits
+  required: false
+- id: rated_apparent_power
+  required: false
+- id: rated_copper_losses
+  required: false
+- id: rated_primary_voltage
+  required: false
+- id: rated_secondary_voltage
+  required: false
+- id: reactance_resistance_ratio
+  required: false
+- id: short_circuit_voltage
+  required: false
+relations:
+- id: isFromNodeOf
+  required: true
+- id: isInEnergyDomain
+  required: true
+- id: isToNodeOf
+  required: true

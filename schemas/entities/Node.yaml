@@ -1,0 +1,7 @@
+name: Node
+attributes:
+- id: name
+  required: true
+relations:
+- id: isInGeographicalRegion
+  required: true
