@@ -3984,96 +3984,290 @@ class Model:
         return self.is_class_derived_from(cls_name, parent_name, inheritance)
 
     def load_classes_from_yaml(self, path: Union[str, pathlib.Path]):
-
         """
-        Load class definitions from all ``*.yaml`` schema files in a directory.
+        Load class definitions from CESDM YAML schemas.
+
+        Supports two layouts:
+
+        1) **Legacy / inline layout**:
+           Each entity YAML contains embedded ``attributes`` and ``relations`` specs.
+
+        2) **LinkML-like separated layout**:
+           - ``attributes.yaml`` defines all attribute (slot) specifications
+           - ``relations.yaml`` defines all relation specifications
+           - ``entities/*.yaml`` define entity classes and *map* attributes/relations by id,
+             optionally overriding ``required`` and ``default``.
+
+        This implementation uses a **two-phase schema validation** approach:
+
+        Phase 1 (parse): load registries + entity documents, collect attribute/relation *references*.
+        Phase 2 (validate + materialize): verify every reference exists, then materialize the final
+        per-entity attribute/relation specs (base definition + overrides).
 
         Parameters
         ----------
-        schema_dir :
-            Path to a folder containing CESDM class definition YAML files.
-
-        Notes
-        -----
-        This method populates :attr:`classes` and :attr:`inheritance`,
-        but does not resolve inherited attributes/relations yet.
-        Call :meth:`resolve_inheritance` afterwards.
+        path:
+            Directory containing schemas (and optionally an ``entities`` subfolder), or a single YAML file.
         """
-        
-        import pathlib, yaml
+        import pathlib, yaml, copy
+        from difflib import get_close_matches
+
         path = pathlib.Path(path)
 
-        docs = []
+        # ----------------------------
+        # Load global registries (if any)
+        # ----------------------------
+        self.global_attributes = {}
+        self.global_relations = {}
 
-        def _load_all(pth):
+        def _load_one_yaml(pth: pathlib.Path):
             with open(pth, "r", encoding="utf-8") as f:
                 return list(yaml.safe_load_all(f))
 
-        if path.is_dir():
-            for f in sorted(path.rglob("*.y*ml")):
-                docs.extend(_load_all(f))
-        else:
-            docs.extend(_load_all(path))
+        def _load_registry(pth: pathlib.Path, key: str) -> Dict[str, Dict[str, Any]]:
+            if not pth.exists():
+                return {}
+            docs = _load_one_yaml(pth)
+            reg: Dict[str, Dict[str, Any]] = {}
+            for d in docs:
+                if not d:
+                    continue
+                block = d.get(key) if isinstance(d, dict) else None
+                if not isinstance(block, dict):
+                    continue
+                for _id, spec in block.items():
+                    if not _id:
+                        continue
+                    reg[str(_id)] = spec or {}
+            return reg
 
+        def _load_registry_from_index(folder: pathlib.Path, key: str) -> Dict[str, Dict[str, Any]]:
+            """Load a registry from a modular folder that contains _index.yaml with an 'imports' list."""
+            idx_file = folder / "_index.yaml"
+            if not idx_file.exists():
+                return {}
+            idx_doc = _load_one_yaml(idx_file)
+            idx = idx_doc[0] if idx_doc else {}
+            imports = (idx or {}).get("imports", [])
+            if not isinstance(imports, list):
+                return {}
+            reg: Dict[str, Dict[str, Any]] = {}
+            for relpath in imports:
+                part_path = folder / str(relpath)
+                if not part_path.exists():
+                    raise FileNotFoundError(f"Registry import not found: {part_path}")
+                part = _load_registry(part_path, key)
+                # enforce uniqueness
+                for _id, spec in part.items():
+                    if _id in reg:
+                        raise ValueError(f"Duplicate {key[:-1]} id '{_id}' across modular registry files")
+                    reg[_id] = spec
+            return reg
+
+        if path.is_dir():
+            # Legacy single-file registries
+            self.global_attributes = _load_registry(path / "attributes.yaml", "attributes")
+            self.global_relations  = _load_registry(path / "relations.yaml", "relations")
+
+            # Modular registries: attributes/_index.yaml, relations/_index.yaml
+            if not self.global_attributes:
+                self.global_attributes = _load_registry_from_index(path / "attributes", "attributes")
+            if not self.global_relations:
+                self.global_relations = _load_registry_from_index(path / "relations", "relations")
+
+        has_registries = bool(self.global_attributes or self.global_relations)
+
+        # ----------------------------
+        # Load entity/class documents
+        # ----------------------------
+        docs: List[Dict[str, Any]] = []
+
+        if path.is_dir():
+            candidates: List[pathlib.Path] = []
+
+            # Prefer an "entities" subfolder if it exists (LinkML-like layout)
+            entities_dir = path / "entities"
+            if entities_dir.exists() and entities_dir.is_dir():
+                candidates.extend(sorted(entities_dir.rglob("*.y*ml")))
+
+            # Also load any other yaml files in root (legacy layout), excluding registries
+            for f in sorted(path.rglob("*.y*ml")):
+                if f.name in ("attributes.yaml", "relations.yaml"):
+                    continue
+                if entities_dir.exists() and entities_dir in f.parents:
+                    continue
+                candidates.append(f)
+
+            # de-dup while keeping order
+            seen = set()
+            ordered = []
+            for f in candidates:
+                if f in seen:
+                    continue
+                seen.add(f)
+                ordered.append(f)
+
+            for f in ordered:
+                docs.extend(_load_one_yaml(f))
+        else:
+            docs.extend(_load_one_yaml(path))
+
+        # ----------------------------
+        # Phase 1: parse and collect refs
+        # ----------------------------
         merged: Dict[str, Dict[str, Any]] = {}
 
-        def _merge_class(into: Dict[str, Any], src: Dict[str, Any]):
-            # copy common keys
+        # keep reference usages so we can validate them *before* materializing
+        # entries are tuples: (class_name, kind, id, usage_item)
+        ref_uses: List[Tuple[str, str, str, Any]] = []
+
+        def _merge_common(into: Dict[str, Any], src: Dict[str, Any]):
             for k in ("description", "parents", "abstract"):
                 if k in src:
                     into[k] = src[k]
 
-            # --- attributes: merge dict OR list-of-objects with "id" ---
+        def _is_attr_ref_item(item: Any) -> bool:
+            # reference/usage item: "id" + optional required/default only
+            if isinstance(item, str):
+                return True
+            if isinstance(item, dict) and "id" in item:
+                allowed = {"id", "required", "default"}
+                return set(item.keys()).issubset(allowed)
+            return False
+
+        def _is_rel_ref_item(item: Any) -> bool:
+            if isinstance(item, str):
+                return True
+            if isinstance(item, dict) and "id" in item:
+                allowed = {"id", "required"}
+                return set(item.keys()).issubset(allowed)
+            return False
+
+        def _merge_class(into: Dict[str, Any], src: Dict[str, Any], cname: str):
+            _merge_common(into, src)
+
+            # --- attributes ---
             into.setdefault("attributes", {})
             raw_attrs = src.get("attributes")
             if isinstance(raw_attrs, dict):
-                # old style
+                # legacy mapping style
                 into["attributes"].update(raw_attrs)
             elif isinstance(raw_attrs, list):
-                # new style: list of {id: ..., ...}
                 for item in raw_attrs:
-                    if not isinstance(item, dict):
-                        continue
-                    attr_id = item.get("id")
-                    if not attr_id:
-                        continue
-                    spec = {k: v for k, v in item.items() if k != "id"}
-                    into["attributes"][attr_id] = spec
+                    if _is_attr_ref_item(item):
+                        aid = item if isinstance(item, str) else item.get("id")
+                        if aid:
+                            ref_uses.append((cname, "attribute", str(aid), item))
+                    elif isinstance(item, dict):
+                        # embedded full spec
+                        aid = item.get("id")
+                        if not aid:
+                            continue
+                        spec = {k: v for k, v in item.items() if k != "id"}
+                        into["attributes"][str(aid)] = spec
 
-            # --- relations: merge dict OR list-of-objects with "id" ---
+            # --- relations ---
             into.setdefault("relations", {})
-            raw_refs = src.get("relations")
-            if isinstance(raw_refs, dict):
-                # old style
-                into["relations"].update(raw_refs)
-            elif isinstance(raw_refs, list):
-                # new style: list of {id: ..., ...}
-                for item in raw_refs:
-                    if not isinstance(item, dict):
-                        continue
-                    ref_id = item.get("id")
-                    if not ref_id:
-                        continue
-                    spec = {k: v for k, v in item.items() if k != "id"}
-                    into["relations"][ref_id] = spec
+            raw_rels = src.get("relations")
+            if isinstance(raw_rels, dict):
+                into["relations"].update(raw_rels)
+            elif isinstance(raw_rels, list):
+                for item in raw_rels:
+                    if _is_rel_ref_item(item):
+                        rid = item if isinstance(item, str) else item.get("id")
+                        if rid:
+                            ref_uses.append((cname, "relation", str(rid), item))
+                    elif isinstance(item, dict):
+                        rid = item.get("id")
+                        if not rid:
+                            continue
+                        spec = {k: v for k, v in item.items() if k != "id"}
+                        into["relations"][str(rid)] = spec
 
         for d in docs:
             if not d:
                 continue
             # Case 1: collection file
-            if isinstance(d.get("entity_classes"), dict):
+            if isinstance(d, dict) and isinstance(d.get("entity_classes"), dict):
                 for cname, cdef in d["entity_classes"].items():
                     merged.setdefault(cname, {})
-                    _merge_class(merged[cname], cdef or {})
+                    _merge_class(merged[cname], cdef or {}, cname)
             # Case 2: single-class file
-            elif "name" in d:
+            elif isinstance(d, dict) and "name" in d:
                 cname = d["name"]
                 merged.setdefault(cname, {})
-                _merge_class(merged[cname], d)
+                _merge_class(merged[cname], d, cname)
             else:
                 continue
 
+        # ----------------------------
+        # Phase 2a: validate references
+        # ----------------------------
+        errors: List[str] = []
+
+        def _suggest(name: str, pool: List[str]) -> str:
+            matches = get_close_matches(name, pool, n=3, cutoff=0.72)
+            if not matches:
+                return ""
+            return f" (did you mean: {', '.join(matches)})"
+
+        # if entity uses reference-style mappings, registries must be present
+        if ref_uses and not has_registries:
+            errors.append(
+                "Entity schemas contain attribute/relation references by id, but no registries "
+                "were found (attributes.yaml / relations.yaml missing or empty)."
+            )
+
+        for cname, kind, _id, item in ref_uses:
+            if kind == "attribute":
+                if _id not in self.global_attributes:
+                    errors.append(
+                        f"[{cname}] Attribute '{_id}' is referenced but not defined in attributes.yaml"
+                        + _suggest(_id, list(self.global_attributes.keys()))
+                    )
+            else:
+                if _id not in self.global_relations:
+                    errors.append(
+                        f"[{cname}] Relation '{_id}' is referenced but not defined in relations.yaml"
+                        + _suggest(_id, list(self.global_relations.keys()))
+                    )
+
+        if errors:
+            raise ValueError("Schema validation failed:\n- " + "\n- ".join(errors))
+
+        # ----------------------------
+        # Phase 2b: materialize references (base + overrides)
+        # ----------------------------
+        def _materialize_attribute(aid: str, item: Any) -> Dict[str, Any]:
+            base = copy.deepcopy(self.global_attributes.get(aid, {}))
+            if isinstance(item, dict):
+                if "required" in item:
+                    base["required"] = item["required"]
+                if "default" in item:
+                    base.setdefault("value", {})
+                    if isinstance(base["value"], dict):
+                        base["value"]["default"] = item["default"]
+            return base
+
+        def _materialize_relation(rid: str, item: Any) -> Dict[str, Any]:
+            base = copy.deepcopy(self.global_relations.get(rid, {}))
+            if isinstance(item, dict):
+                if "required" in item:
+                    base["required"] = item["required"]
+            return base
+
+        for cname, kind, _id, item in ref_uses:
+            if kind == "attribute":
+                merged[cname].setdefault("attributes", {})
+                # don't overwrite an inline spec if present
+                merged[cname]["attributes"].setdefault(_id, _materialize_attribute(_id, item))
+            else:
+                merged[cname].setdefault("relations", {})
+                merged[cname]["relations"].setdefault(_id, _materialize_relation(_id, item))
+
+        # ----------------------------
         # Build class objects
+        # ----------------------------
         for cname, cdef in merged.items():
             ec = EntityClass.from_dict(cname, cdef)
             self.classes[cname] = ec
@@ -4081,50 +4275,60 @@ class Model:
                 self.entities[cname] = {}
 
         self.inheritance = self.build_inheritance_map(path)
-        # finalize inheritance
         self.resolve_inheritance()
 
     def build_inheritance_map(self, schema_dir: str | Path) -> Dict[str, List[str]]:
-        """
-        Reads all ``*.yaml`` in ``schema_dir`` and builds a *direct* inheritance map::
+            """
+            Build a *direct* inheritance map::
 
-            { child_class_name: [parent_class_name, ...] }
+                { child_class_name: [parent_class_name, ...] }
 
-        This is a lightweight helper used during schema loading.  It understands the
-        schema keys ``parent``, ``inherits_from`` and ``parents`` where ``parents``
-        may be either a single string or a list of base-class names.
-        """
-        from pathlib import Path
-        import yaml
+            This helper understands the schema key ``parents`` (string or list).
 
-        schema_dir = Path(schema_dir)
-        inheritance: Dict[str, List[str]] = {}
+            It supports both layouts:
+            - legacy (entity yamls in root)
+            - separated (entity yamls in ``entities/`` plus registries in root)
+            """
+            from pathlib import Path
+            import yaml
 
-        for f in schema_dir.glob("*.yaml"):
-            with f.open() as fp:
-                data = yaml.safe_load(fp) or {}
+            schema_dir = Path(schema_dir)
+            inheritance: Dict[str, List[str]] = {}
 
-            cls_name = data.get("class_name") or data.get("name") or f.stem
+            if not schema_dir.exists():
+                return inheritance
 
-            if "parents" in data:
+            # find candidate entity yaml files
+            files: List[Path] = []
+            entities_dir = schema_dir / "entities"
+            if entities_dir.exists() and entities_dir.is_dir():
+                files.extend(sorted(entities_dir.rglob("*.y*ml")))
+            # legacy root files (exclude registries)
+            for f in sorted(schema_dir.glob("*.y*ml")):
+                if f.name in ("attributes.yaml", "relations.yaml"):
+                    continue
+                files.append(f)
+
+            for f in files:
+                with f.open(encoding="utf-8") as fp:
+                    data = yaml.safe_load(fp) or {}
+
+                cls_name = data.get("class_name") or data.get("name") or f.stem
+
                 raw = data.get("parents")
-            elif "parents" in data:
-                raw = data.get("parents")
-            else:
-                raw = data.get("inherits_from")
+                if raw is None:
+                    raw = data.get("inherits_from") or data.get("parent")
 
-            parents: List[str] = []
-            if raw:
-                if isinstance(raw, str):
-                    parents = [raw]
-                elif isinstance(raw, (list, tuple, set)):
-                    parents = [p for p in raw if p]
+                if raw is None:
+                    parents: List[str] = []
+                elif isinstance(raw, list):
+                    parents = [str(x) for x in raw if x is not None]
                 else:
                     parents = [str(raw)]
 
-            inheritance[cls_name] = parents
+                inheritance[cls_name] = parents
 
-        return inheritance
+            return inheritance
 
     def _add_raw(self, cls: str, id: str, **kwargs):
         if cls not in self.classes:
