@@ -241,3 +241,19 @@ attributes:
       constraints:
         enum:
         - '%'
+  from_switch_closed:
+    description: Binary variable indicating whether the breaker at the from end of the
+        transmission line is closed. If 1, the line is electrically connected
+        to the from-bus; if 0, the line is disconnected at that side.
+    label: from switch closed
+    provenance_ref: Define the provenance here.
+    value:
+      type: binary
+  to_switch_closed:
+    description: Binary variable indicating whether the breaker at the "to" end of the
+          transmission line is closed. If 1, the line is electrically connected
+          to the from-bus; if 0, the line is disconnected at that side.
+    label: from switch closed
+    provenance_ref: Define the provenance here.
+    value:
+      type: binary

@@ -32,6 +32,20 @@ attributes:
       constraints:
         enum:
         - MWh
+  charging_variable_operating_cost:
+      description: The marginal operational cost associated with providing the demand
+        (MU/MWh). For loads, this often represents demand-side management costs, smart-load
+        operation costs, or penalties applied during optimization.
+      label: Variable Operating Cost
+      provenance_ref: Define the provenance here.
+      value:
+        type: decimal
+        constraints:
+          minimum: 0.0
+      unit:
+        constraints:
+          enum:
+          - MU/MWh
   initial_state_of_charge:
     description: Initial state of charge at the beginning of the optimization horizon,
       expressed as a fraction between 0 and 1.

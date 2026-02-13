@@ -20,6 +20,19 @@ attributes:
       constraints:
         enum:
         - MWh/year
+  maximum_energy_demand:
+    description: Maximum energy demand by the load over an entire year,
+      expressed in MW. 
+    label: Maximum Energy Demand
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - MW
   demand_type:
     description: Type of the specific demand
     label: Type of the specific demand
