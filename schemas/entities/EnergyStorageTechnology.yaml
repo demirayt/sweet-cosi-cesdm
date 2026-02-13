@@ -9,7 +9,7 @@ attributes:
 - id: charging_efficiency
   required: false
 - id: discharging_efficiency
-  required: false
+  required: true
 - id: hasInflow
   required: false
 - id: hasCharging
@@ -19,7 +19,7 @@ attributes:
 - id: discount_rate
   required: false
 - id: energy_storage_capacity
-  required: false
+  required: true
 - id: fixed_operating_cost
   required: false
 - id: initial_state_of_charge
@@ -43,7 +43,7 @@ attributes:
 - id: natural_inflow_profile_reference
   required: false
 - id: nominal_power_capacity
-  required: false
+  required: true
 - id: ramping_cost_decrease
   required: false
 - id: ramping_cost_increase
@@ -59,6 +59,8 @@ attributes:
 - id: unit_nominal_size
   required: false
 - id: variable_operating_cost
+  required: false
+- id: charging_variable_operating_cost
   required: false
 - id: name
   required: true

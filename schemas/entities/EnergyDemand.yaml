@@ -9,6 +9,8 @@ attributes:
   required: true
 - id: annual_energy_demand
   required: true
+- id: maximum_energy_demand
+  required: false
 - id: demand_type
   required: false
 - id: demand_profile_reference

@@ -20,10 +20,12 @@ attributes:
   required: false
 - id: name
   required: true
+- id: from_switch_closed
+  required: false
+- id: to_switch_closed
+  required: false
 relations:
 - id: isFromNodeOf
-  required: true
-- id: isInEnergyDomain
   required: true
 - id: isToNodeOf
   required: true

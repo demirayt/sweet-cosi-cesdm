@@ -12,21 +12,23 @@ attributes:
 - id: number_of_parallel_circuits
   required: false
 - id: rated_apparent_power
-  required: false
+  required: true
 - id: rated_copper_losses
   required: false
 - id: rated_primary_voltage
-  required: false
+  required: true
 - id: rated_secondary_voltage
-  required: false
+  required: true
 - id: reactance_resistance_ratio
   required: false
 - id: short_circuit_voltage
+  required: true
+- id: from_switch_closed
+  required: false
+- id: to_switch_closed
   required: false
 relations:
 - id: isFromNodeOf
-  required: true
-- id: isInEnergyDomain
   required: true
 - id: isToNodeOf
   required: true
