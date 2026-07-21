@@ -1,0 +1,21 @@
+name: AssetLocationView
+parents:
+- SpatialView
+description: 'Spatial view for a point-located asset, capturing its geographic coordinates
+  and elevation. Used for GIS integration, renewable resource assessment (solar irradiance,
+  wind atlas), and proximity-based network studies.
+
+  '
+attributes:
+- id: latitude
+  required: false
+- id: longitude
+  required: false
+- id: elevation
+  required: false
+relations:
+- id: representsAsset
+  required: true
+  target: EnergyAssetInstance
+- id: locatedIn
+  required: false

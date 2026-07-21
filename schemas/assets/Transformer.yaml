@@ -1,0 +1,15 @@
+name: Transformer
+parents:
+- TransmissionElement
+description: 'A specific deployed two-winding power transformer connecting two ElectricalBuses
+  at different voltage levels. Electrical parameters (rated primary/secondary voltage,
+  short-circuit voltage, thermal rating) are captured in a Transformer.PowerFlowView.
+  Topological connection (fromNode, toNode, switch states) is expressed in a TwoPort.TopologyView.
+
+  Maps to FlexEco class PN_TR2.
+
+  Examples: a 380/220 kV autotransformer, a 110/20 kV distribution transformer, a
+  220/110 kV step-down transformer.
+
+  '
+attributes: null

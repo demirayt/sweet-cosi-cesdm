@@ -1,0 +1,27 @@
+name: TwoPort.TopologyView
+parents:
+- NetworkTopologyView
+description: 'Topology view for assets that connect two NetworkNodes within the same
+  CarrierDomain via a directed branch. The fromNode and toNode define the reference
+  direction for power or flow sign conventions.
+
+  Switch states (fromSwitchClosed, toSwitchClosed) express whether the branch is electrically
+  or physically connected at each end, supporting contingency analysis and outage
+  modelling.
+
+  Used by: TransmissionElement (lines, cables, pipelines, NTC links).
+
+  '
+attributes:
+- id: from_switch_closed
+  required: false
+- id: to_switch_closed
+  required: false
+relations:
+- id: representsAsset
+  required: true
+  target: TransmissionElement
+- id: fromNode
+  required: true
+- id: toNode
+  required: true

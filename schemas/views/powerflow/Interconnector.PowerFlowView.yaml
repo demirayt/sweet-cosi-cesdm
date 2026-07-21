@@ -1,0 +1,15 @@
+name: Interconnector.PowerFlowView
+parents:
+- PowerFlowView
+description: 'Power flow view for Interconnector assets (Transport Models, Net Trasnfer Capacity). Carries
+  only flow limits.
+  '
+attributes:
+- id: maximum_power_flow_from_to
+  required: false
+- id: maximum_power_flow_to_from
+  required: false
+relations:
+- id: representsAsset
+  required: true
+  target: Interconnector

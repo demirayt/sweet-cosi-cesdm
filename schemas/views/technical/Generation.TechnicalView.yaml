@@ -1,0 +1,9 @@
+name: Generation.TechnicalView
+view_family: technical
+parents:
+- StaticView
+abstract: true
+description: >-
+  Abstract base for technology-specific, relatively stable construction and
+  configuration data of a GenerationUnit. These attributes describe the deployed
+  technical instance and are deliberately not stored on the generic GenerationUnit.

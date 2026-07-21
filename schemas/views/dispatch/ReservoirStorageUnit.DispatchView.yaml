@@ -1,0 +1,33 @@
+name: ReservoirStorageUnit.DispatchView
+parents:
+- OperationalDispatchView
+description: 'Dispatch view for ReservoirStorageUnit assets. Carries reservoir/water-body
+  dispatch state only; turbine/pump power and efficiency parameters belong on HydroGenerationUnit.DispatchView.
+
+
+  Use this view for reservoir-hydro and pumped-hydro reservoirs. A reservoir can supply
+  one or more HydroGenerationUnit assets via suppliesResourceTo / drawsFromReservoir,
+  and each generator keeps its own power and efficiency parameters.
+
+  '
+attributes:
+- id: energy_storage_capacity
+  required: false
+- id: annual_natural_inflow_energy
+  required: false
+- id: minimum_state_of_charge
+  required: false
+- id: maximum_state_of_charge
+  required: false
+- id: initial_state_of_charge
+  required: false
+- id: self_discharge_rate
+  required: false
+- id: storage_technology_type
+  required: false
+relations:
+- id: hasNaturalInflowProfile
+  required: false
+- id: representsAsset
+  required: true
+  target: ReservoirStorageUnit

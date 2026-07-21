@@ -1,0 +1,9 @@
+name: NuclearGeneration.TechnicalView
+parents:
+- Generation.TechnicalView
+description: Static reactor-specific configuration of a nuclear generation unit.
+attributes:
+- id: reactor_type
+  required: false
+- id: thermal_capacity
+  required: false

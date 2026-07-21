@@ -1,0 +1,49 @@
+name: HydroGenerationUnit.DispatchView
+parents:
+- OperationalDispatchView
+description: 'Dispatch view for HydroGenerationUnit assets. It is a specialised hydro
+  view,
+
+  not a subclass of Generation.DispatchView.
+
+
+  It contains the generation-side dispatch parameters needed for hydro units.
+
+  Reservoir-level parameters such as stored energy/water volume, inflow, state
+
+  of charge and evaporation live on ReservoirStorageUnit.DispatchView of the
+
+  linked ReservoirStorageUnit.
+
+  '
+attributes:
+- id: nominal_power_capacity
+  required: false
+- id: minimum_generation
+  required: false
+- id: maximum_generation
+  required: false
+- id: variable_operating_cost
+  required: false
+- id: annual_resource_potential
+  required: false
+- id: dispatch_type
+  required: false
+- id: machine_role
+  required: false
+- id: turbine_efficiency
+  required: false
+- id: maximum_pumping_power
+  required: false
+- id: pumping_efficiency
+  required: false
+- id: maximum_ramp_rate_up
+  required: false
+- id: maximum_ramp_rate_down
+  required: false
+relations:
+- id: hasRunOfRiverInflowProfile
+  required: false
+- id: representsAsset
+  required: true
+  target: HydroGenerationUnit

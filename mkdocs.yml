@@ -1,0 +1,86 @@
+site_name: CESDM
+site_description: Common Energy System Domain Model
+site_url: https://cesdm.github.io/cesdm-toolbox/
+repo_name: cesdm/cesdm-toolbox
+repo_url: https://github.com/cesdm/cesdm-toolbox
+edit_uri: edit/main/docs/
+
+copyright: Copyright &copy; Research Center for Energy Networks, ETH Zürich
+
+theme:
+  name: material
+  language: en
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - navigation.footer
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.action.edit
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+nav:
+  - Home: index.md
+  - Getting Started: getting_started.md
+  - Guide:
+      - Disclaimer: guide/00_disclaimer.md
+      - What is CESDM?: guide/01_what_is_cesdm.md
+      - Core Concepts: guide/02_core_concepts.md
+      - Schemas: guide/03_schemas.md
+      - Asset Hierarchy: guide/04_asset_hierarchy.md
+      - Representation Views: guide/05_representation_views.md
+      - Energy Domain: guide/06_energy_domain.md
+      - Time Series: guide/07_timeseries.md
+      - Spatial Aggregation: guide/08_spatial_aggregation.md
+      - EAR Toolbox: guide/09_ear_toolbox.md
+      - CESDM Toolbox: guide/10_cesdm_toolbox.md
+      - FAQ: guide/faq.md
+      - Glossary: guide/glossary.md
+  - Architecture:
+      - Package Layout: architecture/package_layout.md
+      - Proxy API: architecture/proxy_api.md
+      - Analysis Validation: architecture/analysis_validation.md
+      - Schema Governance: architecture/schema_governance.md
+      - Schema Audit Report: architecture/schema_audit_report.md
+  - Importers:
+      - PyPSA: importers/pypsa.md
+      - TYNDP: importers/tyndp.md
+      - pandapower: importers/pandapower.md
+      - MATPOWER: importers/matpower.md
+  - Exporters:
+      - pandapower: exporters/pandapower.md
+      - MATPOWER: exporters/matpower.md
+  - Reference:
+      - Schema Layout: schema_layout.md
+      - Generated Schema Reference: reference/schema_reference.html
+
+plugins:
+  - search
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences

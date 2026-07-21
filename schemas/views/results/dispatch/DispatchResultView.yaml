@@ -1,0 +1,16 @@
+name: DispatchResultView
+view_family: dispatch
+abstract: true
+parents:
+- ResultView
+description: Abstract base class for all hourly dispatch result views. Any class that
+  inherits from DispatchResultView is automatically classified as role=view by _derive_role_from_parents().
+  Result views hold scalar aggregate metrics and relations to Profile entities for
+  time-series outcomes.
+attributes: null
+relations:
+- id: representsAsset
+  required: true
+- id: hasRunRecord
+  required: true
+  target: DispatchRunRecord

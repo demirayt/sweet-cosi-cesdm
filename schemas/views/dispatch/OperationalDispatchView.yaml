@@ -1,0 +1,11 @@
+name: OperationalDispatchView
+view_family: dispatch
+description: 'Abstract base view for all representations expressing the operational
+  and economic dispatch behaviour of an asset. All concrete dispatch views reference
+  the asset via representsAsset; topological connections (which Bus the asset injects
+  into or withdraws from) are expressed in the corresponding NetworkTopologyView,
+  not here.
+
+  '
+parents:
+- RepresentationView

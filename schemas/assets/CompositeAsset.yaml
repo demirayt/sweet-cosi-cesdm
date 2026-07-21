@@ -1,0 +1,14 @@
+name: CompositeAsset
+parents:
+- EnergyAssetInstance
+abstract: true
+description: 'Abstract asset that groups constituent EnergyAssetInstance entities
+  into a larger plant or system. Concrete subclasses declare their own typed
+  asset-to-asset relations instead
+  of the generic hasComponent, which has been removed.
+
+  Rationale: hasComponent was a catch-all relation that provided no semantic
+  information beyond "these things are related". Typed relations express the
+  actual role of each component (reservoir vs turbine-generator) and allow
+  validators and import tools to reason about the model without string parsing.
+  '

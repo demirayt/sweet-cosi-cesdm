@@ -1,0 +1,20 @@
+name: PowerFlowResultView
+view_family: powerflow
+abstract: true
+parents:
+- ResultView
+description: >-
+  Abstract base class for power-flow (load-flow) result views. Holds
+  scalar aggregate metrics and relations to Profile entities for the
+  outcome of a steady-state AC/DC network study — distinct from
+  DispatchResultView, which holds economic-dispatch/optimisation
+  outcomes. A single asset can carry both a DispatchResultView and a
+  PowerFlowResultView simultaneously, from a chained dispatch ->
+  power-flow workflow (see RunRecord.hasInputRun).
+attributes: null
+relations:
+- id: representsAsset
+  required: true
+- id: hasRunRecord
+  required: true
+  target: PowerFlowRunRecord

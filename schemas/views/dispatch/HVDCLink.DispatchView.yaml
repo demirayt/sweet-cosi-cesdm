@@ -1,0 +1,15 @@
+name: HVDCLink.DispatchView
+parents:
+- OperationalDispatchView
+description: >
+  Dispatch view for HVDCLink assets. Captures scheduled power setpoint and
+  bidirectional transfer capacity limits for economic dispatch models.
+attributes:
+- id: max_flow
+  required: true
+- id: variable_operating_cost
+  required: false
+relations:
+- id: representsAsset
+  required: true
+  target: HVDCLink

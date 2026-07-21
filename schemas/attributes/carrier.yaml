@@ -1,0 +1,70 @@
+attributes:
+  co2_emission_intensity:
+    description: >
+      Mass of CO₂ emitted per unit of energy delivered by the carrier,
+      expressed in tCO₂/MWh. Used for carbon accounting, emission
+      constraint modelling, and environmental impact assessment.
+    label: CO2 Emission Intensity
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      default: 0.0
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+          - tCO2/MWh
+
+  carrier_group:
+    description: >
+      High-level classification group of the carrier. Used for
+      cross-carrier aggregation, reporting, and domain assignment.
+      Matches CESDM's closed set of per-carrier network node types
+      (ElectricalBus, GasBus, HeatBus, HydrogenBus, WaterBus).
+    label: Carrier Group
+    provenance_ref: Define the provenance here.
+    value:
+      type: string
+      constraints:
+        enum:
+        - electricity
+        - gas
+        - heat
+        - hydrogen
+        - water
+
+  carrier_type:
+    description: >
+      Detailed type descriptor for the carrier, finer-grained than
+      carrier_group. Intentionally open/extensible (not a closed enum)
+      since new carrier sub-types are expected as models grow — but
+      new values should follow the existing snake_case convention.
+      Recommended starting vocabulary: "ac_electricity",
+      "dc_electricity", "district_heat", "compressed_hydrogen",
+      "liquid_hydrogen", "natural_gas", "biomethane", "potable_water".
+    label: Carrier Type
+    provenance_ref: Define the provenance here.
+    value:
+      type: string
+
+  is_primary_fuel:
+    description: >
+      Indicates whether this carrier is a primary fuel that enters the
+      system from outside the modelled boundary (e.g., natural gas,
+      coal, crude oil). Mutually exclusive with is_secondary_fuel.
+    label: Is Primary Fuel
+    provenance_ref: Define the provenance here.
+    value:
+      type: boolean
+
+  is_secondary_fuel:
+    description: >
+      Indicates whether this carrier is a secondary or derived fuel
+      produced within the modelled system (e.g., hydrogen from
+      electrolysis, synthetic methane). Mutually exclusive with
+      is_primary_fuel.
+    label: Is Secondary Fuel
+    provenance_ref: Define the provenance here.
+    value:
+      type: boolean

@@ -1,0 +1,13 @@
+name: SolarGeneration.TechnicalView
+parents:
+- Generation.TechnicalView
+description: Static installation configuration of a solar generation unit.
+attributes:
+- id: tilt_angle
+  required: false
+- id: azimuth_angle
+  required: false
+- id: tracking_type
+  required: false
+- id: panel_technology
+  required: false

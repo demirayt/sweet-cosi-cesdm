@@ -1,0 +1,27 @@
+name: HVDCLink.PowerFlowView
+parents:
+- PowerFlowView
+description: >
+  Base power flow view for all HVDC link types. Carries scheduled power,
+  flow limits, DC voltage, converter ratings and loss coefficient.
+attributes:
+- id: hvdc_technology_type
+  required: true
+- id: dc_voltage_kv
+  required: false
+- id: active_power_setpoint_from_to
+  required: false
+- id: p_max_hvdc
+  required: true
+- id: p_min_hvdc
+  required: false
+- id: converter_loss_coefficient
+  required: false
+- id: converter_rating_from
+  required: false
+- id: converter_rating_to
+  required: false
+relations:
+- id: representsAsset
+  required: true
+  target: HVDCLink

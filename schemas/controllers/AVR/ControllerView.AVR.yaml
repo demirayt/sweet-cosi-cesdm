@@ -1,0 +1,28 @@
+name: ControllerView.AVR
+parents:
+- ControllerView
+abstract: true
+view_family: avr
+description: >
+  Abstract base class for all Automatic Voltage Regulator (AVR) /
+  excitation system views attached to a synchronous machine.
+
+  Each concrete subclass represents one specific IEEE or commercial AVR
+  model type and carries only the parameters defined for that model:
+
+    SEXS_AVRView    — Simplified Exciter (PSS/E, simplified studies)
+    IEEET1_AVRView  — IEEE Type 1 DC exciter (IEEE Std 421.5-2016)
+    AC1A_AVRView    — IEEE Type AC1A alternator-rectifier exciter
+    ST1A_AVRView    — IEEE Type ST1A static (thyristor) exciter
+
+  The representsAsset relation (inherited via DynamicView) points to
+  the GenerationUnit this AVR is associated with. The machine↔AVR
+  coupling is also expressed via hasController on
+  SynchronousMachineSubtransientView.
+
+  Do not instantiate AVRView directly — use a concrete subclass.
+
+relations:
+- id: representsAsset
+  required: true
+  target: GenerationUnit

@@ -1,0 +1,64 @@
+name: Generator.DynamicView.Subtransient
+parents:
+- DynamicView
+description: >
+  Dynamic view for a GenerationUnit modelled as a subtransient synchronous
+  machine (6th-order dq model, IEEE Std 1110-2002).
+
+  All reactances are in pu on the machine's own base (MACHINE_rated_mva,
+  MACHINE_rated_kv). Time constants in seconds. H in seconds. D dimensionless.
+
+  Attribute naming: MACHINE.<parameter>  (e.g. MACHINE_xd, MACHINE_H).
+
+attributes:
+- id: MACHINE_rated_mva
+  required: true
+- id: MACHINE_rated_kv
+  required: true
+- id: MACHINE_model
+  required: true
+- id: MACHINE_H
+  required: true
+- id: MACHINE_D
+  required: false
+- id: MACHINE_xd
+  required: true
+- id: MACHINE_xq
+  required: true
+- id: MACHINE_xd_prime
+  required: true
+- id: MACHINE_xq_prime
+  required: false
+- id: MACHINE_Td0_prime
+  required: true
+- id: MACHINE_Tq0_prime
+  required: false
+- id: MACHINE_xd_dprime
+  required: true
+- id: MACHINE_xq_dprime
+  required: true
+- id: MACHINE_Td0_dprime
+  required: true
+- id: MACHINE_Tq0_dprime
+  required: true
+- id: MACHINE_ra
+  required: false
+- id: MACHINE_xl
+  required: false
+relations:
+- id: representsAsset
+  required: true
+  target: GenerationUnit
+- id: hasAutomaticVoltageRegulator
+  required: false
+  target:
+  - ControllerView.AVR
+- id: hasTurbineGovernor
+  required: false
+  target:
+  - ControllerView.GOV
+- id: hasPowerSystemStabilizer
+  required: false
+  target:
+  - ControllerView.PSS
+

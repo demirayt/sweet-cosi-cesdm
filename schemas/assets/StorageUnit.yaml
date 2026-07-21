@@ -1,0 +1,27 @@
+name: StorageUnit
+parents:
+- EnergyAssetInstance
+description: 'A specific deployed storage unit that absorbs and re-releases a single
+  carrier at one EnergyBus. Connected to the network via a SinglePort.TopologyView
+  and described analytically via a Storage.DispatchView or HydroReservoir.DispatchView.
+
+  The StorageUnit entity itself carries only identity attributes (name) and the optional
+  hasTechnology relation. All operational attributes — capacity, efficiencies, state-of-charge
+  bounds, inflow profiles — belong exclusively in the corresponding analytical views.
+
+  Examples: a 10 MWh battery at substation C, a generic demand-response storage. For
+  hydro-specific storage use the dedicated subclasses: ReservoirStorageUnit    — reservoir
+  hydro with natural inflow + separate HydroGenerationUnit ReservoirStorageUnit (PHS)
+  — upper reservoir of PHS, HydroGenerationUnit with is_reversible=True
+
+  '
+attributes: null
+relations:
+- id: hasTechnology
+  required: false
+- id: storesCarrier
+  required: false
+  target: EnergyCarrier
+- id: storesResource
+  required: false
+  target: NaturalResource

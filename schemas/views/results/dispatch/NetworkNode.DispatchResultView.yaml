@@ -1,0 +1,23 @@
+name: NetworkNode.DispatchResultView
+parents:
+- DispatchResultView
+description: |
+  Hourly dispatch result view for NetworkNode entities (ElectricalBus, GasBus,
+  HeatBus, etc.). Captures the nodal price time series and scalar statistics
+  (average, min, max). The nodal price is the dual variable of the energy balance
+  constraint at the node.
+
+relations:
+- id: representsAsset
+  required: true
+  target: NetworkNode
+- id: hasNodalPriceProfile
+  required: false
+  target: Profile
+attributes:
+- id: average_nodal_price
+  required: false
+- id: min_nodal_price
+  required: false
+- id: max_nodal_price
+  required: false

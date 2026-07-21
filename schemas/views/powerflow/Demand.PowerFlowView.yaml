@@ -1,0 +1,22 @@
+name: Demand.PowerFlowView
+parents:
+- PowerFlowView
+description: 'Power flow view for demand assets withdrawing active and reactive power
+  from an EnergyBus. Captures scheduled active and reactive demand and power factor
+  used in AC load-flow analyses.
+
+  The Bus from which this unit withdraws is expressed in the corresponding SinglePort.TopologyView,
+  not here.
+
+  '
+attributes:
+- id: active_power_demand
+  required: true
+- id: reactive_power_demand
+  required: false
+- id: power_factor
+  required: false
+relations:
+- id: representsAsset
+  required: true
+  target: DemandUnit

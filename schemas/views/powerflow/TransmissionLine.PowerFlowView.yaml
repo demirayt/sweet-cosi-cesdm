@@ -1,0 +1,25 @@
+name: TransmissionLine.PowerFlowView
+parents:
+- PowerFlowView
+description: 'Power flow view for transmission line and cable assets. Captures series
+  impedance, shunt susceptance, thermal rating, and physical geometry. NTC flow limits
+  belong on Interconnector.PowerFlowView.
+
+  '
+attributes:
+- id: series_resistance_per_km
+  required: false
+- id: series_reactance_per_km
+  required: false
+- id: shunt_susceptance_per_km
+  required: false
+- id: line_length
+  required: false
+- id: parallel_circuit_count
+  required: false
+- id: thermal_capacity_rating
+  required: false
+relations:
+- id: representsAsset
+  required: true
+  target: TransmissionLine

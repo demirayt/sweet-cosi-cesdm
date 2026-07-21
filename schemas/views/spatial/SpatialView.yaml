@@ -1,0 +1,10 @@
+name: SpatialView
+view_family: spatial
+description: 'Abstract base view for all representations expressing the spatial or
+  geographic properties of an asset or network element. Spatial data exists independently
+  of any analysis and should be expressed once here, referenced by GIS tools, renewable
+  resource mapping, and grid visualisation workflows.
+
+  '
+parents:
+- StaticView

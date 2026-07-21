@@ -1,0 +1,5 @@
+name: RepresentationView
+description: 'Abstract base view for all representations.
+
+  '
+abstract: true

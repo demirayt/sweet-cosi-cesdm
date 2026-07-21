@@ -1,0 +1,21 @@
+name: Shunt.PowerFlowView
+parents:
+- PowerFlowView
+description: >
+  Power flow view for static shunt elements connected to an ElectricalBus.
+
+  The view stores static shunt active power and reactive power injection at
+  nominal voltage. The reactive component follows the MATPOWER bus Bs
+  convention: positive values inject reactive power at V = 1.0 p.u.
+  Pandapower uses the opposite load-oriented sign convention for net.shunt
+  q_mvar, so the pandapower importer/exporter converts the sign. The bus
+  connection itself is expressed through SinglePort.TopologyView.atNode.
+attributes:
+- id: active_power_injection
+  required: false
+- id: reactive_power_injection
+  required: false
+relations:
+- id: representsAsset
+  required: true
+  target: ShuntUnit

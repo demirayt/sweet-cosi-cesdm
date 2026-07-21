@@ -1,0 +1,11 @@
+name: ShuntUnit
+parents:
+- EnergyAssetInstance
+description: 'A static shunt element connected to a single ElectricalBus.
+
+  The ShuntUnit entity represents the identity of the shunt device. Its electrical
+  behaviour for power-flow studies is represented by Shunt.PowerFlowView. The topology
+  connection is represented by SinglePort.TopologyView.
+
+  '
+attributes: null

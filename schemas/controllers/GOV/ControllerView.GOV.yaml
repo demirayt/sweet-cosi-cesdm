@@ -1,0 +1,25 @@
+name: ControllerView.GOV
+parents:
+- ControllerView
+abstract: true
+view_family: governor
+description: >
+  Abstract base class for all speed governor and prime-mover controller
+  views attached to a synchronous machine.
+
+  Each concrete subclass represents one specific IEEE or commercial
+  governor model type:
+
+    IEEEG1_GOVView  — IEEE Type G1 steam governor (IEEE Std 1110-2002)
+    GGOV1_GOVView   — GE/PSS/E generic governor (gas turbine / combined cycle)
+    HYGOV_GOVView   — IEEE hydro turbine-governor
+
+  The representsAsset relation points to the GenerationUnit this governor
+  is associated with.
+
+  Do not instantiate GOVView directly — use a concrete subclass.
+
+relations:
+- id: representsAsset
+  required: true
+  target: GenerationUnit

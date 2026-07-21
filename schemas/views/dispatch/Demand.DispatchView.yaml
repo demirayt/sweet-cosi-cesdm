@@ -1,0 +1,37 @@
+name: Demand.DispatchView
+parents:
+- OperationalDispatchView
+description: 'Operational dispatch view for DemandUnit assets. Captures annual energy
+  demand, demand flexibility parameters, and the demand profile reference. Replaces
+  WithdrawalDispatchView (V3 name).
+
+  '
+attributes:
+- id: annual_energy_demand
+  required: false
+- id: maximum_energy_demand
+  required: false
+- id: demand_type
+  required: false
+- id: is_demand_flexible
+  required: false
+- id: flexibility_time_resolution
+  required: false
+- id: flexibility_window_time_start
+  required: false
+- id: flexibility_window_time_end
+  required: false
+- id: maximum_upward_adjustment
+  required: false
+- id: maximum_downward_adjustment
+  required: false
+- id: value_of_lost_load
+  required: false
+- id: variable_operating_cost
+  required: false
+relations:
+- id: hasDemandProfile
+  required: false
+- id: representsAsset
+  required: true
+  target: DemandUnit

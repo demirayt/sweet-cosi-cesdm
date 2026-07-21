@@ -1,0 +1,53 @@
+name: Generation.DispatchView
+parents:
+- OperationalDispatchView
+description: Canonical scenario-dependent dispatch representation for every GenerationUnit.
+  Technology-specific behavior is expressed by optional attributes, profiles and the
+  linked GeneratorType.
+attributes:
+- id: generator_technology_type
+  required: false
+- id: nominal_power_capacity
+  required: false
+- id: minimum_generation
+  required: false
+- id: maximum_generation
+  required: false
+- id: variable_operating_cost
+  required: false
+- id: fixed_operating_cost
+  required: false
+- id: energy_conversion_efficiency
+  required: false
+- id: annual_resource_potential
+  required: false
+- id: dispatch_type
+  required: false
+- id: maximum_ramp_rate_up
+  required: false
+- id: maximum_ramp_rate_down
+  required: false
+- id: minimum_up_time
+  required: false
+- id: minimum_down_time
+  required: false
+- id: hot_start_cost
+  required: false
+- id: cold_start_cost
+  required: false
+- id: machine_role
+  required: false
+- id: turbine_efficiency
+  required: false
+- id: maximum_pumping_power
+  required: false
+- id: pumping_efficiency
+  required: false
+relations:
+- id: hasAvailabilityProfile
+  required: false
+- id: hasRunOfRiverInflowProfile
+  required: false
+- id: representsAsset
+  required: true
+  target: GenerationUnit

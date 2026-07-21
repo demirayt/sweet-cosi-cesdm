@@ -1,0 +1,21 @@
+name: AssetLifecycleView
+parents:
+- AssetPlanningView
+description: 'Represents the temporal lifecycle of a physical asset, including its
+  commissioning, retrofit, and retirement dates. Used in capacity planning, depreciation
+  modelling, and asset replacement studies.
+
+  '
+attributes:
+- id: commissioning_year
+  required: false
+- id: commission_date
+  required: false
+- id: retrofit_date
+  required: false
+- id: retirement_date
+  required: false
+relations:
+- id: representsAsset
+  required: true
+  target: EnergyAssetInstance

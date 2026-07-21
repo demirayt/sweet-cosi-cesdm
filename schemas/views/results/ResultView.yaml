@@ -1,0 +1,22 @@
+name: ResultView
+abstract: true
+parents:
+- RepresentationView
+description: >-
+  Abstract base for all result views, regardless of which analysis
+  domain (dispatch, power-flow, dynamics, ...) produced them. Any
+  concrete subclass is automatically classified as role=view by
+  _derive_role_from_parents(), since representsAsset is declared here.
+
+  Every result view carries hasRunRecord, linking back to the
+  RunRecord that produced it — this is what allows result views from
+  multiple runs, and multiple analysis domains, to coexist on the same
+  asset without collision. Each domain's abstract base
+  (DispatchResultView, PowerFlowResultView, DynamicResultView)
+  narrows hasRunRecord's target to its own RunRecord subclass.
+relations:
+- id: representsAsset
+  required: true
+- id: hasRunRecord
+  required: true
+  target: RunRecord

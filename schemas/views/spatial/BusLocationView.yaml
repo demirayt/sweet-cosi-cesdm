@@ -1,0 +1,30 @@
+name: BusLocationView
+parents:
+- SpatialView
+description: |
+  Spatial view for a NetworkNode. This is the single source of truth for
+  geographic coordinates of a node. latitude and longitude are no longer
+  carried on the NetworkNode entity itself; all spatial data lives here.
+
+  Use BusLocationView for:
+    - GIS export and grid map visualisation
+    - Region-based aggregation workflows (via locatedIn)
+    - Any workflow that needs elevation in addition to lat/lon
+
+  Even for simple imports that only need lat/lon, create a minimal
+  BusLocationView — it is a lightweight entity and keeps spatial data
+  consistently in one place.
+
+attributes:
+- id: latitude
+  required: false
+- id: longitude
+  required: false
+- id: elevation
+  required: false
+relations:
+- id: representsAsset
+  required: true
+  target: NetworkNode
+- id: locatedIn
+  required: false

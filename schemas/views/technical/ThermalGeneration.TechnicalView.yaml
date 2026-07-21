@@ -1,0 +1,7 @@
+name: ThermalGeneration.TechnicalView
+parents:
+- Generation.TechnicalView
+description: Static technical configuration of a fuel-based thermal generation unit.
+attributes:
+- id: cooling_type
+  required: false

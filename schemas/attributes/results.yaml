@@ -1,0 +1,295 @@
+attributes:
+  # --- PowerFlowRunRecord ---
+  converged:
+    description: Whether the power-flow solver reached a converged solution.
+    label: Converged
+    value:
+      type: boolean
+  iteration_count:
+    description: Number of iterations the power-flow solver took to converge (or reach its iteration limit).
+    label: Iteration Count
+    value:
+      type: integer
+      constraints:
+        minimum: 0
+  convergence_tolerance:
+    description: Mismatch tolerance the power-flow solver was configured to converge to [pu].
+    label: Convergence Tolerance
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+
+  # --- DynamicRunRecord ---
+  integration_method:
+    description: Numerical integration scheme used for the time-domain simulation (e.g. trapezoidal, RK4).
+    label: Integration Method
+    value:
+      type: string
+  simulation_timestep_seconds:
+    description: Fixed integration timestep of the dynamic simulation [s].
+    label: Simulation Timestep
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - s
+  simulation_duration_seconds:
+    description: Total simulated time span of the dynamic run [s].
+    label: Simulation Duration
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - s
+
+  # --- ElectricalBus.PowerFlowResultView ---
+  voltage_magnitude:
+    description: Bus voltage magnitude from a single power-flow snapshot [pu].
+    label: Voltage Magnitude
+    value:
+      type: decimal
+    unit:
+      constraints:
+        enum:
+        - pu
+  voltage_angle:
+    description: Bus voltage angle from a single power-flow snapshot, relative to the slack bus [deg].
+    label: Voltage Angle
+    value:
+      type: decimal
+    unit:
+      constraints:
+        enum:
+        - deg
+  net_active_power_injection:
+    description: Net active power injection at the bus as solved by the power flow [MW].
+    label: Active Power Injection
+    value:
+      type: decimal
+    unit:
+      constraints:
+        enum:
+        - MW
+  net_reactive_power_injection:
+    description: Net reactive power injection at the bus as solved by the power flow [MVAr].
+    label: Reactive Power Injection
+    value:
+      type: decimal
+    unit:
+      constraints:
+        enum:
+        - MVAr
+  average_voltage_magnitude:
+    description: Time-averaged bus voltage magnitude over the power-flow run [pu].
+    label: Average Voltage Magnitude
+    value:
+      type: decimal
+    unit:
+      constraints:
+        enum:
+        - pu
+  min_voltage_magnitude:
+    description: Minimum bus voltage magnitude observed over the power-flow run [pu].
+    label: Min Voltage Magnitude
+    value:
+      type: decimal
+    unit:
+      constraints:
+        enum:
+        - pu
+  max_voltage_magnitude:
+    description: Maximum bus voltage magnitude observed over the power-flow run [pu].
+    label: Max Voltage Magnitude
+    value:
+      type: decimal
+    unit:
+      constraints:
+        enum:
+        - pu
+
+  # --- TransmissionElement.PowerFlowResultView ---
+  active_power_flow_from:
+    description: Active power flow into the branch at its "from" end, from a single power-flow snapshot [MW].
+    label: Active Power Flow (From)
+    value:
+      type: decimal
+    unit:
+      constraints:
+        enum:
+        - MW
+  reactive_power_flow_from:
+    description: Reactive power flow into the branch at its "from" end, from a single power-flow snapshot [MVAr].
+    label: Reactive Power Flow (From)
+    value:
+      type: decimal
+    unit:
+      constraints:
+        enum:
+        - MVAr
+  active_power_flow_to:
+    description: Active power flow into the branch at its "to" end, from a single power-flow snapshot [MW].
+    label: Active Power Flow (To)
+    value:
+      type: decimal
+    unit:
+      constraints:
+        enum:
+        - MW
+  reactive_power_flow_to:
+    description: Reactive power flow into the branch at its "to" end, from a single power-flow snapshot [MVAr].
+    label: Reactive Power Flow (To)
+    value:
+      type: decimal
+    unit:
+      constraints:
+        enum:
+        - MVAr
+  active_power_loss:
+    description: Instantaneous active power loss on the branch, from a single power-flow snapshot [MW].
+    label: Active Power Loss
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - MW
+  reactive_power_loss:
+    description: Instantaneous reactive power loss (or generation, for a line's charging) on the branch, from a single power-flow snapshot [MVAr].
+    label: Reactive Power Loss
+    value:
+      type: decimal
+    unit:
+      constraints:
+        enum:
+        - MVAr
+  current_magnitude:
+    description: Branch current magnitude from a single power-flow snapshot [kA].
+    label: Current Magnitude
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - kA
+  loading_percent:
+    description: Thermal loading relative to rated capacity from a single power-flow snapshot [%].
+    label: Loading
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - '%'
+  average_loading_percent:
+    description: Time-averaged thermal loading relative to rated capacity [%].
+    label: Average Loading
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - '%'
+  max_loading_percent:
+    description: Maximum thermal loading relative to rated capacity observed over the power-flow run [%].
+    label: Max Loading
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - '%'
+  total_active_power_loss:
+    description: Total active-power loss on the element, integrated over the power-flow run.
+    label: Total Active Power Loss
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - MWh
+
+  # --- GenerationUnit.PowerFlowResultView ---
+  active_power_output:
+    description: >-
+      Active power output at the generator as solved by the power flow
+      [MW]. Typically an input at PV/PQ buses (equal to the dispatch
+      setpoint) but solved by the power flow at the slack bus, to
+      balance system losses.
+    label: Active Power Output
+    value:
+      type: decimal
+    unit:
+      constraints:
+        enum:
+        - MW
+  reactive_power_output:
+    description: >-
+      Reactive power output at the generator as solved by the power
+      flow [MVAr]. Solved (not an input) at PV/slack buses, to hold
+      the bus voltage setpoint.
+    label: Reactive Power Output
+    value:
+      type: decimal
+    unit:
+      constraints:
+        enum:
+        - MVAr
+
+  # --- Generator.DynamicResultView ---
+  max_rotor_angle_deviation:
+    description: Maximum rotor-angle deviation from the pre-disturbance operating point during the simulation [deg].
+    label: Max Rotor Angle Deviation
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - deg
+  max_speed_deviation:
+    description: Maximum rotor speed deviation from nominal during the simulation [pu].
+    label: Max Speed Deviation
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - pu
+  settling_time_seconds:
+    description: Time after the disturbance for oscillations to settle within a defined band, or null if the run did not settle [s].
+    label: Settling Time
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - s
+  remained_stable:
+    description: Whether the machine remained in synchronism for the full simulated duration.
+    label: Remained Stable
+    value:
+      type: boolean

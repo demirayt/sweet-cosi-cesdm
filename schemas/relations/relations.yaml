@@ -1,0 +1,410 @@
+relations:
+  hasCarrier:
+    description: 'Associates a CarrierDomain, NetworkNode, or representation with
+      the EnergyCarrier that flows within or through it.
+
+      '
+    target:
+    - EnergyCarrier
+  hasInputCarrier:
+    description: 'Relates a conversion or generation asset / representation to the
+      EnergyCarrier consumed or withdrawn as input.
+
+      '
+    target:
+    - EnergyCarrier
+  hasOutputCarrier:
+    description: 'Relates a conversion or generation asset / representation to the
+      EnergyCarrier produced or injected as output.
+
+      '
+    target:
+    - EnergyCarrier
+  atNode:
+    description: 'Relates a SinglePort.TopologyView to the single NetworkNode (ElectricalBus,
+      GasBus, HeatBus, HydrogenBus, or WaterBus) at which the asset injects or withdraws
+      carrier. Direction of flow is determined by the asset role (GenerationUnit =
+      injection, DemandUnit = withdrawal, StorageUnit = both).
+
+      '
+    target:
+    - NetworkNode
+  fromNode:
+    description: 'Relates a TwoPort.TopologyView to the NetworkNode at the originating
+      (from) end of the directed branch. Defines the reference direction for flow
+      sign conventions.
+
+      '
+    target:
+    - NetworkNode
+  toNode:
+    description: 'Relates a TwoPort.TopologyView to the NetworkNode at the receiving
+      (to) end of the directed branch.
+
+      '
+    target:
+    - NetworkNode
+  belongsToCarrierDomain:
+    description: 'Relates a NetworkNode to the CarrierDomain within which its carrier
+      exchanges occur and the balance constraint is enforced.
+
+      '
+    target:
+    - CarrierDomain
+  locatedIn:
+    description: 'Relates an asset, NetworkNode, or spatial view to the GeographicalRegion
+      in which it is physically or administratively situated.
+
+      '
+    target:
+    - GeographicalRegion
+  isSubRegionOf:
+    description: "Relates a GeographicalRegion to the broader GeographicalRegion that\
+      \ spatially contains it. Supports hierarchical region trees (e.g., bidding zone\
+      \ \u2192 country \u2192 continental area).\n"
+    target:
+    - GeographicalRegion
+  hasTechnology:
+    description: Relates an asset instance to the technology/type template it implements.
+      Instance-level view attributes override technology-level defaults where specified.
+    target:
+    - EnergyTechnologyType
+    - GeneratorType
+    - StorageType
+    - ConverterType
+    - TransmissionType
+  hasAutomaticVoltageRegulator:
+    description: "Relates a SynchronousMachineSubtransientView to its associated controller\
+      \ views (AVRView, PSSView, GOVView). A machine view may reference zero or more\
+      \ controller views of each type. The inverse relation (controller \u2192 machine)\
+      \ is not declared; navigate via the representsAsset relation on each controller\
+      \ view.\n"
+    required: false
+    target:
+    - AVRView
+  hasTurbineGovernor:
+    description: "Relates a SynchronousMachine to its associated controller views\
+      \ (AVRView, PSSView, GOVView). A machine view may reference zero or more controller\
+      \ views of each type. The inverse relation (controller \u2192 machine) is not\
+      \ declared; navigate via the representsAsset relation on each controller view.\n"
+    required: false
+    target:
+    - GOVView
+  hasPowerSystemStabilizer:
+    description: "Relates a SynchronousMachine to its associated controller views\
+      \ PSSView. A machine view may reference zero or more controller views of each\
+      \ type. The inverse relation (controller \u2192 machine) is not declared; navigate\
+      \ via the representsAsset relation on each controller view.\n"
+    required: false
+    target:
+    - PSSView
+  hasInitialCondition:
+    description: "Relates a DynamicView to an initialCondition entity that holds pre-disturbance\
+      \ steady-state values used to initialise the dynamic simulation (terminal voltage,\
+      \ current, flux linkages, field voltage). Optional \u2014 if absent, initial\
+      \ conditions are derived from the associated power flow solution.\n"
+    required: false
+  representsAsset:
+    description: 'Connects any analytical or topological view to the EnergyAssetInstance
+      whose behaviour, topology, or properties it characterises within a specific
+      modelling context. An asset may be described by multiple views simultaneously
+      across different analytical perspectives (dispatch, power flow, planning, spatial,
+      topology).
+
+      '
+    target:
+    - EnergyAssetInstance
+  hasTimestampSeries:
+    description: 'Relates a Profile entity to the TimestampSeries that defines its
+      time axis. The TimestampSeries length must equal the length of the numeric values
+      array stored in the HDF5 file for this profile.
+
+      '
+    target:
+    - TimestampSeries
+  hasAvailabilityProfile:
+    description: 'Relates a Generation.DispatchView, Generation.DispatchView or Generation.DispatchView
+      to the Profile entity that describes the temporal availability shape of available
+      generation power (e.g. wind capacity factor or solar irradiance). The referenced
+      Profile should have profile_type as_capacity_factor or as_normalized_annual_energy.
+
+      '
+    target:
+    - Profile
+  hasRunOfRiverInflowProfile:
+    description: 'Relates a HydroGenerationUnit.DispatchView for run-of-river assets
+      to the Profile entity that describes the temporal run-of-river water availability
+      / inflow shape. The referenced Profile should have profile_type as_capacity_factor
+      or as_normalized_annual_energy, depending on whether it is interpreted as available
+      power or normalized annual water energy.
+
+      '
+    target:
+    - Profile
+  hasDemandProfile:
+    description: 'Relates a WithdrawalDispatchView to the Profile entity that describes
+      the temporal shape of the energy demand. The referenced Profile should have
+      profile_type as_normalized_annual_energy so that multiplying by annual_energy_demand
+      gives absolute demand per timestep.
+
+      '
+    target:
+    - Profile
+  hasNaturalInflowProfile:
+    description: 'Relates a ReservoirStorageUnit.DispatchView to the Profile entity
+      that describes the temporal shape of the natural inflow into the storage reservoir.
+      The referenced Profile should have profile_type as_normalized_annual_energy
+      so that multiplying by annual_natural_inflow_energy gives absolute inflow per
+      timestep.
+
+      '
+    target:
+    - Profile
+  hasDispatchProfile:
+    description: 'Links a GenerationResultView to a Profile entity containing the
+      hourly dispatch output p(t) [MW].
+
+      '
+    target:
+    - Profile
+  hasCommitmentProfile:
+    description: "Links a GenerationResultView to a Profile entity containing the\
+      \ hourly unit commitment status u(t) \u2208 {0,1}.\n"
+    target:
+    - Profile
+  hasStartupProfile:
+    description: "Links a GenerationResultView to a Profile entity containing the\
+      \ hourly startup indicator v(t) \u2208 {0,1}.\n"
+    target:
+    - Profile
+  hasShutdownProfile:
+    description: "Links a GenerationResultView to a Profile entity containing the\
+      \ hourly shutdown indicator w(t) \u2208 {0,1}.\n"
+    target:
+    - Profile
+  hasReducedCostProfile:
+    description: 'Links a result view to a Profile entity containing the dual variable
+      (reduced cost / shadow price) time series [MU/MWh].
+
+      '
+    target:
+    - Profile
+  hasDischargeProfile:
+    description: 'Links a StorageResultView to a Profile entity containing the hourly
+      discharge power p_dis(t) [MW].
+
+      '
+    target:
+    - Profile
+  hasChargeProfile:
+    description: 'Links a StorageResultView to a Profile entity containing the hourly
+      charge power p_chg(t) [MW].
+
+      '
+    target:
+    - Profile
+  hasStateOfChargeProfile:
+    description: 'Links a StorageResultView to a Profile entity containing the hourly
+      state of charge e(t) [MWh].
+
+      '
+    target:
+    - Profile
+  hasChargeDualProfile:
+    description: 'Links a StorageResultView to a Profile entity containing the dual
+      variable on the charging constraint [MU/MWh].
+
+      '
+    target:
+    - Profile
+  hasDischargeDualProfile:
+    description: 'Links a StorageResultView to a Profile entity containing the dual
+      variable on the discharging constraint [MU/MWh].
+
+      '
+    target:
+    - Profile
+  hasServedDemandProfile:
+    description: 'Links a DemandResultView to a Profile entity containing the hourly
+      served demand d_served(t) [MW].
+
+      '
+    target:
+    - Profile
+  hasCurtailedDemandProfile:
+    description: 'Links a DemandResultView to a Profile entity containing the hourly
+      curtailed (unserved) demand d_curt(t) [MW].
+
+      '
+    target:
+    - Profile
+  hasDemandDualProfile:
+    description: "Links a DemandResultView to a Profile entity containing the dual\
+      \ variable on the demand balance constraint \u2014 i.e. the nodal price \u03BB\
+      (t) [MU/MWh].\n"
+    target:
+    - Profile
+  hasFlowProfile:
+    description: "Links an InterconnectorResultView to a Profile entity containing\
+      \ the hourly power flow f(t) [MW]. Positive = flow in direction 1\u21922.\n"
+    target:
+    - Profile
+  hasShadowPriceProfile:
+    description: "Links an InterconnectorResultView to a Profile entity containing\
+      \ the congestion shadow price \u03BC(t) [MU/MWh].\n"
+    target:
+    - Profile
+  hasNodalPriceProfile:
+    description: "Links a NodalPriceResultView to a Profile entity containing the\
+      \ hourly nodal electricity price \u03BB(t) [MU/MWh].\n"
+    target:
+    - Profile
+  hasRunRecord:
+    description: 'Links a ResultView to the RunRecord entity (DispatchRunRecord,
+      PowerFlowRunRecord, DynamicRunRecord, ...) that produced it. Allows result
+      views from different runs — and different analysis domains — to coexist on
+      the same asset. Declared on the abstract ResultView base and narrowed to a
+      specific RunRecord subclass by each domain''s abstract result-view base
+      (DispatchResultView, PowerFlowResultView, DynamicResultView).
+
+      '
+    target:
+    - RunRecord
+  hasInputRun:
+    description: 'Links a RunRecord to the upstream RunRecord whose output it used
+      as input, for chained multi-stage workflows (dispatch -> power-flow ->
+      dynamics).
+
+      '
+    target:
+    - RunRecord
+  hasVoltageMagnitudeProfile:
+    description: 'Links an ElectricalBus.PowerFlowResultView to a Profile entity
+      containing the bus voltage magnitude time series [p.u.].
+
+      '
+    target:
+    - Profile
+  hasVoltageAngleProfile:
+    description: 'Links an ElectricalBus.PowerFlowResultView to a Profile entity
+      containing the bus voltage angle time series [deg].
+
+      '
+    target:
+    - Profile
+  hasLoadingProfile:
+    description: 'Links a TransmissionElement.PowerFlowResultView to a Profile
+      entity containing the thermal loading time series [%].
+
+      '
+    target:
+    - Profile
+  hasActivePowerLossProfile:
+    description: 'Links a TransmissionElement.PowerFlowResultView to a Profile
+      entity containing the active power loss time series [MW].
+
+      '
+    target:
+    - Profile
+  hasActivePowerOutputProfile:
+    description: 'Links a GenerationUnit.PowerFlowResultView to a Profile entity
+      containing the active power output time series [MW].
+
+      '
+    target:
+    - Profile
+  hasReactivePowerOutputProfile:
+    description: 'Links a GenerationUnit.PowerFlowResultView to a Profile entity
+      containing the reactive power output time series [MVAr].
+
+      '
+    target:
+    - Profile
+  hasRotorAngleProfile:
+    description: 'Links a Generator.DynamicResultView to a Profile entity containing
+      the rotor angle deviation time series [deg].
+
+      '
+    target:
+    - Profile
+  hasSpeedDeviationProfile:
+    description: 'Links a Generator.DynamicResultView to a Profile entity containing
+      the rotor speed deviation time series [p.u.].
+
+      '
+    target:
+    - Profile
+  belongsToUnit:
+    description: 'Relates a ConversionPort to the ConversionUnit it belongs to. Every
+      ConversionPort must point at exactly one ConversionUnit.
+
+      '
+    target:
+    - ConversionUnit
+  referencePort:
+    description: 'Relates a Conversion.DispatchView to the ConversionPort whose flow
+      defines the scale for all flow_coefficient values on the unit. nominal_power_capacity
+      on the Conversion.DispatchView is interpreted as the maximum flow at this reference
+      port.
+
+      '
+    target:
+    - ConversionPort
+  hasFlowCoefficientProfile:
+    description: 'Relates a ConversionPort to a Profile entity containing a time-varying
+      flow coefficient series. When present, overrides the scalar flow_coefficient
+      attribute for each timestep. Used for units with operating-point-dependent efficiency
+      (e.g. part-load performance curves, seasonal COP variation).
+
+      '
+    target:
+    - Profile
+  hasComponent:
+    description: Relates a CompositeAsset to one of its constituent assets or components.
+      Multi-valued.
+    target:
+    - SemanticEntity
+  hasPort:
+    description: Relates an asset or component to one of its structural Port entities.
+    target:
+    - Port
+    cardinality: 0..*
+  drawsFromReservoir:
+    description: Relates a HydroGenerationUnit to the ReservoirStorageUnit (upper
+      reservoir) from which it withdraws water during generation. For PHS in pump
+      mode, this is the target reservoir (water pumped into it).
+    target:
+    - StorageUnit
+    - ReservoirStorageUnit
+  dischargesToReservoir:
+    description: Relates a HydroGenerationUnit to the ReservoirStorageUnit (lower
+      reservoir or next cascade stage) that receives the turbine outflow. For PHS
+      in pump mode, this is the source reservoir (water pumped out of it). End-of-cascade
+      turbines that discharge to a natural river without a modelled downstream reservoir
+      need not set this relation.
+    target:
+    - ReservoirStorageUnit
+  suppliesResourceTo:
+    description: Relates a storage asset, reservoir, or resource store to an asset
+      that consumes or converts that stored resource.
+    target:
+    - GenerationUnit
+    - HydroGenerationUnit
+    - ConversionUnit
+  storesCarrier:
+    description: Relates a storage asset to the EnergyCarrier or resource it stores.
+    target:
+    - EnergyCarrier
+  hasInputResource:
+    description: Relates a generation or conversion technology/asset to an exogenous
+      NaturalResource consumed, harvested, or converted as input, such as wind, solar
+      irradiance, river flow, or reservoir inflow. Use hasInputCarrier for transported
+      fuels or commodities.
+    target:
+    - NaturalResource
+  storesResource:
+    description: Relates a storage asset such as a reservoir to the NaturalResource
+      it stores or buffers, e.g. water in a hydro reservoir. Use storesCarrier for
+      transported/storage carriers such as electricity, hydrogen or heat.
+    target:
+    - NaturalResource

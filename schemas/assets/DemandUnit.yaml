@@ -1,0 +1,17 @@
+name: DemandUnit
+parents:
+- EnergyAssetInstance
+description: 'A specific deployed demand or load entity that withdraws a carrier from
+  one EnergyBus. Connected to the network via a SinglePort.TopologyView and described
+  analytically via a WithdrawalDispatchView or Demand.PowerFlowView.
+
+  The DemandUnit entity itself carries only identity attributes (name) and the optional
+  hasTechnology relation. All operational attributes — demand volumes, profiles, flexibility
+  parameters, cost signals — belong exclusively in the WithdrawalDispatchView, which
+  is the analytical context where those values are meaningful.
+
+  Examples: an industrial electricity load at Bus H, a residential heat demand zone
+  connected to a district heating node.
+
+  '
+attributes: null

@@ -1,0 +1,23 @@
+name: DynamicView
+view_family: dynamic
+parents:
+- RepresentationView
+abstract: true
+description: 'Abstract base class for all dynamic simulation views.
+
+  DynamicView marks the root of the dynamic representation branch. Any class that
+  inherits from DynamicView (directly or transitively) and declares representsAsset
+  is automatically classified as role=view by _derive_role_from_parents.
+
+  Dynamic views capture parameters and initial conditions needed for time-domain simulation
+  (transient stability, small-signal analysis, electromagnetic transients). They are
+  always analysis-context-specific: the same physical machine may have different dynamic
+  models depending on the simulation tool or study type.
+
+  All concrete DynamicView subclasses must carry a representsAsset relation pointing
+  to the asset they parametrise.
+
+  '
+relations:
+- id: representsAsset
+  required: true

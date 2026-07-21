@@ -1,0 +1,17 @@
+name: TransmissionElement
+parents:
+- EnergyAssetInstance
+description: "Abstract base class for all assets that transport a carrier between\
+  \ two Buses within the same CarrierDomain via a directed branch.\nThe identity entity\
+  \ carries only name and optional hasTechnology. All physical, electrical, and operational\
+  \ parameters belong on the corresponding typed representation views.\nConcrete subclasses:\n\
+  \  TransmissionLine  — AC/DC overhead lines and underground cables.\n          \
+  \            Uses TransmissionLine.PowerFlowView (r, x, b,\n                   \
+  \   length, parallel circuits, thermal rating).\n  Transformer       — Two-winding\
+  \ power transformers.\n                      Uses Transformer.PowerFlowView (UR1,\
+  \ UR2, Usc,\n                      thermal rating).\n  Interconnector    — NTC interconnectors\
+  \ and HVDC links where only\n                      transfer capacity matters (no\
+  \ detailed impedance).\n                      Uses TransmissionLine.PowerFlowView\
+  \ (P1max, P2max).\n"
+attributes: null
+abstract: true

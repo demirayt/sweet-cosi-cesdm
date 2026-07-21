@@ -1,0 +1,25 @@
+name: ControllerView.PSS
+parents:
+- ControllerView
+abstract: true
+view_family: pss
+description: >
+  Abstract base class for all Power System Stabiliser (PSS) views
+  attached to a synchronous machine AVR.
+
+  Each concrete subclass represents one specific IEEE or commercial PSS
+  model type:
+
+    STAB1_PSSView   — PSS/E STAB1 / IEEE PSS1A single-input stabiliser
+    PSS2A_PSSView   — IEEE PSS2A dual-input (speed + power) stabiliser
+    PSS2B_PSSView   — IEEE PSS2B dual-input with additional signal path
+
+  The representsAsset relation points to the GenerationUnit this PSS
+  is associated with.
+
+  Do not instantiate PSSView directly — use a concrete subclass.
+
+relations:
+- id: representsAsset
+  required: true
+  target: GenerationUnit

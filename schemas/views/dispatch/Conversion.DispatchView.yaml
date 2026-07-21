@@ -1,0 +1,23 @@
+name: Conversion.DispatchView
+parents:
+- OperationalDispatchView
+description: >
+  Generic dispatch representation for a ConversionUnit.
+
+  This view is intentionally minimal. It only states that the ConversionUnit
+  participates in a dispatch model. Carrier topology, node connections,
+  input/output roles, reference-port information, conversion ratios,
+  efficiencies and port-level flow limits are represented by ConversionPort
+  entities, not by this view.
+
+  If a particular model requires unit-level commitment costs, ramping limits,
+  fuel-specific parameters or technology-specific constraints, define a
+  specialized representation that extends Conversion.DispatchView, for example
+  CHPDispatchView, ElectrolyserDispatchView or HeatPumpDispatchView.
+
+attributes: []
+
+relations:
+- id: representsAsset
+  required: true
+  target: ConversionUnit

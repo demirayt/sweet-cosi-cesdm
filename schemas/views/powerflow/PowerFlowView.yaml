@@ -1,0 +1,10 @@
+name: PowerFlowView
+view_family: powerflow
+description: 'Abstract base view for all representations expressing the power flow
+  behaviour of an asset within an AC or DC network analysis. Topological connections
+  are always expressed in the corresponding NetworkTopologyView (SinglePort.TopologyView
+  or TwoPort.TopologyView).
+
+  '
+parents:
+- RepresentationView

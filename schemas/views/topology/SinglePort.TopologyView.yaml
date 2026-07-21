@@ -1,0 +1,21 @@
+name: SinglePort.TopologyView
+parents:
+- NetworkTopologyView
+description: 'Topology view for assets that connect at a single NetworkNode. Covers
+  generation units, demand units, and storage units, all of which inject into or withdraw
+  from one nodal point in the network.
+
+  The direction of flow (injection vs. withdrawal) is not encoded here — it is a property
+  of the asset role (GenerationUnit injects, DemandUnit withdraws, StorageUnit does
+  both). This view records only the structural fact of the connection.
+
+  Sign convention: injection is positive, withdrawal is negative, consistent with
+  standard bus injection notation (IEC, MATPOWER, PyPSA).
+
+  '
+relations:
+- id: representsAsset
+  required: true
+  target: EnergyAssetInstance
+- id: atNode
+  required: true

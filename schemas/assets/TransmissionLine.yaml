@@ -1,0 +1,16 @@
+name: TransmissionLine
+parents:
+- TransmissionElement
+description: 'A specific deployed AC or DC transmission line or underground cable
+  carrying an electrical carrier between two ElectricalBuses. Physical parameters
+  (series impedance, shunt susceptance, length, parallel circuits, thermal rating)
+  are captured in a TransmissionLine.PowerFlowView. Topological connection (fromNode,
+  toNode, switch states) is expressed in a TwoPort.TopologyView.
+
+  Maps to FlexEco class PN_Line.
+
+  Examples: a 380 kV overhead line between substations A and B, a 220 kV underground
+  cable, a 132 kV feeder.
+
+  '
+attributes: null

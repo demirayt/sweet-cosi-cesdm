@@ -1,0 +1,34 @@
+name: Generator.PowerFlowView
+parents:
+- PowerFlowView
+description: 'Power flow view for generation assets injecting active and reactive
+  power into an EnergyBus. Captures the scheduled real and reactive power setpoints
+  and voltage control parameters used in AC load-flow and optimal power flow analyses.
+
+  The Bus into which this unit injects is expressed in the corresponding SinglePort.TopologyView,
+  not here.
+
+  '
+attributes:
+- id: powerflow_bus_type
+  required: true
+- id: voltage_magnitude_setpoint
+  required: false
+- id: voltage_angle_setpoint
+  required: false
+- id: active_power_setpoint
+  required: true
+- id: reactive_power_setpoint
+  required: false
+- id: maximum_active_power_output
+  required: false
+- id: minimum_active_power_output
+  required: false
+- id: maximum_reactive_power_output
+  required: false
+- id: minimum_reactive_power_output
+  required: false
+relations:
+- id: representsAsset
+  required: true
+  target: GenerationUnit

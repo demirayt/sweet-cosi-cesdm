@@ -1,0 +1,35 @@
+name: ElectricalBus.PowerFlowView
+parents:
+- PowerFlowView
+description: >
+  Power flow view for an ElectricalBus node, specifying the bus model
+  type and voltage initial conditions used in AC load-flow and optimal
+  power flow analyses.
+
+  The powerflow_bus_type attribute defines which quantities are held
+  fixed (specified) at this node and which are solved:
+
+    slack  — V and θ specified; P and Q solved.
+             One per connected island; serves as the angular reference.
+    PV     — P and V specified; Q and θ solved.
+             Typical for generator buses with AVR voltage control.
+    PQ     — P and Q specified; V and θ solved.
+             Typical for load buses and passive network nodes.
+
+  Voltage initial conditions (voltage_magnitude_setpoint,
+  voltage_angle_setpoint) provide the starting point for the iterative
+  load-flow solver. For the slack bus they are the fixed boundary values.
+
+  Bus-level injections (generator P, Q; load P, Q) are carried on the
+  corresponding Generator.PowerFlowView and Demand.PowerFlowView
+  entities attached to the assets connected at this node — not here.
+
+  The representsAsset relation points to the ElectricalBus this view
+  parametrises. One ElectricalBus may have at most one ElectricalBus.PowerFlowView
+  per power flow study context.
+
+attributes:
+relations:
+- id: representsAsset
+  required: true
+  target: ElectricalBus

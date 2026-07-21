@@ -1,0 +1,22 @@
+name: EnergyAssetInstance
+parents:
+- SystemAsset
+description: "Abstract base class for a specific deployed instance of an energy infrastructure\n\
+  asset. An instance carries only identity information (name, via SemanticEntity)\nand optionally\
+  \ references its technology type via hasTechnology.\n\nAll operational, physical, temporal,\
+  \ spatial, and analytical properties are\nexpressed exclusively through typed representation\
+  \ views attached to the instance:\n  - SinglePort.TopologyView / TwoPort.TopologyView\n\
+  \      → which NetworkNode(s) the asset connects to\n  - Generation.DispatchView / technology-specific DispatchViews / Storage.DispatchView\
+  \ / Demand.DispatchView /\n    Conversion.DispatchView\n      → operational and economic\
+  \ dispatch parameters\n  - Generator.PowerFlowView / Demand.PowerFlowView / BranchPowerFlowView\n\
+  \      → power flow parameters\n  - AssetLifecycleView  → commission, retrofit, retirement\
+  \ dates\n  - AssetLocationView   → latitude, longitude, elevation\n\nThis strict separation\
+  \ means the same physical asset can be described\nsimultaneously at multiple levels of detail\
+  \ without any attribute appearing\nmore than once.\n\nCarrier relations (hasInputCarrier,\
+  \ hasOutputCarrier) may be set directly on the\ninstance when no EnergyTechnologyType exists\
+  \ (e.g. when importing from PyPSA,\nwhich has no formal technology-type registry). When\
+  \ an hasTechnology relation is\npresent, carrier information is preferably read from the\
+  \ referenced type entity.\n\nConcrete subclasses: GenerationUnit, StorageUnit, ConversionUnit,\n\
+  TransmissionElement, DemandUnit.\n"
+attributes: null
+abstract: true

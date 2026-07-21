@@ -1,0 +1,10 @@
+name: AssetPlanningView
+view_family: planning
+description: 'Abstract base view for all representations expressing planning, investment,
+  and lifecycle semantics of an asset. Specialisations capture the attributes relevant
+  to long-term capacity expansion, technology replacement, and cost annualisation
+  studies.
+
+  '
+parents:
+- StaticView

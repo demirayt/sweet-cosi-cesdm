@@ -1,0 +1,49 @@
+name: Storage.DispatchView
+parents:
+- OperationalDispatchView
+description: 'Operational dispatch view for non-hydro storage assets: batteries, demand-side
+  response with storage characteristics, and generic storage units.
+
+  For hydraulic reservoir storage (reservoir-hydro and PHS) prefer ReservoirStorageUnit.DispatchView.
+  Some legacy imports may still provide reservoir-style attributes on Storage.DispatchView;
+  import/export tools handle those for backward compatibility.
+
+  Topological connection is expressed in the corresponding SinglePort.TopologyView,
+  not here. '
+attributes:
+- id: nominal_power_capacity
+  required: false
+- id: energy_storage_capacity
+  required: false
+- id: annual_natural_inflow_energy
+  required: false
+- id: charging_efficiency
+  required: false
+- id: discharging_efficiency
+  required: false
+- id: self_discharge_rate
+  required: false
+- id: minimum_state_of_charge
+  required: false
+- id: maximum_state_of_charge
+  required: false
+- id: initial_state_of_charge
+  required: false
+- id: maximum_ramp_rate_up
+  required: false
+- id: maximum_ramp_rate_down
+  required: false
+- id: variable_operating_cost
+  required: false
+- id: charging_variable_operating_cost
+  required: false
+- id: maximum_charging_power
+  required: false
+- id: maximum_discharging_power
+  required: false
+- id: storage_technology_type
+  required: false
+relations:
+- id: representsAsset
+  required: true
+  target: StorageUnit

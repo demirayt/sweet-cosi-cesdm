@@ -1,0 +1,32 @@
+name: ReservoirStorageUnit
+parents:
+- StorageUnit
+description: 'Water reservoir storage unit. Covers all hydraulic water bodies: natural
+  reservoirs, pondage, dams, and upper/lower reservoirs in PHS systems.
+
+  With or without natural inflow: With inflow    — reservoir-hydro or open-loop PHS.
+  Set annual_natural_inflow_energy on Storage.DispatchView. Without inflow — closed-loop
+  PHS upper reservoir. Leave annual_natural_inflow_energy unset or zero.
+
+  Coupling to generation: The linked HydroGenerationUnit accesses this reservoir via
+  drawsFromReservoir. Whether that generator has is_reversible = true (PHS) or false
+  (pure turbine) determines the operational mode — the reservoir itself does not need
+  to know.
+
+  A PHS scheme with distinct upper and lower reservoirs is represented with two ReservoirStorageUnit
+  entities and one or more HydroGenerationUnit entities. Use drawsFromReservoir for
+  the upper/source reservoir and dischargesToReservoir for the lower/downstream reservoir
+  where modelled. '
+relations:
+- id: storesCarrier
+  required: false
+  target: EnergyCarrier
+- id: suppliesResourceTo
+  required: false
+  target: HydroGenerationUnit
+- id: hasTechnology
+  required: false
+  target: StorageType
+- id: storesResource
+  required: false
+  target: NaturalResource

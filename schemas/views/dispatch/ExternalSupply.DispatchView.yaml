@@ -1,0 +1,35 @@
+name: ExternalSupply.DispatchView
+parents:
+- OperationalDispatchView
+description: >
+  Dispatch view for ExternalSupply assets.
+
+  Captures the economic and capacity parameters of the slack source used
+  in dispatch optimisation and market clearing models:
+
+    supply_price    [MU/MWh] — marginal cost of injected energy.
+                               Set to 0 for a free reference slack.
+                               Set to value_of_lost_load for emergency
+                               import of last resort.
+    supply_capacity [MW]     — maximum injection power. Absent or null
+                               means uncapacitated (true slack).
+    is_slack        [bool]   — true if this supply is the system balance
+                               reference for its connected island.
+
+  Topological connection (which bus the supply injects into) is in the
+  corresponding SinglePort.TopologyView, not here.
+
+  For AC power flow the connected bus should additionally have an
+  ElectricalBus.PowerFlowView with powerflow_bus_type = slack.
+
+attributes:
+- id: supply_price
+  required: false
+- id: supply_capacity
+  required: true
+- id: is_slack
+  required: true
+relations:
+- id: representsAsset
+  required: true
+  target: ExternalSupply

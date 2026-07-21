@@ -1,0 +1,9 @@
+name: StaticView
+parents:
+- RepresentationView
+abstract: true
+description: Base for relatively stable asset representations.
+relations:
+- id: representsAsset
+  required: true
+  target: EnergyAssetInstance

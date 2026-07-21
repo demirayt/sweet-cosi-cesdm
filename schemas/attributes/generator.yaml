@@ -1,0 +1,674 @@
+attributes:
+  net_electrical_efficiency:
+    description: Net electrical efficiency is the ratio of the net electrical energy
+      output of the CHP plant to the total fuel energy input under defined operating
+      conditions. It quantifies the plant’s effectiveness in converting input fuel
+      energy into electricity.
+    label: Net Electrical Efficiency
+    provenance_ref: Define the provenance here.
+    value:
+      type: float
+      default: 0.35
+      constraints:
+        minimum: 0.0
+        maximum: 1.0
+    unit:
+      constraints:
+        enum:
+        - fraction
+  net_thermal_efficiency:
+    description: Net thermal efficiency is the ratio of the useful thermal energy
+      output of the CHP plant to the total fuel energy input. It represents the portion
+      of input fuel energy recovered as usable heat.
+    label: Net Thermal Efficiency
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      default: 0.45
+      constraints:
+        minimum: 0.0
+        maximum: 1.0
+    unit:
+      constraints:
+        enum:
+        - fraction
+  rated_electrical_power_capacity:
+    description: Electrical power capacity is the maximum continuous electrical output
+      a device can deliver under specified conditions, typically expressed in kilowatts
+      (kW) or megawatts (MW).
+    label: Rated Electrical Power Capacity
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - MW
+  rated_thermal_output_capacity:
+    description: Thermal power capacity is the maximum useful thermal power that a
+      device can deliver (as steam, hot water, or process heat) to an external heat
+      network or process under defined operation.
+    label: Rated Thermal Output Capacity
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - MW
+  conversion_rules:
+    description: List of conversion relations between input and output ports. Each
+      rule references an input port ID and an output port ID defined under ports-inputs
+      / ports-outputs and specifies an efficiency (0..1).
+    provenance_ref: Define the provenance here.
+    value:
+      type: string
+  energy_conversion_efficiency:
+    description: Ratio of useful output energy to input energy, expressed as a fraction
+      (0–1). Determines efficiency of energy conversion processes.
+    label: Energy Conversion Efficiency
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+        maximum: 1.0
+    unit:
+      constraints:
+        enum:
+        - fraction
+  generator_technology_type:
+    description: >
+      Technology category of the generator. Intentionally
+      open/extensible (not a closed enum) since new generation
+      technologies are expected as models grow — but new values should
+      follow the existing snake_case convention. Recommended starting
+      vocabulary, drawn from what's actually used across this
+      toolbox's examples/importers: "gas_turbine" (CCGT/OCGT),
+      "steam_turbine", "hydro", "photovoltaic", "wind", "nuclear",
+      "biomass". Used for technology-specific constraints and
+      performance modeling.
+    label: Generator Technology Type
+    provenance_ref: Define the provenance here.
+    value:
+      type: string
+
+  machine_role:
+    description: Operational role of a hydro machine in dispatch. turbine = generation-only hydraulic turbine; pump = pump-only unit consuming electricity to move water; reversible = reversible pump-turbine that can operate in both turbine and pump mode.
+    label: Hydro Machine Role
+    provenance_ref: Define the provenance here.
+    value:
+      type: string
+      constraints:
+        enum:
+        - turbine
+        - pump
+        - reversible
+
+  nominal_power_capacity:
+    description: Maximum instantaneous power that the conversion unit can deliver
+      or absorb, in MW. Defines operational limits for dispatch.
+    label: Nominal Power Capacity
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - MW
+  energy_conversion_efficiency_in1_out1:
+    description: Ratio of useful output energy to input energy, expressed as a fraction
+      (0–1). Determines efficiency of energy conversion processes.
+    label: Energy Conversion Efficiency in 1 out 1
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - fraction
+  energy_conversion_efficiency_in1_out2:
+    description: Ratio of useful output energy to input energy, expressed as a fraction
+      (0–1). Determines efficiency of energy conversion processes.
+    label: Energy Conversion Efficiency in 1 out 2
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - fraction
+  nominal_power_capacity_output_1:
+    description: Maximum instantaneous power that the conversion unit can deliver
+      or absorb, in MW. Defines operational limits for dispatch.
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - MW
+  nominal_power_capacity_output_2:
+    description: Maximum instantaneous power that the conversion unit can deliver
+      or absorb, in MW. Defines operational limits for dispatch.
+    label: Nominal Power Capacity Output 2
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - MW
+  charging_efficiency:
+    description: The fraction of input energy that is successfully stored during the
+      charging process, expressed as a value between 0 and 1. Accounts for losses
+      in power electronics, conversion stages, and internal storage mechanisms.
+    label: Charging Energy Efficiency
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - fraction
+  turbine_efficiency:
+    description: The fraction of hydraulic energy converted into useful electrical output by the turbine or turbine-generator set, expressed as a value between 0 and 1. Applies to HydroGenerationUnit.DispatchView and avoids storage-discharge semantics.
+    label: Turbine Efficiency
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - fraction
+
+  discharging_efficiency:
+    description: The fraction of stored energy that can be delivered as useful output
+      during the discharging process, expressed as a value between 0 and 1. Represents
+      conversion losses, internal resistance, and inverter losses.
+    label: Discharging Energy Efficiency
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - fraction
+
+  minimum_generation:
+    description: >
+      The minimum active power output that the generation entity
+      can continuously produce while remaining in stable operation.
+      This value represents the lower operational dispatch limit
+      of the generator and is typically expressed in MW.
+
+    label: Minimum Generation
+
+    provenance_ref: Define the provenance here.
+
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+
+    unit:
+      constraints:
+        enum:
+          - MW
+
+
+  maximum_generation:
+    description: >
+      The maximum active power output that the generation entity
+      can produce under normal operating conditions. This value
+      represents the upper operational dispatch limit of the
+      generator and is typically expressed in MW.
+
+    label: Maximum Generation
+
+    provenance_ref: Define the provenance here.
+
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+
+    unit:
+      constraints:
+        enum:
+          - MW
+
+  active_power_setpoint:
+    description: >
+      The target active power output assigned to the generator
+      within the power flow calculation. This value defines the
+      scheduled real power injection of the generator into the
+      electrical network and is typically expressed in MW.
+
+    label: Active Power Setpoint
+
+    provenance_ref: Define the provenance here.
+
+    value:
+      type: decimal
+
+    unit:
+      constraints:
+        enum:
+          - MW
+
+
+  reactive_power_setpoint:
+    description: >
+      The target reactive power output assigned to the generator
+      within the power flow calculation. This value defines the
+      scheduled reactive power injection used for voltage support
+      and reactive power balancing in the electrical network and
+      is typically expressed in MVAr.
+
+    label: Reactive Power Setpoint
+
+    provenance_ref: Define the provenance here.
+
+    value:
+      type: decimal
+
+    unit:
+      constraints:
+        enum:
+          - MVAr
+
+  maximum_active_power_output:
+    description: >
+      Maximum active power output of a generator in power-flow or OPF
+      formulations. This corresponds to MATPOWER QMAX and is expressed in MW.
+
+    label: Maximum active Power Output
+
+    provenance_ref: Define the provenance here.
+
+    value:
+      type: decimal
+
+    unit:
+      constraints:
+        enum:
+          - MW
+
+
+  minimum_active_power_output:
+    description: >
+      Minimum active power output of a generator in power-flow or OPF
+      formulations. This corresponds to MATPOWER QMIN and is expressed in MW.
+
+    label: Minimum active Power Output
+
+    provenance_ref: Define the provenance here.
+
+    value:
+      type: decimal
+
+    unit:
+      constraints:
+        enum:
+          - MW
+
+  maximum_reactive_power_output:
+    description: >
+      Maximum reactive power output of a generator in power-flow or OPF
+      formulations. This corresponds to MATPOWER QMAX and is expressed in MVAr.
+
+    label: Maximum Reactive Power Output
+
+    provenance_ref: Define the provenance here.
+
+    value:
+      type: decimal
+
+    unit:
+      constraints:
+        enum:
+          - MVAr
+
+
+  minimum_reactive_power_output:
+    description: >
+      Minimum reactive power output of a generator in power-flow or OPF
+      formulations. This corresponds to MATPOWER QMIN and is expressed in MVAr.
+
+    label: Minimum Reactive Power Output
+
+    provenance_ref: Define the provenance here.
+
+    value:
+      type: decimal
+
+    unit:
+      constraints:
+        enum:
+          - MVAr
+
+
+  voltage_magnitude_setpoint:
+    description: >
+      The target voltage magnitude maintained by the generator
+      at its connected network node during the power flow analysis.
+      This value is commonly used for PV bus modelling and voltage
+      regulation studies and is typically expressed in per unit.
+
+    label: Voltage Setpoint
+
+    provenance_ref: Define the provenance here.
+
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+
+    unit:
+      constraints:
+        enum:
+          - pu
+
+
+  voltage_angle_setpoint:
+    description: >
+      The voltage phase angle associated with the generator bus
+      within the power flow solution. The voltage angle represents
+      the phase displacement of the bus voltage relative to the
+      system reference angle and is typically expressed in degrees.
+
+    label: Voltage Angle
+
+    provenance_ref: Define the provenance here.
+
+    value:
+      type: decimal
+
+    unit:
+      constraints:
+        enum:
+          - deg
+  hub_height:
+    description: 'Height of the wind turbine hub above ground level. Determines the
+      wind speed at rotor height via the wind shear profile, and therefore directly
+      affects annual energy yield. Instance-specific: two turbines of the same type
+      may have different hub heights depending on site conditions.
+      '
+    label: Hub Height
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - m
+
+  rotor_diameter:
+    description: 'Diameter of the wind turbine rotor. Together with hub_height,
+      determines the swept area and the rated power curve. Instance-specific.
+      '
+    label: Rotor Diameter
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - m
+
+  installation_type:
+    description: 'Installation category of the wind turbine. Determines foundation
+      type, accessibility, and O&M cost profile.
+      Allowed values: onshore, offshore, floating_offshore.
+      '
+    label: Installation Type
+    provenance_ref: Define the provenance here.
+    value:
+      type: string
+      constraints:
+        enum:
+        - onshore
+        - offshore
+        - floating_offshore
+
+  number_of_turbines:
+    description: 'Number of individual wind turbines within this GenerationUnit
+      (wind farm). Used to derive per-turbine statistics and wake-loss modelling.
+      '
+    label: Number of Turbines
+    provenance_ref: Define the provenance here.
+    value:
+      type: integer
+      constraints:
+        minimum: 1
+
+  tilt_angle:
+    description: 'Tilt angle of the solar panels relative to the horizontal plane.
+      0° = horizontal, 90° = vertical. Optimal value depends on latitude and
+      tracking system. Instance-specific.
+      '
+    label: Tilt Angle
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+        maximum: 90.0
+    unit:
+      constraints:
+        enum:
+        - deg
+
+  azimuth_angle:
+    description: 'Azimuth orientation of the solar panels. Measured clockwise from
+      north: 0° = north, 90° = east, 180° = south, 270° = west.
+      180° (south-facing) is optimal in the northern hemisphere.
+      '
+    label: Azimuth Angle
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+        maximum: 360.0
+    unit:
+      constraints:
+        enum:
+        - deg
+
+  tracking_type:
+    description: 'Tracking system of the solar installation. Fixed systems have no
+      moving parts. Single-axis trackers follow the sun east-west. Dual-axis trackers
+      follow both elevation and azimuth.
+      Allowed values: fixed, single_axis, dual_axis.
+      '
+    label: Tracking Type
+    provenance_ref: Define the provenance here.
+    value:
+      type: string
+      constraints:
+        enum:
+        - fixed
+        - single_axis
+        - dual_axis
+
+  panel_technology:
+    description: 'Photovoltaic cell technology or solar thermal technology type.
+      Determines efficiency, degradation rate, and temperature coefficient.
+      Allowed values: monocrystalline, polycrystalline, thin_film, csp.
+      '
+    label: Panel Technology
+    provenance_ref: Define the provenance here.
+    value:
+      type: string
+      constraints:
+        enum:
+        - monocrystalline
+        - polycrystalline
+        - thin_film
+        - csp
+
+  hydraulic_head:
+    description: 'Net hydraulic head available at the turbine under design conditions.
+      Determines the theoretical power output together with flow rate and turbine
+      efficiency. Instance-specific: depends on reservoir level and tailwater.
+      '
+    label: Hydraulic Head
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - m
+
+  turbine_type:
+    description: 'Hydraulic turbine or pump-turbine machine type.
+      Unidirectional turbines (is_reversible = false):
+        pelton           high head (>300m), impulse turbine.
+        francis          medium head (40-600m), reaction turbine.
+        kaplan           low head (<40m), axial-flow reaction turbine.
+        bulb             very low head run-of-river, horizontal axis.
+      Reversible pump-turbines (is_reversible = true):
+        reversible_francis  most common PHS machine; same runner as francis
+                            but operates in both pump and turbine mode.
+        ternary          separate pump and turbine on the same shaft with
+                         a clutch; allows simultaneous operation.
+        quaternary       fully separate pump and turbine units; most
+                         flexible but highest civil cost.
+      '
+    label: Turbine Type
+    provenance_ref: Define the provenance here.
+    value:
+      type: string
+      constraints:
+        enum:
+        - pelton
+        - francis
+        - kaplan
+        - bulb
+        - reversible_francis
+        - ternary
+        - quaternary
+
+  commissioning_year:
+    description: 'Year in which the generation unit was first commissioned and
+      became commercially operational. Instance-specific: determines actual age,
+      real efficiency relative to nameplate, and remaining technical lifetime.
+      Distinct from commission_date (which carries the full date) — year alone
+      is sufficient for most planning and ageing models.
+      '
+    label: Commissioning Year
+    provenance_ref: Define the provenance here.
+    value:
+      type: integer
+      constraints:
+        minimum: 1900
+        maximum: 2100
+
+  cooling_type:
+    description: 'Cooling system type of a thermal generation unit. Determines
+      water withdrawal and consumption rates, and affects de-rating at high
+      ambient temperatures.
+      once_through: river/lake water drawn and returned (high withdrawal, low consumption).
+      cooling_tower: evaporative cooling (low withdrawal, high consumption).
+      air_cooled: dry cooling (no water withdrawal, efficiency penalty in heat).
+      Allowed values: once_through, cooling_tower, air_cooled.
+      '
+    label: Cooling Type
+    provenance_ref: Define the provenance here.
+    value:
+      type: string
+      constraints:
+        enum:
+        - once_through
+        - cooling_tower
+        - air_cooled
+
+  reactor_type:
+    description: 'Nuclear reactor technology type. Determines neutron spectrum,
+      coolant, moderator, fuel cycle, and safety characteristics.
+      PWR: pressurised water reactor (most common globally).
+      BWR: boiling water reactor.
+      PHWR: pressurised heavy-water reactor (e.g. CANDU).
+      SMR: small modular reactor (<300 MWe).
+      Allowed values: PWR, BWR, PHWR, SMR.
+      '
+    label: Reactor Type
+    provenance_ref: Define the provenance here.
+    value:
+      type: string
+      constraints:
+        enum:
+        - PWR
+        - BWR
+        - PHWR
+        - SMR
+
+  thermal_capacity:
+    description: 'Gross thermal power output of the nuclear reactor core under
+      rated conditions. The electrical output is thermal_capacity multiplied by
+      the net electrical efficiency. Relevant for thermal discharge licensing
+      and fuel management.
+      '
+    label: Thermal Capacity
+    provenance_ref: Define the provenance here.
+    value:
+      type: decimal
+      constraints:
+        minimum: 0.0
+    unit:
+      constraints:
+        enum:
+        - MW_th
+
+  is_reversible:
+    description: 'Whether this HydroGenerationUnit can also operate as a pump
+      (pumped-hydro storage). true = PHS reversible machine; the unit can both
+      generate electricity (turbine mode) and consume electricity to pump water
+      to the upper reservoir (pump mode). false = pure turbine, generation only.
+      Operational pumping parameters (charging_efficiency, maximum_charging_power,
+      has_active_charging) belong on Storage.DispatchView of the linked
+      ReservoirStorageUnit, not here.
+      '
+    label: Is Reversible (PHS)
+    provenance_ref: Define the provenance here.
+    value:
+      type: boolean
+  converter_technology:
+    description: HVDC converter technology classification, e.g. LCC or VSC.
+    label: Converter Technology
+    provenance_ref: Define the provenance here.
+    value:
+      type: string
+      constraints:
+        enum:
+        - LCC
+        - VSC

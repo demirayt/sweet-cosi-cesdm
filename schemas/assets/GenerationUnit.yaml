@@ -1,0 +1,23 @@
+name: GenerationUnit
+parents:
+- EnergyAssetInstance
+description: >-
+  A deployed generation asset with stable identity and carrier/resource relations.
+  Technology-specific construction and configuration data are represented by static
+  technical views; operational values belong in Generation.DispatchView and
+  Generator.PowerFlowView. Technology classification and shared defaults are expressed
+  through hasTechnology rather than through asset subclasses.
+relations:
+- id: hasTechnology
+  required: false
+  target: GeneratorType
+- id: hasInputResource
+  required: false
+  target: NaturalResource
+- id: hasInputCarrier
+  required: false
+  target: EnergyCarrier
+- id: hasOutputCarrier
+  required: false
+  target: EnergyCarrier
+attributes: []

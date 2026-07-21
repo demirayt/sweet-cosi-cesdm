@@ -1,0 +1,8 @@
+name: HVDCLink
+parents:
+- TransmissionElement
+description: HVDC transmission link. Converter technology is represented by converter_technology
+  (LCC or VSC), not by subclasses.
+attributes:
+- id: converter_technology
+  required: false

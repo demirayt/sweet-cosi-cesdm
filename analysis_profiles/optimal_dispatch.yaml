@@ -1,0 +1,73 @@
+# Analysis profile: optimal dispatch / unit commitment
+#
+# What an optimal-dispatch or unit-commitment study needs present and
+# sensible on the model, independent of what the CESDM schema itself
+# marks as `required:`. Schema validation (model.validate()) checks
+# structural completeness against the *schema*; this checks fitness
+# for a *specific analysis* -- an attribute can be schema-optional but
+# required here (e.g. variable_operating_cost, which most of CESDM
+# doesn't strictly need but a dispatch optimization can't run without),
+# or schema-required but irrelevant here.
+#
+# Checks are entity-centric: just name the attribute/relation, not
+# where it lives. If it isn't declared directly on the entity_class
+# itself, CESDM looks for exactly one view_family that declares it
+# (e.g. nominal_power_capacity lives on Generation.DispatchView, but
+# nothing below says so) -- no need to know the asset/view split to
+# write a profile. Add an explicit `view_family:` to a check only for
+# the rare name that's genuinely ambiguous across more than one view
+# family (representsAsset, hasRunRecord -- structural relations every
+# view has, never a real domain attribute you'd put in a profile).
+#
+# Load and run with:
+#   errors = model.validate_for_analysis("optimal_dispatch")
+# or, for a copy you edit yourself first:
+#   profile = model.load_analysis_profile("analysis_profiles/optimal_dispatch.yaml")
+#   errors = model.validate_for_analysis(profile)
+
+name: optimal_dispatch
+description: >
+  Minimum attribute/value requirements for running an optimal dispatch
+  or unit-commitment study: generation capacity and cost, and
+  transmission topology and thermal limits.
+
+requirements:
+
+  - entity_class: GenerationUnit
+    # Every concrete GenerationUnit (including subclasses like
+    # HydroGenerationUnit) in the model is checked against this block.
+    checks:
+      - attribute: hasTechnology
+        required: true
+
+      - attribute: nominal_power_capacity
+        required: true
+        constraints:
+          minimum: 0
+
+      - attribute: variable_operating_cost
+        required: true
+        constraints:
+          minimum: 0
+
+      - attribute: energy_conversion_efficiency
+        required: false
+        # Not every technology has a meaningful conversion efficiency
+        # (e.g. wind/solar don't consume a fuel), so this stays
+        # optional -- but if it *is* set, it must be a real fraction.
+        constraints:
+          minimum: 0
+          maximum: 1
+
+  - entity_class: TransmissionLine
+    checks:
+      - attribute: fromNode
+        required: true
+
+      - attribute: toNode
+        required: true
+
+      - attribute: thermal_capacity_rating
+        required: true
+        constraints:
+          minimum: 0

@@ -1,0 +1,13 @@
+name: WindGeneration.TechnicalView
+parents:
+- Generation.TechnicalView
+description: Static site and turbine configuration of a wind generation unit or wind farm.
+attributes:
+- id: hub_height
+  required: false
+- id: rotor_diameter
+  required: false
+- id: installation_type
+  required: false
+- id: number_of_turbines
+  required: false

@@ -1,0 +1,33 @@
+name: Transformer.PowerFlowView
+parents:
+- PowerFlowView
+description: "Power flow view for two-winding power transformer assets. Captures the\
+  \ electrical parameters needed for AC power flow and optimal power flow calculations:\
+  \ rated voltages on each winding, short-circuit voltage (which determines series\
+  \ reactance in per-unit), and the thermal rating.\nThe from/to Bus connections (primary\
+  \ winding bus → secondary winding bus) are expressed in the corresponding TwoPort.TopologyView.\
+  \ This view holds only the transformer-specific physics parameters.\nAttributes\
+  \ ---------- rated_primary_voltage  : Rated line-to-line voltage, primary winding\
+  \ [kV].\n                         Together with rated_secondary_voltage defines\
+  \ the\n                         nominal transformation ratio.\nrated_secondary_voltage:\
+  \ Rated line-to-line voltage, secondary winding [kV]. short_circuit_voltage_in_percentage  : Short-circuit\
+  \ voltage as percentage of rated [%].\n                         Determines series\
+  \ reactance: x_pu = Usc / 100.\nthermal_capacity_rating: Maximum continuous apparent\
+  \ power [MVA].\n"
+attributes:
+- id: rated_primary_voltage
+  required: false
+- id: rated_secondary_voltage
+  required: false
+- id: short_circuit_voltage_in_percentage
+  required: false
+- id: thermal_capacity_rating
+  required: false
+- id: tap_ratio
+  required: false
+- id: phase_shift_angle
+  required: false
+relations:
+- id: representsAsset
+  required: true
+  target: Transformer

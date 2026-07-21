@@ -1,0 +1,11 @@
+name: NetworkTopologyView
+view_family: topology
+description: "Abstract base view for representations expressing the physical network\
+  \ topology of an asset: which NetworkNode(s) the asset connects to, and in what\
+  \ structural role.\nTwo concrete specialisations cover the common network connection\
+  \ patterns:\n  - SinglePort.TopologyView: asset connects at a single NetworkNode\n\
+  \  - TwoPort.TopologyView: asset connects between two NetworkNodes\n\nMulti-carrier\
+  \ conversion topology is represented by ConversionPort entities rather than by a\
+  \ separate topology view.\n"
+parents:
+- StaticView
